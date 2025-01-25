@@ -1,0 +1,169 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - DNS, CNAME, A Record, and HTTP Redirect Explained</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/dns-cname-a-record-and-http-redirect-explained">DNS, CNAME, A Record, and HTTP Redirect Explained</a></h2><span class="post-date">May 30, 2014</span></div>
+			<div class="post-content">
+				<p>You have probably noticed that different websites handle the <strong>www</strong> subdomain in different ways. For Example:</p>
+				<ul>
+					<li><a href="http://google.com">google.com</a> redirects you to <a href="http://www.google.com">www.google.com</a></li>
+					<li><a href="http://www.ipython.org">www.ipython.org</a> redirects you to <a href="http://ipython.org">ipython.org</a></li>
+					<li><a href="http://writersreply.com">writersreply.com</a> and <a href="http://www.writersreply.com">www.writersreply.com</a> look identical without redirecting</li>
+				</ul>
+				<p>It&#x2019;s worth understanding DNS, A Records, CNAME, the HTTP Host Request Header, and HTTP Redirects so you can make your domain function the way that you
+					want.</p>
+				<h2 id="dns---domain-name-system">DNS - Domain Name System</h2>
+				<p>When you buy a domain, your registrar allows you to specify <strong>Authoritative Name Servers</strong>. For example you might register <code>ns1.domaincontrol.com</code>					as the authoritative resource on the internet for identifying the IP address of your domain.</p>
+				<h2 id="a-records-and-cname">A Records and CNAME</h2>
+				<p>Once your Authoritative Name Server is registered, you configure that name server, specifying the IP addresses that your domain and (optionally) subdomains point
+					to.</p>
+				<p>An <strong>A Record</strong> (Address Record) points your domain or subdomain to an IP Address. An <strong>A Record</strong> will always point to an IP Address.</p>
+				<p>A <strong>CNAME</strong> (Canonical Name aka Alias) points your domain or subdomain to to the the IP Address of a different domain. <strong>CNAME</strong> records
+					always point to domain names.</p>
+				<p>The **<span class="citation" data-cites="*">@*</span>* symbols is used in DNS records to indicate your root domain name. Consider the hypothetical DNS table
+					below for the domain <code>writersreply.com</code></p>
+				<table>
+					<style>
+						thead {
+							font-weight: bold;
+						}
+						
+						td {
+							width: 180px;
+						}
+						
+						table,
+						td,
+						th {
+							border: 1px solid black;
+							border-collapse: collapse;
+							padding: 4px 8px;
+						}
+					</style>
+					<thead>
+						<tr>
+							<td>
+								Host Name
+							</td>
+							<td>
+								Address
+							</td>
+							<td>
+								Type
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								@
+							</td>
+							<td>
+								18.85.28.11
+							</td>
+							<td>
+								A
+							</td>
+						</tr>
+						<tr>
+							<td>
+								www
+							</td>
+							<td>
+								writersreply.com
+							</td>
+							<td>
+								CNAME
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<p>The example above doesn&#x2019;t actually redirect users - it just means that when you navigate your browser to <code>www.example.com</code> the HTTP Request
+					goes to the same IP address as if you navigate to <code>example.com</code>. In either case the address bar in your browser will be unchanged when the site loads.</p>
+				<h2 id="http-redirects">HTTP Redirects</h2>
+				<p>You can&#x2019;t redirect users with DNS Configuration. However, <strong>some DNS providers offer a redirection service</strong>. If your Domain registrar does
+					not offer redirection service, you have to configure your web server to redirect http traffic manually.</p>
+				<p>How does this work? Here&#x2019;s an example of browser behavior when you navigate to <code>google.com</code>:</p>
+				<ol type="1">
+					<li>Use the DNS IP address provided by your Router or ISP to determine the Authoritative Name Server for <code>google.com</code></li>
+				</ol>
+				<ul>
+					<li>Answer: <code>ns1.google.com</code></li>
+				</ul>
+				<ol start="2" type="1">
+					<li>Request the ip address of <code>google.com</code> from <code>ns1.google.com</code></li>
+				</ol>
+				<ul>
+					<li>Answer: <code>74.125.21.100</code></li>
+				</ul>
+				<ol start="3" type="1">
+					<li>Send an HTTP Request to <code>74.125.21.100</code> looking something like this:</li>
+				</ol>
+				<pre><code>GET / HTTP/1.1
+Host: google.com
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: en-US,en;q=0.8
+DNT: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36
+X-Chrome-UMA-Enabled: 1</code></pre>
+				<p>Notice that the HTTP request is sent to an IP address, but it includes the <strong>Host Header</strong> <code>google.com</code>. Google&#x2019;s servers see
+					the host name in the request, and send back an HTTP 301 Redirect looking akin to this:</p>
+				<pre><code>HTTP/1.1 301 Moved Permanently
+Location: http://www.google.com/
+Content-Type: text/html; charset=UTF-8
+Server: gws
+Content-Length: 219
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Alternate-Protocol: 80:quic
+Age: 25150
+Date: Sun, 01 Jun 2014 13:09:35 GMT
+Expires: Tue, 01 Jul 2014 13:09:35 GMT
+Cache-Control: public, max-age=2592000
+Connection: keep-alive</code></pre>
+				<p>Important points</p>
+				<ul>
+					<li>The only thing that DNS acutally does is tie Domain names to IP Addresses</li>
+					<li>HTTP Requests are sent to IP addresses, but include the domain name in the Host Header</li>
+					<li>HTTP servers may serve different content depending on the contents of the Host Header</li>
+				</ul>
+				<p>The exact way you configure your server to redirect http requests depends on the server you are using.</p>
+				<ul>
+					<li>Apache servers can redirect via the .htaccess file (<a href="http://stackoverflow.com/questions/1100343/apache-redirect-from-non-www-to-www">Stackoverflow</a>)</li>
+					<li>Nginx servers can redirect via server block (<a href="http://stackoverflow.com/questions/10294481/how-to-redirect-a-url-in-nginx">Stackoverflow</a>)</li>
+					<li>Node.js servers inspect the HTTP Host header, and headers modify the response object</li>
+				</ul>
+				<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Inside node.js request handler</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">writeHead</span>(<span class="dv">302</span><span class="op">,</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;Location&apos;</span><span class="op">:</span> <span class="st">&apos;your/path/here&apos;</span><span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// optional other headers...</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">end</span>()<span class="op">;</span></span></code></pre></div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

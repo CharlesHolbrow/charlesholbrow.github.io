@@ -1,0 +1,221 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Blog</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item current-menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div
+	class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/in-the-trenches-with-a-large-scale-backbone-express-mongodb-app">In the Trenches With a Large Scale Backbone/Express/MongoDB App</a></h2><span class="post-date">Jul 10, 2013</span></div>
+			<div class="post-content">
+				<p>I&#x2019;ve just finished some contract work on the Web App <a href="http://www.visualstager.com">www.VisualStager.com</a>. This is a large scale project that
+					build on top of Express, Mongoose, Backbone, <a href="http://lazd.github.io/F/">F</a>, and <a href="http://lazd.github.io/PseudoClass/">PsuedoClass</a>.</p>
+				<p>Since Express and Backbone are both lightweight and flexible, it was pretty neat to see them working a part of a well designed large scale production app. My
+					team of four developers had just under two weeks to build out an admin interface for the entire app.</p>
+				<p>Visual Stager is an interior design app that depends on three.js and clever mathematics to position 3D furniture models inside a 2D photo of a room. We needed
+					to create admin pages for the Account, User, House, Photo, Scene, and Furniture collections. While the experience is still fresh in my mind, I&#x2019;m going
+					to memoize some interesting takeaways.</p>
+				<h2 id="pure-backbone-is-too-lightweight-for-large-scale-apps">Pure Backbone is too lightweight for large scale apps</h2>
+				<p>In a mature framework like Rails or Django, building an admin page is trivial. In our case, we depended on <a href="http://lazd.github.io/F/F/jsdoc/F.ListComponent.html">F.ListComponent</a>					to render collections of items as tables or lists without boilerplate. F.Component organizes the following into a logical unit of application code:</p>
+				<ul>
+					<li>A Backbone View</li>
+					<li>A Backbone Model</li>
+					<li>Handlebars templates</li>
+					<li>Public methods</li>
+					<li>Sub-components</li>
+				</ul>
+				<p>F Components address one of the main complexity headaches found in backbone apps &#x2013; There is no Controller class. Additionally, we can subclass F Components
+					using the <a href="http://lazd.github.io/PseudoClass/">PsuedoClass</a> inheritance pattern.</p>
+				<h2 id="no-associations">No Associations</h2>
+				<p>In ActiveRecord we have &#x201C;associations&#x201D;. Imagine a User in our app is a member of many accounts. When we delete the user, we want to automatically
+					remove that user from all accounts it belongs to. This is trivial with ActiveRecord. However, the Mongo/Express stack is not mature enough to have abstracted
+					this behavior. We had to write the association logic manually in our server-side controllers.</p>
+				<h2 id="async">Async</h2>
+				<p>This is where Express gets fun. As part of the admin behavior, I found myself writing backend operations that run on large collections of MongoDB documents.
+					The asynchronous style of node.js lends itself perfectly to this type of operation. The <a href="https://github.com/caolan/async">async</a> library provides
+					operations that operate on collections, similar to _.each and _.map &#x2013; the difference between async and underscore is synchronicity. Async iterators may
+					operate on each member of a collection asynchronously.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/magic-technology-and-the-hogwarts-for-hackers">Magic, Technology, and the Hogwarts for Hackers</a></h2><span class="post-date">Jul 2, 2013</span></div>
+			<div class="post-content">
+				<p>I&#x2019;ve been thinking about the internet in terms of Magic. Our phones are portals in our pockets, opening a small window into another world. I like the
+					magic metaphor because it encourages me to think about the internet as a place where fantastic and wonderful things can happen. But can opening up a web browser
+					inspire the same feelings as reading about fictional magic?</p>
+				<p>Reality Check &#x2013; the internet isn&#x2019;t <em>real</em>. Code doesn&#x2019;t actually DO real things. For me, the excitement I felt when the <strong>The Subtle Knife</strong>					opened a portal into a parallel world was more thrilling than anything I&#x2019;ve felt on the internet. The Internet <em>can</em> do all sorts of amazing things,
+					but I have come to the conclusion that the price that we pay for the internet is <em>roughly</em> equal to the benefit we get. An <strong>equelibrium</strong>					of sorts. We have a fantastic library of knowledge at our fingertips, but we waste time on Facebook and buzzfeed. We have instant communication all accross
+					the world, but we end up spending more time investing in virtual relationships, and less time with friends in the real world. GPS devices can magically direct
+					us to a place we&#x2019;ve never been before, but by depending on GPS we are lost without it.</p>
+				<p>Actually, maybe this isn&#x2019;t so unlike fictional magic. In most fictitous magical worlds, the magic does enact a kind equelibrium. Think of <strong>The Lord of the Rings</strong>					&#x2013; magic is a burden that comes with a price. In <strong>The Lord of the Rings</strong>, and <strong>The Golden Compass</strong>, both trilogies are concluded
+					with the forfeiture of Magic. Even in Harry Potter, Magic is a force that is equally available to good and evil.</p>
+				<p>Pushing the metaphor further reveals a score of additional parallels between Magic and Technology. There is a currency that powers magic and a currency that
+					powers technology. After Gandalf&#x2019;s first encounter with the Balrag he was drained to the point of exaustion. Your smartphone works the same way. We study
+					magic to learn it&#x2019;s secrets. I&#x2019;m currently a student at the <a href="http://www.hackreactor.com">Hogwarts for Hackers</a>. Our efforts to become
+					more skilled magic users parallel our efforts for personal growth. We aim to harness Magic for pleasure and profit. Like the internet, <strong>The Force</strong>					from <strong>Star Wars</strong> is a great source that we tap into to manipulate and enhance our lives.</p>
+				<p>There are Factions that contrast in philosophy, design and implementation. Think of the five &#x201C;Colors&#x201D; in <strong>Magic: the Gathering</strong>.
+					Green is the magic of nature and fecundidty, while red is the magic of Mountains and fire. These factions can interact with varying levels of synergy and incompatibility.
+					Compare these colors to (for example) the functional asycronous style of node.js and the more traditional linear models of Ruby and Python.</p>
+				<p>There is one important feature of technology that is missing from magic: <em>Layers of Abstraction</em>. In web development we rely on layers of abstraction
+					to build projects so capable and advanced that they may be indistinguishable from magic to and end user. This is the distinction that differntiates magic from
+					technology. Magic is technology that we didn&#x2019;t invent &#x2013; just discovered. Once we understand magic, we forfeit magic &#x2013; and it becomes technology.</p>
+				<p>There&#x2019;s one more important parallel between magic and technology. Alladin&#x2019;s genie couldn&#x2019;t do it, neither could Dumbledor, and Gandalf may
+					have come closest of all. Magic cannot conquer death. So conclusion I&#x2019;ve come to is this: Don&#x2019;t spend your life on technology&#x2026; or magic.
+					Remeber the equelibrium, and try to be a force that leverages technology for the better.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/webrtc-concepts">WebRTC Concepts</a></h2><span class="post-date">Jun 22, 2013</span></div>
+			<div class="post-content">
+				<p>WebRTC is pretty tricky to work with right now. As of June 2013, support in Chrome and Firefox Nightly is fragmented and incomplete. The best explanation of
+					WebRTC that I have found is the <a href="http://www.w3.org/TR/webrtc/">WebRTC Spec Draft from the W3C</a>. This pedantic document is filled with jargon specific
+					to Internet Connectivity Establishment. To elucidate the spec, I put together a list of descriptions for the most fundamental concepts.</p>
+				<p>Proceed with Caution! Both Chrome and Firefox are still a long way from compliance.</p>
+				<p><strong>ICE</strong> - Protocol for Network Address Translation - <a href="http://www.ietf.org/rfc/rfc5245.txt">Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols</a>.
+					ICE agents include STUN and TURN servers.</p>
+				<p><strong>STUN</strong> - Session Traversal Utilities for NAT (STUN). Peers connect to a stun server to find their public facing addresses, AND other info on how
+					that peer may be reached fron the internet.</p>
+				<p><strong>TURN</strong> - Traversal Using Relays around NAT (TURN). Like a stun server, but can relay data from one peer to another if the clients are unable to
+					connect directly. Every TURN server is also a STUN server.</p>
+				<p><strong>NAT</strong> - Network Address Translation - When a signal passes through a router, the router may alter the port number &#x2013; effectively creating
+					a &#x201C;public facing address&#x201D;. The public address is effectively mapped to a different address behing the router.</p>
+				<p><strong>SDP</strong> - Session Description Protocol - (<a href="http://en.wikipedia.org/wiki/Session_Description_Protocol">Wikipedia</a>) - a format for describing
+					streaming media initialization and connectivity parameters.</p>
+				<p>An SDP example from <code>someRTCPeerConnection.localDescription.sdp</code> looks like this:</p>
+				<pre><code>v=0
+o=Mozilla-SIPUA-24.0a1 15165 0 IN IP4 0.0.0.0
+s=SIP Call
+t=0 0
+a=ice-ufrag:1f8009b2
+a=ice-pwd:04f106d867cbba054729ae220b5c9618
+a=fingerprint:sha-256 62:5F:18:CD:23:D3:BD:D9:C9:B4:42:BD:3B:07:2A:6A:EE:B0:06:59:6D:A3:B3:C8:E4:FA:99:B3:37:5E:56:FA
+m=audio 41438 RTP/SAVPF 109 0 8 101
+c=IN IP4 199.87.82.66
+a=rtpmap:109 opus/48000/2
+a=ptime:20
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+a=sendrecv
+a=candidate:0 1 UDP 2113667327 10.0.1.46 65468 typ host
+a=candidate:1 1 UDP 1694302207 199.87.82.66 41438 typ srflx raddr 10.0.1.46 rport 65468
+a=candidate:0 2 UDP 2113667326 10.0.1.46 57425 typ host
+a=candidate:1 2 UDP 1694302206 199.87.82.66 38208 typ srflx raddr 10.0.1.46 rport 57425
+m=application 37652 SCTP/DTLS 5000
+c=IN IP4 199.87.82.66
+a=fmtp:5000 protocol=webrtc-datachannel;streams=16
+a=sendrecv
+a=candidate:0 1 UDP 2113667327 10.0.1.46 55401 typ host
+a=candidate:1 1 UDP 1694302207 199.87.82.66 37652 typ srflx raddr 10.0.1.46 rport 55401
+a=candidate:0 2 UDP 2113667326 10.0.1.46 61947 typ host
+a=candidate:1 2 UDP 1694302206 199.87.82.66 46592 typ srflx raddr 10.0.1.46 rport 61947</code></pre>
+				<p><strong>ICE Agent</strong> - A peer trying to connect to another peer via ICE. I have also heard this term used to describe an arbitrary node in the Internet
+					Connectivity Establishment Handshake.</p>
+				<p>The following definitions borrow from the <a href="http://www.ietf.org/rfc/rfc5245.txt">IETF ICE Spec</a></p>
+				<p><strong>ICE Peer</strong> - From the perspective of one of the agents in a session, its peer is the other agent. Specifically, from the perspective of the offerer,
+					the peer is the answerer. From the perspective of the answerer, the peer is the offerer.</p>
+				<p><strong>ICE Transport Address</strong> - The combination of an IP address, port and transport protocol (such as UDP or TCP) port.</p>
+				<p><strong>ICE Candidate</strong> - A transport address that is a potential point of contact for receipt of media. An agent may have many candidate addresses &#x2013;
+					each consisting of an IP address and port number. Candidates might include:</p>
+				<ul>
+					<li>A transport address on a directly attached network interface (a &#x201C;host&#x201D; address)</li>
+					<li>A translated transport address on the public side of a NAT (a &#x201C;server reflexive&#x201D; address)</li>
+					<li>A transport address allocated from a TURN server (a &#x201C;relayed&#x201D; address)</li>
+				</ul>
+				<p>Candidates have properties &#x2013; their type (server reflexive, relayed or host), priority, foundation, and base.</p>
+				<p><strong>ICE Component</strong> - A component is a piece of a media stream requiring a single transport address; a media stream may require multiple components,
+					each of which has to work for the media stream as a whole to work. For media streams based on RTP, there are two components per media stream &#x2013; one for
+					RTP, and one for RTCP.</p>
+				<h2 id="helpful-webrtc-resources">Helpful WebRTC Resources</h2>
+				<p><a href="https://hacks.mozilla.org/2013/05/embedding-webrtc-video-chat-right-into-your-website/">Mozilla Hacks blog post mentions some of the discrepancies between chrome and Firefox</a>
+					<br>
+					<a href="https://webrtc-experiment.appspot.com/docs/rtc-datachannel-for-beginners.html">Webrtc on Chrome for Beginners</a>
+					<br>
+					<a href="http://datatracker.ietf.org/doc/draft-ietf-rtcweb-jsep/?include_text=1">General Description on IETF</a>
+					<br>
+					<a href="http://www.w3.org/TR/webrtc/">WebRTC Spec Draft from the W3C</a>
+					<br>
+					<a href="http://www.peerjs.com">Peer.js &#x2013; This WebRTC abstraction library worked really well for me</a></p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/what-is-the-content-type-http-header-for">What is the Content-Type http header for?</a></h2><span class="post-date">Jun 12, 2013</span></div>
+			<div class="post-content">
+				<p>The <code>Content-Type</code> http request header specifies the content type of the <strong>http request payload</strong>. The <code>Content-Type</code> header
+					is NOT tied to the content type of the response sent by the server.</p>
+				<p>Here&#x2019;s an example using pure JavaScript to make an asynchronous HTTP request from the browser.</p>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> joinRequest <span class="op">=</span> <span class="kw">new</span> <span class="bu">XMLHttpRequest</span>()<span class="op">;</span>  </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span>() {  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">status</span> <span class="op">===</span> <span class="dv">200</span>) {  </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&apos;JOINED!&apos;</span><span class="op">,</span> <span class="kw">this</span><span class="op">.</span><span class="at">response</span>)<span class="op">;</span> <span class="co">// this.response is NOT affected by &apos;Content-Type&apos;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">// &apos;Content-Type&apos; header tells the server what type of data we are sending</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="fu">setRequestHeader</span>(<span class="st">&apos;Content-Type&apos;</span><span class="op">,</span> <span class="st">&apos;application/json&apos;</span>)<span class="op">;</span>  </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">// &apos;Accept&apos; header tells the server what content types we can accept</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="fu">setRequestHeader</span>(<span class="st">&apos;Accept&apos;</span><span class="op">,</span> <span class="st">&apos;text/plain&apos;</span>)<span class="op">;</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="fu">open</span>(<span class="st">&apos;POST&apos;</span><span class="op">,</span> <span class="st">&apos;/join&apos;</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>  </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="fu">send</span>(<span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>({<span class="dt">name</span><span class="op">:</span><span class="st">&apos;Charles&apos;</span>}))<span class="op">;</span>  </span></code></pre></div>
+				<p>Don&#x2019;t confuse <code>Content-Type</code> with <code>dataType</code>, <code>accepts</code>, and <code>Accept</code>.</p>
+				<p><code>dataType</code>, and <code>accepts</code> are jquery.ajax options.</p>
+				<ul>
+					<li><code>dataType</code> helps jqeury correctly process the server&#x2019;s response.</li>
+					<li><code>accepts</code> tells jquery to include headers in the request that inform the server what type of data we are interested in.</li>
+					<li><code>Accept</code> is an http request header that informs the server which data types we are interested in. The value for the Accept header must be a semicolon-separated
+						list of MIME types.</li>
+				</ul>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/install-node-0-10-0-on-aws-ec2-ubuntu">Install Node 0.10.0 on AWS ec2 Ubuntu</a></h2><span class="post-date">Jun 10, 2013</span></div>
+			<div class="post-content">
+				<p>I wanted to install Node on a free AWS ec2 instance. As is so often the case with ec2, I had to jump through some hoops. Hopefully my own experiences can save
+					you some time.</p>
+				<p>As of June, 2013 Node runs perfectly on on Ubuntu 12.X LTS and 13.x. You can <code>$ apt-get install nodejs</code> but this will install node 0.6.0.</p>
+				<p>If you already installed node 0.6.0, uninstall with</p>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get remove nodejs</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If needed clean up symbolic link created when we installed node js</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> hash <span class="at">-r</span></span></code></pre></div>
+				<p>Add Chris Lea&#x2019;s PPA to the list of locations that apt-get searches, and get the package.</p>
+				<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo add-apt-repository ppa:chris-lea/node.js  </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get update  </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install build-essential  </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install nodejs  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install npm</span></code></pre></div>
+				<p>Now you can <code>npm install</code>, <code>npm update</code> etc</p>
+				<p>For the record &#x2013; I also was able to build node from source by following the steps in <a href="http://cuppster.com/2011/05/12/diy-node-js-server-on-amazon-ec2/">this excellent blog post</a>					on cuppster.com.</p>
+			</div>
+		</div>
+		<!-- pagination: navigate between pages-->
+		<div class="post post-content last">
+			<div class="pagination-nav"><a href="/posts/3" class="page-newer">...newer content</a></div>
+		</div>
+		</div>
+</body>
+
+</html>

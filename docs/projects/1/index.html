@@ -1,0 +1,296 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Projects</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item current-menu-item">Projects </a></div>
+	<div
+	class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/fluid-music">Fluid Music: A New Model for Radically Collaborative Music Production</a></h2><span class="post-date">Aug 30, 2021</span></div>
+			<div class="post-content">
+				<p>My Media Lab PhD Dissertation is available as a PDF:</p>
+				<ul>
+					<li><a href="https://web.media.mit.edu/~holbrow/project/fluid-music/Fluid-Music-Charles-Holbrow-PhD-Dissertation.pdf">Fluid Music PDF</a></li>
+					<li><a href="https://web.media.mit.edu/~holbrow/project/fluid-music/Fluid-Music-Charles-Holbrow-PhD-Dissertation-Printable.pdf">Fluid Music PDF (Printable Version)</a></li>
+				</ul>
+				<h2 id="abstract">Abstract</h2>
+				<p>Twentieth century music recording technologies were invented to capture and reproduce live music performances, but musicians and engineers used these new tools
+					to create the art of music production, something distinctly different from &#x2013; and well beyond &#x2013; simple archiving. Are current technologies poised
+					to bring about new kinds of musical experiences yet again? Could these new kinds of music be every bit as transformative and impactful as recorded music was
+					in the 20th century? Fluid Music proposes one possible trajectory by which this could happen: harnessing the internet&#x2019;s power for massive asynchronous
+					collaboration in the context of music production.</p>
+				<p>This dissertation articulates how Fluid Music proposes new tools for computational music production, prioritizes human agency via audio production paradigms
+					found in digital audio workstations, and rejects existing collaborative processes like remixing and crowdsourcing. It describes the Fluid Music framework, a
+					software toolkit which provides the foundation to build, experiment, and study Fluid Music workflows. It discusses the long-term goals of Fluid Music, including
+					the construction of a massive, open repository of music production Techniques that sound designers, producers, and composers can use to share malleable sound
+					worlds without reimplementing complex music production processes, demonstrating how design choices in the Fluid Music framework support the project&#x2019;s
+					larger objectives. One consequence of these design choices is that Fluid Music encapsulates the art of music production in the same way that recorded music
+					encapsulates the art of music performance.</p>
+				<p>The dissertation lays out next steps that are required for Fluid Music to grow into an entirely new art form which is clearly distinct from the recorded music
+					that is pervasive today.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/fluid-music-examples">Fluid Music Examples</a></h2><span class="post-date">Jan 2, 2021</span></div>
+			<div class="post-content">
+				<p>The Fluid Music framework enables users to encapsulate professional music production techniques in reusable and reconfigurable JavaScript modules.</p>
+				<p>The following examples were scripted with the JavaScript based fluid score language and produced using the Fluid Music audio server. They aim to demonstrate
+					that professional quality audio production can be automatically applied to symbolic digital scores.</p>
+				<p>The examples were generated completely in code. A GUI was only used in the final stages to trim and normalize the output of the Fluid Music audio server.</p>
+				<h2 id="example-1-processed-guitar">Example 1: Processed Guitar</h2>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/fluid-experiment.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/fluid-experiment.wav" type="audio/wav">
+				</audio>
+				<p>See the <a href="https://github.com/fluid-music/example">score repository</a> on github for the code that created this audio. To make the audio sound polished
+					I packaged the following music productions techniques using the fluid music framework:</p>
+				<ul>
+					<li>A sub-bass synthesizer adds low end to the kick drum, giving it extra <em>OOMPH!</em></li>
+					<li>Reversed and processed guitar samples from the <a href="https://www.npmjs.com/package/@fluid-music/g3rd"><code>@fluid-music/g3rd</code> npm package</a> are
+						time aligned with the musical grid.</li>
+					<li>Tempo synchronized stereo width modulation (this technique is subtly in the example, but can by much more dramatic).</li>
+					<li>A subtle reverb &#x2018;glues&#x2019; the mix together.</li>
+				</ul>
+				<p>These are just some of the kinds of productions techniques that can be encapsulated with the fluid music library. Used with care, techniques like these are a
+					big part of what make prerecorded music stand out and sound professional.</p>
+				<h2 id="example-2-trap-drums">Example 2: Trap Drums</h2>
+				<p>Trap music is built around manipulated TR-808 drum samples. The next example uses the <a href="https://www.npmjs.com/package/@fluid-music/tr-808"><code>@fluid-music/tr-808</code> npm package</a>					as source material for the drum and bass samples.</p>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/trap-002b.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/trap-002b.wav" type="audio/wav">
+				</audio>
+				<ul>
+					<li>Custom timing techniques applied to the drum samples to achieve the characteristically complex trap-style hi-hat patterns.</li>
+					<li>Micro timing adjustments shift drum samples off of the timeline grid so that the samples&#x2019; transients don&#x2019;t mask each other when they overlap.</li>
+					<li>Subtle reverb and bus compression &#x2018;glue&#x2019; the mix together.</li>
+				</ul>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/twitterb.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/twitterb.wav" type="audio/wav">
+				</audio>
+				<ul>
+					<li>This second Trap example builds on the techniques in the first one, expanding the sonic palette without duplicating effort</li>
+					<li>Side chain compression (with &#x201C;ghost kicks&#x201D;) pump one of the pad synthesizers in time with the musical rhythm</li>
+					<li>The <a href="https://www.npmjs.com/package/@fluid-music/kit"><code>@fluid-music/kit</code></a> this package works like a drum sampler preset with features like
+						sample randomization and dynamic layers.</li>
+				</ul>
+				<h2 id="example-3-seven-and-five">Example 3: Seven and Five</h2>
+				<p>In <em>Seven and Five</em> I tried to make a slightly longer composition that holds interest throughout. Additionally, I tried to make something that would be
+					infeasible or impossible to make <em>without</em> Fluid Music.</p>
+				<p>The piece is based around a MIDI delay (echo), except that each delayed copy contains mutated MIDI content. The delays are grouped in five repetitions of seven
+					notes, giving the composition its name.</p>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/seven-and-five-excerpt.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/seven-and-five-excerpt.wav" type="audio/wav">
+				</audio>
+				<p>Note that the code in the <a href="https://github.com/fluid-music/example-seven-and-five">score repository</a> is more complex that the previous examples, so
+					it&#x2019;s a more challenging starting point if you are just exploring Fluid Music for the first time.</p>
+				<ul>
+					<li>Custom techniques insert up to 70 MIDI notes per invocation.</li>
+					<li>Features the unusual 35/32 time signature</li>
+					<li>Uses computationally generated custom Technique Libraries that create the arpeggiated patterns that make up the harmonic foundation of the piece.</li>
+				</ul>
+				<h2 id="example-4-nikhil-singhs-fluid-adaptations">Example 4: Nikhil Singh&#x2019;s <em>Fluid Adaptations</em></h2>
+				<p>Composer <a href="https://nsingh1.host.dartmouth.edu/">Nikhil Singh</a> worked with the <em>Seven and Five</em> score to compose <em>Fluid Adaptations</em>.
+					His composition keeps the same harmonic material, mutates the existing timbres and adds new ones.</p>
+				<p>His score also converts the 35/32 time signature to 4/4, a change that would be difficult or impossible to do without the Fluid Music framework.</p>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/nikhil-sing.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/nikhil-sing.wav" type="audio/wav">
+				</audio>
+				<p>Read Nikhil&#x2019;s full score on GitHub at <a href="https://github.com/nikhilsinghmus/fluid-demotrapremix">nikhilsinghmus/fluid-demotrapremix</a>. By reading
+					the updated <a href="https://github.com/nikhilsinghmus/fluid-demotrapremix/blob/main/package.json">package.json</a> file, we can also see that the score adds
+					a dependency on the <a href="https://www.npmjs.com/package/@fluid-music/battery-4">Battery 4 plugin adapter</a>.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/fluid-music-beta">Fluid Music Beta Workshop</a></h2><span class="post-date">Jan 2, 2021</span></div>
+			<div class="post-content">
+				<p><a href="https://github.com/CharlesHolbrow/fluid-music">Fluid Music</a> is an extensible music composition and music production framework for Node.js, currently
+					in closed beta. (<a href="https://en.wiktionary.org/wiki/closed_beta">closed what?</a>)</p>
+				<p>If you are interested in computational or procedural music production, please consider joining in the closed beta by participating in a two-part Fluid Music
+					workshop. Fill out the <strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdbFdVLhC4xHW_ueTbPAb13HXTfJv4wUu5nX9q2VTH_k4jfQA/viewform?usp=sf_link">workshop interest form</a></strong>,
+					and you will receive a follow-up email shortly with more information.</p>
+				<p>Workshop participants will:</p>
+				<ul>
+					<li>Learn the Fluid Music API foundations</li>
+					<li>Programmatically create and render DAW sessions</li>
+					<li>Code a reusable sound design technique</li>
+					<li>Create music by sharing sound design techniques with other participants</li>
+				</ul>
+				<p>Participants will be invited to a two-part workshop:</p>
+				<ol type="1">
+					<li>Introduction &amp; Fluid Music Basics <strong>January 22 or 23, 1pm - 2:30pm</strong></li>
+					<li>Developing Custom Techniques <strong>January 24 or 25, 1pm - 2:30pm</strong></li>
+				</ol>
+				<p>Each workshop will consist of a pre-recorded tutorial video and a subsequent zoom meeting. I will also hold &#x201C;Office Hours&#x201D; to answer questions
+					and troubleshoot technical issues.</p>
+				<h2 id="what-is-fluid-music">What is Fluid Music?</h2>
+				<p>A quick overview of the <code>fluid-music</code> <code>npm</code> package:</p>
+				<iframe src="https://player.vimeo.com/video/496085866" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+				</iframe>
+				<p>An example project (note that this video is for an earlier version of Fluid Music):</p>
+				<iframe src="https://player.vimeo.com/video/426799080" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+				</iframe>
+				<h2 id="how-is-fluid-music-different-from-supercollider-csound-etc">How is Fluid Music different from SuperCollider, CSound, etc?</h2>
+				<p>There are already several code-based languages for audio design. Why do we need another one? Existing tools like CSound, SuperCollider, Max, and PD are useful
+					for live coding and for building experimental and interactive audio tools with digital primitives like Oscillators and Filters. However:</p>
+				<ul>
+					<li>
+						<p>Fluid music aims to be <strong>useful for creating music that people care about.</strong> Currently, this means that it has to complement and integrate with
+							a Digital Audio Workstation (DAW) and plugin (VST) based workflow. Fluid Music creates DAW session files as opposed to audio or MIDI files.</p>
+					</li>
+					<li>
+						<p>Fluid Music is designed around JavaScript and the <code>npm</code> ecosystem. It is made to enable <strong>reuse and sharing of sound design techniques.</strong>							If you have a favorite collection of audio samples, encapsulate them in an <code>npm</code> package, and computationally insert them into your sessions. Automate
+							sound design techniques that you use often. Publish and import them using <code>npm</code>. Create music by mixing and matching existing <code>fluid-music npm</code>							packages.</p>
+					</li>
+				</ul>
+				<h2 id="workshop-prerequisites">Workshop prerequisites</h2>
+				<p>You do need be comfortable with <a href="https://nodejs.org/en/">node.js</a> and <a href="https://www.npmjs.com/">npm</a>, and have at least a little familiarity
+					with music production. Otherwise, there are no prerequisites - I would love participants to have a range of different backgrounds! However, there are a limited
+					number of seats, so availability will depend on the level of interest.</p>
+				<p>It will helpful if you have used one of <a href="https://reaper.fm">Reaper</a> or <a href="https://www.tracktion.com/">Tracktion Waveform</a> DAWs, but you can
+					learn the basics of either one in an afternoon if needed.</p>
+				<h2 id="why-are-you-holding-the-workshops">Why are you holding the workshops?</h2>
+				<p>I&#x2019;ve been developing the Fluid Music system as part of my PhD dissertation within the Opera of the Future Group at the MIT Media Lab. The goal Fluid Music
+					system is to enable many users to create and share compatible tools and techniques, and to use those tools and techniques for producing music.</p>
+				<p>To be broadly useful, Fluid Music needs input from other software developers and music producers. So I am looking for input! I will incorporate feedback into
+					the analysis section of my dissertation (by participating, you will also be helping me graduate &#x1F64F;).</p>
+				<h2 id="how-much-time-will-it-take">How much time will it take?</h2>
+				<p>In addition to attending the workshop, plan to spend:</p>
+				<ul>
+					<li>30 minutes installing and setting up Fluid Music prior to the first workshop</li>
+					<li>30 minutes in a follow-up interview (if you agreed when filling out the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdbFdVLhC4xHW_ueTbPAb13HXTfJv4wUu5nX9q2VTH_k4jfQA/viewform?usp=sf_link">interest form</a>)</li>
+					<li>Plan to spend some time outside of the workshop coding and composing. How much time? It is flexible, and depends on how far you want to push the coding and
+						composition.</li>
+				</ul>
+				<p>Your mileage will depend on your comfort with the core tools (Node, npm, Reaper).</p>
+				<p>The fluid-music library comes with support for some free and paid VST plugins. If you want to use them, plan to spend some additional time downloading and installing
+					them (you can add support for your favorite VST plugins, but we won&#x2019;t cover this in detail during the workshop).</p>
+				<h2 id="next-steps">Next steps</h2>
+				<p>Interested in participating? Fill out the <strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSdbFdVLhC4xHW_ueTbPAb13HXTfJv4wUu5nX9q2VTH_k4jfQA/viewform?usp=sf_link">workshop interest form</a></strong>.</p>
+				<p>If you have further questions, please email me! <a href="mailto:CharlesHolbrow@gmail.com" class="email">CharlesHolbrow@gmail.com</a></p>
+				<h2 id="getting-started-tutorials">Getting Started Tutorials</h2>
+				<p>To prepare for the first workshop, follow either the video or text-based tutorial below. Choose one:</p>
+				<ul>
+					<li>Video Tutorial: <a href="https://youtu.be/1ap7N3mfd6U">YouTube</a>/<a href="https://vimeo.com/502398822">Vimeo</a></li>
+					<li>Text Based: <a href="https://github.com/CharlesHolbrow/fluid-music/blob/main/docs/getting-started.md">Getting Started Guide</a></li>
+				</ul>
+				<p>To complete the tutorial, you&#x2019;ll need to install <code>cybr</code>, the Fluid Music sound server. I&#x2019;ll email a link to the executable so you don&#x2019;t
+					need to compile it.</p>
+				<h2 id="examples">Examples</h2>
+				<ul>
+					<li><a href="https://github.com/CharlesHolbrow/fluid-music-kit/">fluid-music/kit</a></li>
+					<li><a href="https://github.com/fluid-music/rides">fluid-music/rides</a></li>
+					<li><a href="https://github.com/fluid-music/g3rd">fluid-music/g3rd</a></li>
+					<li><a href="https://github.com/fluid-music/example">fluid-music-example</a></li>
+					<li><a href="https://github.com/charlesholbrow/fluid-music-utils">fluid music utils (<code>transcribe-chords</code>, <code>afactory</code>)</a></li>
+				</ul>
+				<h2 id="additional-resources">Additional Resources</h2>
+				<p>You can get started with fluid music by studying the following resources, but it will be much more efficient to learn this material by participating in the workshops.</p>
+				<ul>
+					<li><a href="https://github.com/CharlesHolbrow/fluid-music">Fluid Music on GitHub</a></li>
+					<li><a href="https://fluid-music.github.io/modules.html">API Docs</a></li>
+					<li><a href="https://github.com/CharlesHolbrow/fluid-music/blob/main/docs/about.md">About Fluid Music</a></li>
+					<li><a href="https://gitter.im/fluid-music/community">Gitter (Fluid Music Chat)</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/media-timelines">Media Timelines</a></h2><span class="post-date">Dec 1, 2019</span></div>
+			<div class="post-content">
+				<p>The world wide web was conceived 30 years ago. What will internet media look like after another 30 years? Should we expect it to be mostly the same? Or will
+					it evolve rapidly in the coming years?</p>
+				<p>To understand these questions, I have been studying the evolution of other media technologies. In the process I am working to identifying ways that they are
+					both similar to, and different from the internet.</p>
+				<p><strong><a href="https://web.media.mit.edu/~holbrow/timelines/">Media Timelines</a></strong> packages this research in an interactive application that makes
+					it easy to visualize the evolution of sound recording, film, internet, and other media technologies.</p>
+				<p>
+					<a href="https://web.media.mit.edu/~holbrow/timelines/"><img src="/project/media-timelines/media-timelines.gif"></a>
+				</p>
+				<p>By employing a <strong>contextual zoom</strong> interface, Media Timelines makes it possible to effortlessly zoom from a high level historical overview of 20th
+					century music and technology, to a detailed timeline showing the exact day that a music album was released. The interface exposes a growing database of information,
+					details, and historical anecdotes on art, music, media, and history.</p>
+				<p>This technique for interacting with historical media content led to some surprising conclusions about the current state of internet media, and some interesting
+					hypotheses about the future, both of which will form the foundation for my PhD dissertation.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/cybernetic-media">Cybernetic Media Production</a></h2><span class="post-date">Feb 1, 2019</span></div>
+			<div class="post-content">
+				<p>In the early stages of my PhD, I was working on tools for creating, testing and iterating on augmented reality music videos. I called this system <strong>Cybernetic Media Production</strong>.
+					Before discarding the idea, I developed a custom augmented reality framework. Here it is in action:</p>
+				<iframe title="vimeo-player" src="https://player.vimeo.com/video/305900081" width="640" height="360" frameborder="0" allowfullscreen>
+				</iframe>
+				<p>This is how it works:</p>
+				<ul>
+					<li>I mounted an <a href="https://www.vive.com/us/accessory/vive-tracker/">HTC Vive &#x201C;Puck&#x201D; Tracker</a> on a DSLR camera</li>
+					<li>I wrote a <a href="https://github.com/CharlesHolbrow/vive-osc-sender">utility</a> that uses Valve&#x2019;s OpenVR C++ library to access the HTC Vive tracking
+						data</li>
+					<li>I created a 3D scene using the open source tools in <a href="https://openframeworks.cc/">OpenFrameworks</a>.</li>
+					<li>Using the tracking data from the camera to I position a virtual camera in the 3D Space</li>
+					<li>Using the tracking data from the HTC Vive controller, I put virtual objects into the scene, and layer them over the live feed from the DSLR</li>
+				</ul>
+				<p>During development, I discovered that it is the coincidence of many small details that makes the AR illusion effective. The latency of the video feed has to
+					be perfectly matched with the latency of the tracking data. The field of view of the virtual camera needs to be carefully calibrated with the &#x201C;real&#x201D;
+					camera. The virtual objects need to be smooth and I found that it was important to optimize the rendering pipeline. Efficiently rendering pretty, smooth lines
+					in 3D is surprisingly difficult.</p>
+				<p>The idea behind <strong>Cybernetic Media Production</strong> was to procedurally create many different versions of a music video, and then A/B test the audio
+					and video content the same way that big companies like Amazon and Microsoft test different versions of their websites. Microsoft was able to use A/B testing
+					to <a href="https://doi.org/10.1145/2487575.2488217">increase advertising revenue by hundreds of millions of dollars</a>. At the time, I was thinking <strong>&#x201C;shouldn&#x2019;t musicians be able to do the same thing?&#x201D;</strong></p>
+				<p>I believe that Cybernetic Media Production has commercial value. I also believe that some version of this practice is likely inevitable. The technology isn&#x2019;t
+					quite there to make it happen yet.</p>
+				<p>Initially, I intended to spend my PhD developing the technology to make Music Video A/B testing a reality. For every creative or ethical question I answered,
+					another obstacle emerged. What kinds of artistic parameters should be A/B tested? Will A/B tested content really offer new creative opportunities? The major
+					web companies do a good job of measuring and manipulating the public for profit, but what are the <em>creative</em> advantages to thinking about artwork the
+					way that the Big Four think about web pages?</p>
+				<p>With guidance from my advisor and dissertation committee, questions like these led me to reconsider. Eventually I did move my dissertation work away from what
+					you might call <strong>the Amazon of music production</strong> toward the development of infrastructure to support <strong>the Wikipedia of music production</strong>.
+					Ask me about this journey if your are curious &#x2013; It&#x2019;s an interesting story, and it speaks to unique characteristics within the MIT Media Lab&#x2019;s
+					unconventional academic environment.</p>
+				<p>However, I was able to re-purpose the my AR framework for something Joyful. In the video below, the projections are entirely created by members of the audience
+					who are manipulating the 3D Vive controllers in real time.</p>
+				<iframe title="vimeo-player" src="https://player.vimeo.com/video/366604775" width="640" height="360" frameborder="0" allowfullscreen>
+				</iframe>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/arts-at-ml">Arts@ML</a></h2><span class="post-date">Nov 28, 2017</span></div>
+			<div class="post-content">
+				<iframe src="https://player.vimeo.com/video/246193416" width="640" height="360" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen>
+				</iframe>
+				<p>This internet connected piano visualizer was made in one day as part of the <em>Arts@ML</em> Media Lab class. The project was the basis for a subsequent algorithmic
+					EDM composition performed at a 99F event at the Media Lab.</p>
+			</div>
+		</div>
+		<!-- pagination: navigate between pages-->
+		<div class="post post-content last">
+			<div class="pagination-nav"><a href="/projects/2" class="page-older">older content...</a></div>
+		</div>
+		</div>
+</body>
+
+</html>

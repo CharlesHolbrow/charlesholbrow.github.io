@@ -1,0 +1,122 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Calculate the Nullspace of a Matrix</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/calculate-the-nullspace-of-a-matrix">Calculate the Nullspace of a Matrix</a></h2><span class="post-date">Dec 17, 2015</span></div>
+			<div class="post-content">
+				<p>We want to find the nullspace of <span class="math inline">\(A\)</span></p>
+				<p><span class="math display">\[\begin{equation}
+A = 
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 2 &amp; 3 &amp; 4 \\
+4 &amp; 3 &amp; 2 &amp; 1
+\end{bmatrix}
+\end{equation}\]</span></p>
+				<p><strong><span class="math inline">\(A\)</span> and <span class="math inline">\(U\)</span> have the same nullspace.</strong> Elimination brings us to <span class="math inline">\(U\)</span></p>
+				<p><span class="math display">\[\begin{equation*}
+A
+\implies
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; 1 &amp; 2 &amp; 3 \\
+0 &amp; -1 &amp; -2 &amp; -3 
+\end{bmatrix}
+\implies
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; 1 &amp; 2 &amp; 3 \\
+0 &amp; 0 &amp; 0 &amp; 0 
+\end{bmatrix}
+=U
+\end{equation*}\]</span></p>
+				<p>We identify our <em>pivot columns</em> and our <em>free colums</em>. The pivot columns, <span class="math inline">\(x_1\)</span>, and <span class="math inline">\(x_2\)</span>					contain our pivots. The other columns, <span class="math inline">\(x_3\)</span> and <span class="math inline">\(x_4\)</span>, are free. Now we have two choices:
+					<em>back subsitution</em>, and solving by <em>row reduced echelon form</em>.</p>
+				<h2 id="back-subsitution">Back Subsitution</h2>
+				<p>For each <em>free</em> column, <span class="math inline">\(x_n\)</span>:</p>
+				<ol type="1">
+					<li>Set that col to 1</li>
+					<li>Set all the other free columns to 0</li>
+					<li>Solve all equations for 0 with back subsitution</li>
+				</ol>
+				<p>The upper triangular matrix above, <span class="math inline">\(U\)</span>, becomes:</p>
+				<p><span class="math display">\[\begin{align}
+x_1 &amp;+&amp; x_2 &amp;+&amp; x_3 &amp;+&amp; x_4 &amp;= 0 \\
+     &amp;&amp; x_2 &amp;+&amp; 2x_3 &amp;+&amp; 3x_4 &amp;= 0 \\
+     &amp;&amp; &amp;&amp; &amp;&amp; 0 &amp;= 0
+\end{align}\]</span></p>
+				<p>Do back subsitution with <span class="math inline">\(x_3 = 1\)</span> and <span class="math inline">\(x_4 = 0\)</span>:</p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= x_2 + 2  &amp;\implies&amp; x_2 = -2 \\
+0 &amp;= x_1 -2 + 1 &amp;\implies&amp; x_1 = 1
+\end{align}\]</span></p>
+				<p><span class="math display">\[\begin{equation*}
+A \begin{bmatrix} 1 \\ -2 \\ 1 \\ 0\end{bmatrix} = 0
+\end{equation*}\]</span></p>
+				<p>Do back subsitution with <span class="math inline">\(x_3 = 0\)</span> and <span class="math inline">\(x_4 = 1\)</span>:</p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= x_2 + 3  &amp;\implies&amp; x_2 = -3 \\
+0 &amp;= x_1 -3 + 1 &amp;\implies&amp; x_1 = 2
+\end{align}\]</span></p>
+				<p><span class="math display">\[\begin{equation*}
+A 
+\begin{bmatrix} 2 \\ -3 \\ 0 \\ 1
+\end{bmatrix} 
+= 0
+\end{equation*}\]</span></p>
+				<p>One way to write the complete solution:</p>
+				<p><span class="math display">\[\begin{equation*}
+x_3
+\begin{bmatrix} 1 \\ -2 \\ 1 \\ 0
+\end{bmatrix} 
++ x_4
+\begin{bmatrix} 2 \\ -3 \\ 0 \\ 1
+\end{bmatrix} =
+\begin{bmatrix} x_3 + 2x_4 \\ -2x_3 - 3x_4 \\ x_3 \\ x_4
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<h2 id="row-reduced-echelon-form">Row Reduced Echelon Form</h2>
+				<p>However, it is quicker to &#x201C;complete&#x201D; elimination, and find the solution from rref. <strong><span class="math inline">\(A\)</span>, <span class="math inline">\(U\)</span>, and <span class="math inline">\(R\)</span> have the same nullspace.</strong>					Our example matrix, <span class="math inline">\(A\)</span>, is very close to rref already (the pivots are already 1).</p>
+				<p><span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; 1 &amp; 2 &amp; 3 \\
+0 &amp; 0 &amp; 0 &amp; 0 
+\end{bmatrix}
+\implies
+\begin{bmatrix}
+1 &amp; 0 &amp; -1 &amp; -2 \\
+0 &amp; 1 &amp; 2 &amp; 3 \\
+0 &amp; 0 &amp; 0 &amp; 0 
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<p>Notice how if we set <span class="math inline">\(x_3 = 1\)</span> and <span class="math inline">\(x_4 = 0\)</span> we can read the values <span class="math inline">\(x_1\)</span>					and <span class="math inline">\(x_2\)</span> from the third column (if we reverse the sign)</p>
+				<p><span class="math inline">\(A \begin{bmatrix} 1 \\ -2 \\ 1 \\ 0\end{bmatrix} = 0\)</span></p>
+				<p>You <strong>cannot</strong> do back subsitution on a matrix in rref. This yields incorrect results.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

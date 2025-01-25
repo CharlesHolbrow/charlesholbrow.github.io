@@ -1,0 +1,71 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Tempic Integrations</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/tempic-integrations">Tempic Integrations</a></h2><span class="post-date">Oct 29, 2016</span></div>
+			<div class="post-content">
+				<p>Tempic Integrations is a musical study that experiments with the use of multiple simultaneous <strong>tempi</strong> (the plural of tempo) in a musical composition.
+					While Listening to the composition below:</p>
+				<ul>
+					<li>Can you hear the parallel musical tempi as they accelerate and decelerate relative to each other?</li>
+					<li>Can you hear when the parallel musical tempi de-synchronize and re-synchronize?</li>
+				</ul>
+				<audio label="Tempic Integrations" controls="true" src="/media/CharlesHolbrow-TempicIntegrations.mp3">
+					Your Browser Does not Support the Audio Element
+				</audio>
+				<ul>
+					<li>How can we design these tempo changes so the layers synchronize at defined musical moments? (<a href="/post/creating-tempic-integrations/">Hint: calculus</a>)</li>
+					<li>How can we use this process musically?</li>
+				</ul>
+				<h3 id="motivation">Motivation</h3>
+				<p>Consider the factors that make a musical instrument <em>expressive</em>. The gold standard is the human voice. Can any other instrument be as expressive as the
+					human voice? Probably not, though some may come close. Other instruments are still useful because they <em>extend</em> our capabilities.</p>
+				<figure>
+					<img src="/project/tempic-integrations/basic-tempo-transition.png" alt="Example of a simple polytempic accelerando">
+					<figcaption aria-hidden="true">Example of a simple polytempic accelerando</figcaption>
+				</figure>
+				<p>This project explores a particular way of extending our sonic palette. It uses integral calculus to unlock a class of previously inaccessible rhythmic patterns.
+					Specifically it shows how simultaneous musical tempi can continuously accelerate and decelerate relative to each other while coming in and out of phase at defined
+					musical points as shown in the image above.</p>
+				<p>The project had three phases:</p>
+				<ol type="1">
+					<li>Design of a Mathematical algorithm for computing continuous tempo curves required for the <strong>polytempic accelerando</strong> shown in the image above.</li>
+					<li>Implementation of Python routines and development of work flow for generating, auditioning, and editing the patterns in a Digital Audio Workstation.</li>
+					<li>Composition of musical piece using algorithm implementation.</li>
+				</ol>
+				<p>While listening to the composition, listen for the two melodic patterns:</p>
+				<ul>
+					<li>Both patterns play the same melody, one octave apart</li>
+					<li>At the start of the piece both patterns play together at the same tempo, synchronized with each other, <em>and</em> with the kick drum.</li>
+					<li>Both patterns accelerate to 1.5 times the original tempo. However, they accelerate at slightly different rates, so they over the course of the piece the go
+						out of phase with each other</li>
+					<li>At 0:57 the two parts re-synchronize with each other and with the drums.</li>
+				</ul>
+				<p>For a detailed explanation of the background and mathematics (and a little bit of music history) read my blog post about <a href="/post/creating-tempic-integrations/">Creating Tempic Integrations</a>.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

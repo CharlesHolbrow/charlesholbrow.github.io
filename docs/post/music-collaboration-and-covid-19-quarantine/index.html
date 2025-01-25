@@ -1,0 +1,248 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Music Collaboration and COVID-19 Quarantine</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/music-collaboration-and-covid-19-quarantine">Music Collaboration and COVID-19 Quarantine</a></h2><span class="post-date">Mar 22, 2020</span></div>
+			<div class="post-content">
+				<p><strong>Updates</strong>:</p>
+				<ul>
+					<li><strong>June 23, 2021:</strong> added sub.live and faders.io</li>
+					<li><strong>August 12, 2021:</strong> sub.live now available for MacOS and Windows</li>
+				</ul>
+				<p>I&#x2019;ve been getting a lot of questions about collaborative online music in the age of Covid-19. There are lots of performance and DJ streams on Twitch and
+					Youtube. What are the options for collaborating on <em>making</em> music. What is the lowest-latency way to play music together over the internet? Can my choir
+					rehearse over zoom? How can I collaborate on recordings with other musicians while we are self-isolating? What follows is a quick brain dump that I hope will
+					be helpful.</p>
+				<p><strong>NOTE:</strong> The tweet-sized description of my PhD work at the MIT Media lab is: &#x201C;Understanding the long-term potential of the internet, AI,
+					and streaming technologies for music through experimentation&#x201D; and I have way more to say about this than almost anyone wants to hear. I&#x2019;ll try
+					to keep this pragmatic.</p>
+				<h3 id="the-short-answer">The Short Answer</h3>
+				<p>No one wants to hear the short answer, but: Real-time (synchronous) internet-enabled music collaboration will never seriously compete with playing music with
+					other people in the same room. Video conferencing options like Zoom and Google Hangouts have a combination of latency and quality issues, and will be more frustrating
+					than rewarding. When making music together online, I recommend non-real-time (asynchronous or semi-synchronous) approaches.</p>
+				<p>Below I list a variety of collaborative technologies for creating music on the internet. I&#x2019;ve <a href="http://www.aes.org/e-lib/browse.cfm?elib=20316">written about</a>					this in the past, but FWIW, the technologies outlined below are primitive, and are (in their own different ways) attempting to squeeze historical ideas and
+					formats into the online medium. We haven&#x2019;t yet figured a way to create music collaboratively on the internet where the advantages outweigh the disadvantages.</p>
+				<p>However because many of us are self isolating right now, playing music in the same room just isn&#x2019;t possible&#x2026;. So now is a good time to look at
+					some of the current options for online music collaboration.</p>
+				<h3 id="realtime-internet-enabled-collaboration">Realtime Internet Enabled Collaboration</h3>
+				<p>If you really want to shoehorn the experience of making music together in real-time into the internet, I recommend trying one of the following native applications
+					which are designed to minimize latency.</p>
+				<ul>
+					<li>JackTrip <a href="https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/">(Mac, Linux)</a>, <a href="https://ccrma.stanford.edu/software/jacktrip/windows/index.html">(Windows)</a>.
+						Open source, free software for creating reasonably low-latency audio connections over the internet. It also scales to multiple concurrent users, as bandwidth
+						allows.</li>
+					<li><a href="https://www.ianhowellcountertenor.com/soundjack-bootcamp">SoundJack</a> I haven&#x2019;t used this, but it looks slightly more user friendly than JackTrip.</li>
+					<li><a href="https://sub.live/">sub.live</a> prioritizes low latency audio, but also includes video support. As of August 2021 it is available for Mac and Windows.</li>
+				</ul>
+				<p>I would go with one of the options above if everyone in your ensemble knows what an IP address is, and is ready to set up port-forwarding if needed. SoundJack
+					has some nice tutorials and documentation for network configuration. JackTrip requires that one user run a server, which will be easier if that user is familiar
+					with a command line, is familiar with <a href="https://jackaudio.org/">Jack Audio</a>, and has some knowledge of computer networking. JackTrip comes from Stanford&#x2019;s
+					Center for Computer Research in Music and Acoustics, which published a <a href="https://ccrma.stanford.edu/groups/soundwire/research/slsq/">write-up</a> of
+					one of their early experiments, containing some useful references.</p>
+				<p>Note that all real-time options will have latency. Your mileage will vary. If your ensemble is small, everyone is in the same geographic region, and everyone
+					has a fast internet connection you might just get usable results.</p>
+				<p>A quick note about latency: Assume our latency threshold is 20 milliseconds. Anything higher than this and your ability to play together begins to suffer. Light
+					travels approximately 3728 miles in 20 milliseconds (in a vacuum). Absolute best case scenario for round-trip audio is 1864 miles or NYC to Wyoming (but not
+					across the Atlantic). Practical results will rarely be better than half that, and typically be much, much worse, due to network congestion, bandwidth limitations,
+					IP throttling, the fact that light travels slower in the optical cables and internet hardware that it does in a vacuum, and other factors.</p>
+				<p><a href="https://mp.ucpress.edu/content/24/1/49.full.pdf+html">Experiments show</a> that musicians can perform together acceptably with latency as high as 50
+					milliseconds. However, even in the unusual situation when you have a low-ish latency connection to your fellow musicians, there are other difficulties associated
+					with playing music together over the internet in real-time. Think of how difficult it is just to get a Zoom meeting in the office going, with projectors, calls,
+					constantly misbehaving in creative new ways. Now imagine that every participant brings with them the complexity of a small home studio. Suddenly trying to coordinate
+					a performance becomes much harder.</p>
+				<h3 id="almost-realtime-with-optional-zoom-video-share">Almost realtime (with optional Zoom video share)</h3>
+				<p>If your use-case can tolerate approximately 100 milliseconds of latency, and you want lossless audio, the subscription service by <a href="https://audiomovers.com/">Audio Movers</a>					might be what you need. Their service uses an audio workstation plugin, and can stream to a sharable browser URL. The video below shows how to synchronize a
+					web stream to a Zoom call for Audio+Video.</p>
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/OmJUOkf0kE4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen>
+				</iframe>
+				<p>This might be useful in professional situations as discussed in the video. However it will probably not be suitable for realtime jamming or distributed performance.</p>
+				<h3 id="non-internet-network-audio">Non-Internet Network Audio</h3>
+				<p>If you are lucky enough to be on the same physical network as your musical collaborators then JackTrip might work well. However, depending on your network infrastructure,
+					you can probably get even better results with professional audio-over-ethernet options such as AVB (Supported by modern Motu interfaces like the <a href="https://motu.com/products/avb/ultralite-avb">UltraLightAVB</a>)
+					or Dante (supported by modern Focusrite audio interfaces like the <a href="https://pro.focusrite.com/category/audiooverip/item/rednet-x2p">REDNET2XP</a>). These
+					protocols can deliver high channel counts at sub-millisecond latency over a local network. For Dante or AVB, ensure compatibility with your network hardware
+					before buying audio interfaces.</p>
+				<h3 id="google-docs-for-audio">&#x201C;Google Docs for Audio&#x201D;</h3>
+				<p>A number of startups are developing tools that add cloud enabled collaboration to the form factor of conventional digital audio workstations. These add real-time
+					remote collaboration to a digital audio workstation, meaning that users record and edit audio at the same time similar to how users can edit text collaboratively
+					in Google Docs. Note that the real-time interaction is for composing, editing, or recording music &#x2013; these are not helpful if you want to <em>play</em>					music together in real-time.</p>
+				<ul>
+					<li><a href="https://www.soundtrap.com/">Soundtrap</a></li>
+					<li><a href="https://www.ohmstudio.com/">Ohm Studio</a></li>
+					<li><a href="https://www.bandlab.com/">BandLab</a></li>
+					<li><a href="https://ampedstudio.com/">Amped Studio</a></li>
+					<li><a href="https://soundation.com/">Soundation</a></li>
+					<li><a href="https://www.faders.io/">faders.io</a> - This is a brand new option which is as of Summer 2021. In beta</li>
+				</ul>
+				<p>All of these are less mature and less capable than native digital audio workstations. Soundtrap was purchased by Spotify in 2017, and so it has a little more
+					support than some of the others. It is also browser based, which means its sessions are easy to share, but limits its capabilities in other ways. These tend
+					to be aimed at podcast creators, and beat makers, but you can use them for other kinds of music as well.</p>
+				<h3 id="dropbox-for-digital-audio-workstations">&#x201C;Dropbox for Digital Audio Workstations&#x201D;</h3>
+				<p>If you are accustomed to working with a conventional digital audio workstation like ProTools, Ableton Live, or Reaper, one easy option is to save your session
+					files along with the accompanying audio files in a Dropbox folder, and then pass them off to your band mates so that they can record over them. Unlike the options
+					above, only one user will be able to record or edit at a time.</p>
+				<p>Dropbox works okay for this purpose, but I would also recommend taking a look at these variants, which are specially designed for working with digital audio
+					sessions. These include extra features like dedicated audio session version control and track preview. These can be helpful for sharing audio sessions between
+					users.</p>
+				<ul>
+					<li><a href="https://splice.com/">Splice.com</a></li>
+					<li><a href="https://blend.io/">Blend.io</a></li>
+				</ul>
+				<p>These will try to sell you sample packs and drum loops. If you want to make music with samples or loops, this might even be useful.</p>
+				<h3 id="mobile-apps">Mobile apps</h3>
+				<p>These come and go so quickly it is hard to keep up! Here are just a few.</p>
+				<p>There are a million different mobile apps for creating videos. Want to make a video like the one that recently went viral by the Chino Valley Unified School
+					District in California? Google <strong>video collage</strong>, and there are numerous apps that will help.</p>
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/k3_crTZ0NHg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen>
+				</iframe>
+				<p><a href="https://apps.apple.com/us/app/acapella-from-picplaypost/id924635678">Acapella</a> is one iOS app that cam make video collages, and includes built-in
+					support for remote collaboration. Here&#x2019;s a self-isolation themed music video made with Acapella.</p>
+				<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/B9zs2zrg0qy/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="12"
+				style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+					<div style="padding:16px;">
+						<a href="https://www.instagram.com/p/B9zs2zrg0qy/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;"
+						target="_blank">
+							<div style=" display: flex; flex-direction: row; align-items: center;">
+								<div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;">
+
+								</div>
+								<div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;">
+									<div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;">
+
+									</div>
+									<div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;">
+
+									</div>
+								</div>
+							</div>
+							<div style="padding: 19% 0;">
+
+							</div>
+							<div style="display:block; height:50px; margin:0 auto 12px; width:50px;">
+								<svg width="50px" height="50px" viewbox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<g transform="translate(-511.000000, -20.000000)" fill="#000000">
+											<g>
+												<path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"
+												/>
+											</g>
+										</g>
+									</g>
+								</svg>
+							</div>
+							<div style="padding-top: 8px;">
+								<div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">
+									View this post on Instagram
+								</div>
+							</div>
+							<div style="padding: 12.5% 0;">
+
+							</div>
+							<div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;">
+								<div>
+									<div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);">
+
+									</div>
+									<div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;">
+
+									</div>
+									<div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);">
+
+									</div>
+								</div>
+								<div style="margin-left: 8px;">
+									<div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;">
+
+									</div>
+									<div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)">
+
+									</div>
+								</div>
+								<div style="margin-left: auto;">
+									<div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);">
+
+									</div>
+									<div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);">
+
+									</div>
+									<div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);">
+
+									</div>
+								</div>
+							</div>
+							<div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;">
+								<div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;">
+
+								</div>
+								<div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;">
+
+								</div>
+							</div>
+						</a>
+						<p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">
+							<a href="https://www.instagram.com/p/B9zs2zrg0qy/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;"
+							target="_blank">A post shared by AcapellaApp by Mixcord (<span class="citation" data-cites="acapellaapp">@acapellaapp</span>)</a> on
+							<time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;"
+							datetime="2020-03-16T20:25:51+00:00">Mar 16, 2020 at 1:25pm PDT</time>
+						</p>
+					</div>
+				</blockquote>
+				<script async src="//www.instagram.com/embed.js"></script>
+				<p><a href="https://www.tiktok.com/">TikTok</a> is often used with video editor apps (like Acapella), but it also includes features for asynchronous collaboration
+					called &#x201C;duets&#x201D; and &#x201C;reactions&#x201D; which are pretty self explanatory. If you know of a nice example of a musical TikTok Duet, please
+					send me a link, and I&#x2019;ll embed it.</p>
+				<p><a href="https://www.smule.com/">Smule</a>&#x2019;s eponymous mobile app is specifically made to create karaoke style videos collaboratively. It includes a RockBand
+					style vocal pitch display, supports remote collaborations, and can create video collages.</p>
+				<h3 id="semi-real-time-loop-based-jamming">Semi Real-Time Loop Based Jamming</h3>
+				<p>This final category of apps is for jamming with people in almost-real time. Instead of trying to minimize latency, these <em>increase</em> latency to a musical
+					duration in measures. They work kind of like playing with a looper, except that instead of layering over yourself, you are layering over what other musicians
+					played a few bars ago.</p>
+				<ul>
+					<li><a href="https://www.cockos.com/ninjam/">Ninjam</a> is free and open source. It is designed to be used with the commercial, but very affordable DAW, <a href="https://reaper.fm">Reaper</a></li>
+					<li><a href="https://jammr.net/">Jammr</a> is a commercial version of the same concept. Might be slightly easier to setup than Ninjam, but for most purposes, I
+						recommend Ninjam</li>
+					<li><a href="https://endlesss.fm/">Endless</a> is a mobile app that supports semi real-time beat making, and can also sync with a MacOS desktop app.</li>
+				</ul>
+				<p>If you are familiar with (or interested in) algorithmic music or code-based composition, there are also tools for &#x201C;jamming&#x201D; semi real-time with
+					code. The <a href="https://tidalcycles.org/index.php/Welcome">TidalCycles</a> software package supports <a href="https://tidalcycles.org/index.php/Multi-user_Tidal">several different collaborative paradigms</a>					including shared editors for a google-docs like experience capable of generating MIDI messages with code (thanks to <a href="https://manaswimishra.com/">Manaswi Mishra</a>					for the tip).</p>
+				<h3 id="latency-tolerant-music">Latency Tolerant Music</h3>
+				<p>Music and compositions that do not depend on precise shared rhythm can be tolerant to latent or distributed interaction. Playing this kind of music is one way
+					to circumvent some (but not all) of the obstacles introduced by video conferencing. I participated in <a href="https://paulineoliveros.us/">Pauline Oliveros&#x2019;</a>					&#x201C;World Wide Tuning Meditation&#x201D; via zoom, and while I wasn&#x2019;t expecting to enjoy it, I was surprised. A <a href="https://www.nytimes.com/2020/04/03/arts/music/music-meditation-zoom-coronavirus.html">review in the New York Times</a>					explains how the piece works.</p>
+				<p>For technology centric people (such as myself) it&#x2019;s worth recognizing that what makes this kind of music work is not the technology: it is the community
+					leadership of the organizers.</p>
+				<h2 id="final-thoughts">Final Thoughts</h2>
+				<p>There&#x2019;s lots of historical examples, and a million apps I left out. If you think of an important category or example that I missed, please feel free to
+					reach out and I&#x2019;ll add it to the list. If you don&#x2019;t know me personally, try @<a href="https://twitter.com/CharlesHolbrow">CharlesHolbrow</a> (or
+					email, etc.)</p>
+				<p>COVID-19 has and will continue to be challenging for musicians. Performing musicians (who don&#x2019;t typically have extra money laying around) suddenly had
+					their tours cancelled and their income eliminated. Venues are closing. If you are lucky enough to be self-isolating with loved ones or family members, I recommend
+					making music with them. Also please reach out to friends and family who may be more isolated.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

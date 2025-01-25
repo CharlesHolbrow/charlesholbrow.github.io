@@ -1,0 +1,78 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Useful, Welcoming Software</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/useful-welcoming-software">Useful, Welcoming Software</a></h2><span class="post-date">Dec 22, 2020</span></div>
+			<div class="post-content">
+				<p><strong>Useful, Welcoming Software</strong> is a conceptual model for describing software, and articulating design goals. It is built around two questions:</p>
+				<ol type="1">
+					<li>What is this software useful for?</li>
+					<li>Who is this software welcoming to?</li>
+				</ol>
+				<p>Avid Technologies <a href="https://www.avid.com/pro-tools">Pro Tools</a> and Ableton <a href="https://www.ableton.com/en/live/">Live</a> are useful for producing
+					music. Ableton Live is useful simply because a lot of producers choose to &#x201C;use&#x201D; it for aesthetic and practical reasons. Pro Tools is similarly
+					useful because it is still a core component of commercial music production.</p>
+				<p>However, Live and Pro Tools are &#x201C;welcoming&#x201D; to a very narrow user base, because both are expensive, closed source, and only available under restrictive
+					licenses. You cannot legally share your copy of Ableton Live with a friend. Are you allowed to run a copy of Pro Tools on a web server as part of an generative
+					interactive streaming audio exhibit? I do not know, because Pro Tools&#x2019; legal user rights are buried in a <a href="https://www.avid.com/legal/end-user-license-terms-for-avid-software">240 page End User License Agreement</a>					(as of December 2020). Pro Tools is probably only welcoming to affluent audio engineers and producers with professional ambitions.</p>
+				<p>In the context of <strong>Useful, Welcoming Software</strong>, &#x201C;useful,&#x201D; and &#x201C;welcoming&#x201D; are intended to have somewhat more specific
+					meaning than in everyday conversation.</p>
+				<p>You can think about these questions as aspirational design goals:</p>
+				<ol type="1">
+					<li>What do we <em>want</em> this software useful for?</li>
+					<li>Who do we <em>want</em> this software to be welcoming to?</li>
+				</ol>
+				<p>Here&#x2019;s an example from <a href="https://github.com/CharlesHolbrow/fluid-music">Fluid Music</a>, which is software I am writing for my dissertation.</p>
+				<p>Fluid Music aims to be:</p>
+				<ol type="1">
+					<li>Useful for creating music that people care about</li>
+					<li>Welcoming to developers with a wide variety of backgrounds</li>
+				</ol>
+				<p>Within the <strong>Useful, Welcoming Software</strong> model, software is always useful <em>for</em> some purpose. Conceptually, this is more useful for thinking
+					about and articulating software design goals.</p>
+				<p>Similarly, within the <strong>Useful, Welcoming Software</strong> model, software is always welcoming <em>to</em> some audience.</p>
+				<p>The word &#x201C;welcoming&#x201D; is intended to express the intention of going beyond &#x201C;access&#x201D;. Not only can you access welcoming software, but
+					in the ideal case, it <em>invites</em> you to use it. A high cost, a difficult user interface, or a restrictive user license are all antithetical to welcoming
+					software. Free, well-documented software with a permissive license, and an accessible user interface, is more &#x201C;welcoming.&#x201D; However, care should
+					still be taken to consider <em>who</em> is it welcoming to. What language is the software written in? What spoken languages are present in the documentation?
+					Does the website or documentation use <a href="https://www.recurse.com/social-rules#no-subtle-isms">subtle -isms</a>? What assumptions does the documentation
+					make about the reader&#x2019;s background and areas of expertise?</p>
+				<p>I found that being intentional about what I <em>want</em> my software to do, and <em>who</em> I want to be able to do it helped me make consistent design choices.
+					It also helped me to articulate why I made the design choices I did.</p>
+				<p>It is is a simple model with modest ambitions. Note that while it may help identify or articulate design goals, this is just a first step. You still need to
+					evaluate the implications of the software you are building. For example&#x2026;</p>
+				<p>Amazon Rekognition aims to be:</p>
+				<ol type="1">
+					<li>Useful for identifying and characterizing individuals using an image of their face</li>
+					<li>Welcoming to governments, NGOs, and businesses</li>
+				</ol>
+				<p>In an ideal world this would alert you to the fact that there are some serious ethical concerns with the software Amazon is creating. But if you are not familiar
+					with the literature on facial recognition software, that might not be obvious. Know that merely identifying and articulating the goals of software you are working
+					on is not a substitute for understanding and evaluating them.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - What is the Content-Type http header for?</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/what-is-the-content-type-http-header-for">What is the Content-Type http header for?</a></h2><span class="post-date">Jun 12, 2013</span></div>
+			<div class="post-content">
+				<p>The <code>Content-Type</code> http request header specifies the content type of the <strong>http request payload</strong>. The <code>Content-Type</code> header
+					is NOT tied to the content type of the response sent by the server.</p>
+				<p>Here&#x2019;s an example using pure JavaScript to make an asynchronous HTTP request from the browser.</p>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> joinRequest <span class="op">=</span> <span class="kw">new</span> <span class="bu">XMLHttpRequest</span>()<span class="op">;</span>  </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span>() {  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">status</span> <span class="op">===</span> <span class="dv">200</span>) {  </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&apos;JOINED!&apos;</span><span class="op">,</span> <span class="kw">this</span><span class="op">.</span><span class="at">response</span>)<span class="op">;</span> <span class="co">// this.response is NOT affected by &apos;Content-Type&apos;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">// &apos;Content-Type&apos; header tells the server what type of data we are sending</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="fu">setRequestHeader</span>(<span class="st">&apos;Content-Type&apos;</span><span class="op">,</span> <span class="st">&apos;application/json&apos;</span>)<span class="op">;</span>  </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">// &apos;Accept&apos; header tells the server what content types we can accept</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="fu">setRequestHeader</span>(<span class="st">&apos;Accept&apos;</span><span class="op">,</span> <span class="st">&apos;text/plain&apos;</span>)<span class="op">;</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="fu">open</span>(<span class="st">&apos;POST&apos;</span><span class="op">,</span> <span class="st">&apos;/join&apos;</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>  </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>joinRequest<span class="op">.</span><span class="fu">send</span>(<span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>({<span class="dt">name</span><span class="op">:</span><span class="st">&apos;Charles&apos;</span>}))<span class="op">;</span>  </span></code></pre></div>
+				<p>Don&#x2019;t confuse <code>Content-Type</code> with <code>dataType</code>, <code>accepts</code>, and <code>Accept</code>.</p>
+				<p><code>dataType</code>, and <code>accepts</code> are jquery.ajax options.</p>
+				<ul>
+					<li><code>dataType</code> helps jqeury correctly process the server&#x2019;s response.</li>
+					<li><code>accepts</code> tells jquery to include headers in the request that inform the server what type of data we are interested in.</li>
+					<li><code>Accept</code> is an http request header that informs the server which data types we are interested in. The value for the Accept header must be a semicolon-separated
+						list of MIME types.</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

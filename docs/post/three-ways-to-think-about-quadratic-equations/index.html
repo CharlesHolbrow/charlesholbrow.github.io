@@ -1,0 +1,125 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Three ways to think about quadratic equations</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/three-ways-to-think-about-quadratic-equations">Three ways to think about quadratic equations</a></h2><span class="post-date">Feb 15, 2021</span></div>
+			<div class="post-content">
+				<h3 id="standard-form">Standard form</h3>
+				<p><span class="math display">\[\begin{align}
+f(x) &amp;= ax^2 + bx + c\\
+f(x) &amp;= x^2 + b&apos;x + c&apos;\\
+\end{align}\]</span></p>
+				<h3 id="in-terms-of-its-roots">In terms of its roots</h3>
+				<p>If we know the roots, <span class="math inline">\(r\)</span>, and <span class="math inline">\(s\)</span> for a <strong>&#x201C;normalized&#x201D;</strong> function,
+					<span class="math inline">\(f\)</span></p>
+				<p><span class="math display">\[\begin{align}
+f(r) &amp;= 0\\
+f(s) &amp;= 0\\
+f(x) &amp;= (x-r)(x-s) &amp;&amp; \text{A quadratic function defined in terms of it roots}\\ 
+f(x) &amp;= x^2 -(r+s)x + rs &amp;&amp; \text{expands to the form that looks like this}\\
+\end{align}\]</span></p>
+				<p>From here, we can see that <span class="math display">\[\begin{align}
+b&apos; &amp;= -(r+s)\\
+c&apos; &amp;= rs\\
+\end{align}\]</span></p>
+				<h3 id="the-parabola-mid-point-and-distance">The parabola mid-point and distance</h3>
+				<p>Say we have a parabola in the form</p>
+				<p><span class="math display">\[\begin{equation}
+ax^2 + bx + c
+\end{equation}\]</span></p>
+				<p>Remember that <span class="math inline">\(b&apos;\)</span> is the negative sum of of the two roots, <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span>.
+					That means that we can get the mid-point, <span class="math inline">\(m\)</span> with the following equation (<span class="math inline">\(b&apos;\)</span> is
+					the normalized value <span class="math inline">\(b/a\)</span>): <span class="math display">\[\begin{equation}
+m = -\frac{b&apos;}{2}
+\end{equation}\]</span></p>
+				<p>To get the <span class="math inline">\(\pm\)</span> distance of the of the roots from the mid point, remember that <span class="math inline">\(c&apos;\)</span>					is a product of <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span>. This product can be expressed as a difference of squares.</p>
+				<p><span class="math display">\[\begin{align}
+c&apos; &amp;= rs\\
+c&apos; &amp;= (m - d)(m + d)\\
+c&apos; &amp;= m^2 - d^2\\
+d^2 &amp;= m^2 - c&apos;\\
+d &amp;= \sqrt{m^2 - c&apos;}\\
+\end{align}\]</span></p>
+				<p>&#x2026;where <span class="math inline">\(d\)</span> is the distance of the roots from the mid-point, <span class="math inline">\(m\)</span>. From which we can
+					deduce:</p>
+				<p><span class="math display">\[\begin{equation}
+r, s = m \pm \sqrt{m^2 - c&apos;}
+\end{equation}\]</span></p>
+				<ul>
+					<li>The key is really recognizing that <span class="math inline">\(c&apos;\)</span> is a product.</li>
+					<li>You can think about products as
+						<ul>
+							<li>A mean of the two factors (the mid-point) and a (<span class="math inline">\(\pm\)</span>) distance from that mean&#x2026;</li>
+							<li>&#x2026;which can be expressed as a difference of squares</li>
+						</ul>
+					</li>
+				</ul>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for plotting</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">8.0</span>, <span class="fl">0.01</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x<span class="op">**</span><span class="dv">2</span> <span class="op">-</span>(<span class="dv">7</span><span class="op">*</span>x) <span class="op">+</span> <span class="dv">6</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">&apos;x axis&apos;</span>, ylabel<span class="op">=</span><span class="st">&apos;y axis&apos;</span>, title<span class="op">=</span><span class="st">&apos;a quadratic curve&apos;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ax.grid()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ax.grid()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">min</span>(y))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">&apos;equal&apos;</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">&apos;both&apos;</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># set the x-spine (see below for more info on `set_position`)</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">&apos;left&apos;</span>].set_position(<span class="st">&apos;zero&apos;</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># turn off the right spine/ticks</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">&apos;right&apos;</span>].set_color(<span class="st">&apos;none&apos;</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>ax.yaxis.tick_left()</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># set the y-spine</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">&apos;bottom&apos;</span>].set_position(<span class="st">&apos;zero&apos;</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># turn off the top spine/ticks</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">&apos;top&apos;</span>].set_color(<span class="st">&apos;none&apos;</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>ax.xaxis.tick_bottom()</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co"># fig.savefig(&quot;test.png&quot;)</span></span></code></pre></div>
+				<pre><code>-6.25</code></pre>
+				<figure>
+					<img src="src/post/08-quadratic-equations_files/src/post/08-quadratic-equations_4_1.png" alt="png">
+					<figcaption aria-hidden="true">png</figcaption>
+				</figure>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

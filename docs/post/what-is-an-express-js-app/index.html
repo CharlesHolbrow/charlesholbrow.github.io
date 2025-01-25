@@ -1,0 +1,80 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - What is an express.js app?</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/what-is-an-express-js-app">What is an express.js app?</a></h2><span class="post-date">Jul 13, 2013</span></div>
+			<div class="post-content">
+				<p>An express <code>app</code> is built on top of the npm connect module. The express docs feel incomplete, because they do not cover behavior inherited from connect.</p>
+				<p>Express apps begin like this:</p>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> express <span class="op">=</span> <span class="pp">require</span>(<span class="st">&apos;express&apos;</span>)<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span></code></pre></div>
+				<p>The source of the express function looks like this <a href="https://github.com/visionmedia/express/blob/ba5c48aa864202ae9962a4bb7d5b570efa9caa44/lib/express.js#L32-L39">(github)</a>:</p>
+				<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createApplication</span>() {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> app <span class="op">=</span> <span class="fu">connect</span>()<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  utils<span class="op">.</span><span class="fu">merge</span>(app<span class="op">,</span> proto)<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="at">request</span> <span class="op">=</span> { <span class="dt">__proto__</span><span class="op">:</span> req<span class="op">,</span> <span class="dt">app</span><span class="op">:</span> app }<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="at">response</span> <span class="op">=</span> { <span class="dt">__proto__</span><span class="op">:</span> res<span class="op">,</span> <span class="dt">app</span><span class="op">:</span> app }<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> app<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+				<h2 id="connect-prototype">Connect Prototype</h2>
+				<p>The npm <code>connect</code> module is the foundation of our express app. The source of the <code>connect()</code> function above looks like this <a href="https://github.com/senchalabs/connect/blob/695f7e966ee3a6d76d9c76499b7a2191ba24d552/lib/connect.js#L64-L74">(github)</a>:</p>
+				<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createServer</span>() {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">app</span>(req<span class="op">,</span> res<span class="op">,</span> next){ app<span class="op">.</span><span class="fu">handle</span>(req<span class="op">,</span> res<span class="op">,</span> next)<span class="op">;</span> }</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  utils<span class="op">.</span><span class="fu">merge</span>(app<span class="op">,</span> proto)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  utils<span class="op">.</span><span class="fu">merge</span>(app<span class="op">,</span> <span class="bu">EventEmitter</span><span class="op">.</span><span class="at">prototype</span>)<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="at">route</span> <span class="op">=</span> <span class="st">&apos;/&apos;</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="at">stack</span> <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">arguments</span><span class="op">.</span><span class="at">length</span><span class="op">;</span> <span class="op">++</span>i) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    app<span class="op">.</span><span class="fu">use</span>(<span class="kw">arguments</span>[i])<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> app<span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+				<p>The code above uses <code>utils.merge</code> to give <code>app</code> all the functionality of the <a href="https://github.com/senchalabs/connect/blob/master/lib/proto.js">Connect http server prototype</a>.
+					This includes the <code>.use</code>, <code>.handle</code>, and <code>.listen</code> methods.</p>
+				<p>The app also merges <a href="https://github.com/Gozala/events">EventEmitter</a> from the node.js <code>events</code> library. <code>EventEmitter</code> is where
+					<code>app</code> gets <code>app.on</code> and <code>app.emit</code> from.</p>
+				<h2 id="app.listen-returns-a-server">app.listen returns a server</h2>
+				<p><code>app</code> is itself a request handler that is passed to node&#x2019;s <code>http.createServer</code> when you call <code>app.listen</code></p>
+				<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> port <span class="op">=</span> <span class="dv">3000</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> server <span class="op">=</span> app<span class="op">.</span><span class="fu">listen</span>(port)<span class="op">;</span></span></code></pre></div>
+				<p><code>app.listen</code> is defined in the connect prototype. It looks like this:</p>
+				<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// require &apos;http&apos;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="at">listen</span> <span class="op">=</span> <span class="kw">function</span>(){</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> server <span class="op">=</span> http<span class="op">.</span><span class="fu">createServer</span>(<span class="kw">this</span>)<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> server<span class="op">.</span><span class="at">listen</span><span class="op">.</span><span class="fu">apply</span>(server<span class="op">,</span> <span class="kw">arguments</span>)<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+				<p><code>http.createServer</code> returns a <code>net.Server</code> instance from node&#x2019;s <a href="http://nodejs.org/api/net.html">net module</a>.</p>
+				<h2 id="express-app-prototype">Express App Prototype</h2>
+				<p>After the connect initializaition has finished, we merge the express app prototype onto our new <code>connect</code> app.</p>
+				<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>utils<span class="op">.</span><span class="fu">merge</span>(app<span class="op">,</span> proto)<span class="op">;</span></span></code></pre></div>
+				<p>This line adds all the functionality from the <a href="https://github.com/visionmedia/express/blob/master/lib/application.js">express application prototype</a>.
+					This is where <code>app.use</code>, <code>app.routes</code>, <code>app.get</code>, etc are defined. This behavior is documented very clearly in the express
+					docs.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

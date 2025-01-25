@@ -1,0 +1,668 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Blog</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item current-menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div
+	class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/calculating-fibonacci-numbers-with-matrices-and-linear-algebra">Calculating Fibonacci Numbers with Matrices and Linear Algebra</a></h2><span class="post-date">Jan 19, 2016</span></div>
+			<div class="post-content">
+				<p>In this post we solve the Fibonacci sequence using linear algebra. The Fibonacci equation is a <em>second-order difference equation</em> which is a particular
+					type of sequence.</p>
+				<h2 id="sequences">Sequences</h2>
+				<p>A <a href="http://www.synechism.org/wp/difference-equations-to-differential-equations/">sequence</a> is a (possibly infinite) set of numbers with a defined order.</p>
+				<p><span class="math display">\[
+a_n = \frac{1}{n}, \textit{ for } n = 0, 1, 2, ...,
+\]</span></p>
+				<h3 id="difference-equations">Difference Equations</h3>
+				<p>A difference equation is a type of sequence. A difference equation expresses the value of the sequence relative to the value of another point in the sequence.</p>
+				<p><span class="math display">\[
+x_{n+1} = 1.5x_n, \textit{ for } n = 0, 1, 2, ...,
+\]</span></p>
+				<p>To evaluate this equation at <span class="math inline">\(n=3\)</span> we need to know the initial value <span class="math inline">\(x_0\)</span>, and evaluate
+					<span class="math inline">\(n=1, 2, 3\)</span> in succession. For example, if <span class="math inline">\(x_0=100\)</span>:</p>
+				<p><span class="math display">\[\begin{align}
+x_0 &amp; &amp;&amp; = 100 \\
+x_1 &amp; = 1.5 \times 100 &amp;&amp; = 150\\
+x_2 &amp; = 1.5 \times 150 &amp;&amp; = 225\\
+x_3 &amp; = 1.5 \times 225 &amp;&amp; = 337.5
+\end{align}\]</span></p>
+				<p>In the example above, we evaluate the equation recursively. It would be better to be able to evaluate the equation at <span class="math inline">\(n = 100\)</span>					without performing <span class="math inline">\(100\)</span> calculations. Note that we can also write the equation above in this form:</p>
+				<p><span class="math display">\[
+x_3 = 100 \times 1.5 \times 1.5 \times 1.5 = 337.5
+\]</span></p>
+				<p>Solving a difference equation means writing the same equation such that it can be evaluated at a given <span class="math inline">\(n\)</span> without first evaluating
+					<span class="math inline">\(n=1,2,etc\)</span>. The solution to the equation above is:</p>
+				<p><span class="math display">\[
+x_{n} = 1.5^{n} \times x_0, \textit{ for } n = 0, 1, 2, ...,
+\]</span></p>
+				<h3 id="second-order-difference-equations">Second Order Difference Equations</h3>
+				<p>The previous example is a <strong>first order difference equation</strong> because it expresses the value of <span class="math inline">\(x_n\)</span> as a function
+					of one other sample, <span class="math inline">\(x_{n-1}\)</span>. A <strong>second order difference equation</strong> is a function of two other samples, for
+					example</p>
+				<p><span class="math display">\[
+x_{n+2} = 1.5x_n + 1.4x_{n+1}, \textit{ for } n = 0, 1, 2, ...,
+\]</span></p>
+				<h2 id="fibonacci-numbers">Fibonacci Numbers</h2>
+				<p>The easiest way to describe the Fibonacci sequence is with a second order difference equation. Assume <span class="math inline">\(F_0 = 0\)</span> and
+					<span
+					class="math inline">\(F_1 = 1\)</span>
+				</p>
+				<p><span class="math display">\[
+F_{k+2} = F_{k+1} + F_{k}
+\]</span></p>
+				<p>The first eight Fibonacci numbers are:</p>
+				<p><span class="math display">\[
+F_k=0,1,1,2,3,5,8,13,...
+\]</span></p>
+				<p>We can solve the sequence with linear algebra. Let us start our sequence with a vector, <span class="math inline">\(u_0=\begin{bmatrix}1\\0\end{bmatrix}\)</span>.
+					Find the next vector in our sequence, <span class="math inline">\(u_1\)</span> like this:</p>
+				<p><span class="math display">\[
+u_{1} =
+\begin{bmatrix}
+1 &amp; 1 \\
+1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+1 \\ 0
+\end{bmatrix} = 
+\begin{bmatrix}
+1 \\ 1
+\end{bmatrix}
+\]</span></p>
+				<p>More generally:</p>
+				<p><span class="math display">\[
+u_{k+1} = 
+\begin{bmatrix}
+1 &amp; 1 \\
+1 &amp; 0
+\end{bmatrix}
+u_k
+\]</span></p>
+				<p>Note that <span class="math inline">\(u_0\)</span> contains <span class="math inline">\(\begin{bmatrix}F_1\\F_0\end{bmatrix}\)</span>.</p>
+				<p>The key to solving the sequence is in the eigenvalues and eigenvectors of <span class="math inline">\(\begin{bmatrix}1&amp;1\\1&amp;0\end{bmatrix}\)</span>.
+					We can write <span class="math inline">\(u_3\)</span> as</p>
+				<p><span class="math display">\[
+u_3 = 
+\begin{bmatrix}1 &amp; 1 \\ 1 &amp; 0\end{bmatrix}
+\begin{bmatrix}1 &amp; 1 \\ 1 &amp; 0\end{bmatrix}
+\begin{bmatrix}1 &amp; 1 \\ 1 &amp; 0\end{bmatrix}
+\begin{bmatrix}1 \\ 0\end{bmatrix} = 
+\begin{bmatrix}3 \\ 2\end{bmatrix} = 
+\begin{bmatrix}F_4 \\ F_3\end{bmatrix}
+\]</span></p>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>fib <span class="op">=</span> np.matrix([[<span class="dv">1</span>,<span class="dv">1</span>],[<span class="dv">1</span>,<span class="dv">0</span>]])</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>u_0 <span class="op">=</span> np.matrix([[<span class="dv">1</span>],[<span class="dv">0</span>]])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>fib <span class="op">*</span> fib <span class="op">*</span> fib <span class="op">*</span> u_0 <span class="co"># The * operator is dot product for np.matrix (but not np.array)</span></span></code></pre></div>
+				<pre><code>matrix([[3],
+        [2]])</code></pre>
+				<h3 id="eigenvector-solution">Eigenvector Solution</h3>
+				<p>The general case of the previous example is:</p>
+				<p><span class="math display">\[
+\begin{align}
+u_k &amp;= \begin{bmatrix}1 &amp; 1 \\ 1 &amp; 0\end{bmatrix}^k\begin{bmatrix}1 \\ 0\end{bmatrix}\\
+u_k &amp;= A^ku_0
+\end{align}
+\]</span></p>
+				<p>We can use eigenvectors and eigenvalues to solve the matrix power (see <a href="http://web.media.mit.edu/~holbrow/post/eigenvalues-and-eigenvectors/">Eigenvalues and Eigenvectors</a>).
+					First, find the eigenvalues of <span class="math inline">\(A\)</span>:</p>
+				<p><span class="math display">\[
+\begin{align}
+det\begin{vmatrix}
+1 - \lambda &amp; 1\\
+1 &amp; - \lambda
+\end{vmatrix} &amp; = 0\\
+-\lambda(1-\lambda) - 1 &amp; = 0\\
+\lambda{}^2 - \lambda - 1 &amp; = 0
+\end{align}
+\]</span></p>
+				<p>Solve using the quadratic formula <span class="math inline">\(\frac{-b \pm \sqrt{b^2-4ac}}{2a} \implies \frac{1 \pm \sqrt{5}}{2} \approx \frac{1 \pm 2.236}{2}\\\)</span>,
+					which gives the eigenvalues for our matrix: <span class="math display">\[
+\begin{align}
+\lambda_1 &amp; \approx &amp;1.618 \\
+\lambda_2 &amp; \approx &amp;-0.618
+\end{align}
+\]</span></p>
+				<p>Now we plug our constant eigenvalues (<span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>) into <span class="math inline">\((A-\lambda I)\vec{x}=0\)</span>					to find the eigen vectors.</p>
+				<p><span class="math display">\[
+\begin{bmatrix}1-\lambda_1 &amp; 1 \\ 1 &amp; -\lambda_1 \end{bmatrix}\vec{x}_1 = 0 \implies \vec{x}_1 = \begin{bmatrix}\lambda_1 \\ 1\end{bmatrix}
+\]</span></p>
+				<p>Note that this solution is not necessarily intuitive. This is <strong>not</strong> a valid solution for <em>any</em> arbitrary value of <span class="math inline">\(\lambda\)</span>:
+					our values, <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span> are valid solutions. We can use the same process
+					to solve for <span class="math inline">\(\lambda_2\)</span>, revealing eigenvectors <span class="math inline">\(\begin{bmatrix}\lambda_1 \\1\end{bmatrix}\)</span>					and <span class="math inline">\(\begin{bmatrix}\lambda_2 \\1\end{bmatrix}\)</span>. Now create the eigenvector matrix, <span class="math inline">\(S\)</span>					and eigenvalue matrix, <span class="math inline">\(\Lambda\)</span>.</p>
+				<p><span class="math display">\[
+\begin{align}
+S &amp;= \begin{bmatrix}\lambda_1 &amp; \lambda_2 \\ 1 &amp; 1\end{bmatrix}\\
+\Lambda &amp;= \begin{bmatrix}\lambda_1 &amp; 0 \\ 0 &amp; \lambda_2\end{bmatrix}
+\end{align}
+\]</span></p>
+				<p>Remeber that <span class="math inline">\(A^k = S^{-1}\Lambda^kS\)</span>. To proceed, invert <span class="math inline">\(S\)</span>. Remember this shortcut for
+					inverting a <span class="math inline">\(2 \times 2\)</span> matrix.</p>
+				<p><span class="math display">\[
+\begin{align}
+\begin{bmatrix}
+a &amp; b \\ c &amp; d
+\end{bmatrix}^{-1} =&amp;&amp;
+\frac{1}{ad-cb}
+&amp;\begin{bmatrix}
+d &amp; -b \\ -c &amp; a
+\end{bmatrix} \\
+S^{-1} =&amp;&amp;                               &amp;\begin{bmatrix}\lambda_1 &amp; \lambda_2 \\ 1 &amp; 1\end{bmatrix}^{-1} \\
+S^{-1} =&amp;&amp; \frac{1}{\lambda_1-\lambda_2} &amp;\begin{bmatrix}1 &amp; -\lambda_2\\ -1 &amp; \lambda_1 \end{bmatrix}\\
+S^{-1} =&amp;&amp; \tfrac{1}{\sqrt{5}}           &amp;\begin{bmatrix}1 &amp; -\lambda_2\\ -1 &amp; \lambda_1 \end{bmatrix}
+\end{align}
+\]</span></p>
+				<p>Using the components <span class="math inline">\((A, \Lambda, S, S^{-1},u_0)\)</span>:</p>
+				<p><span class="math display">\[
+\begin{align}
+u_k &amp;= A^ku_0 \\
+u_k &amp;= S\Lambda^kS^{-1}u_o \\
+u_k &amp;= S\Lambda^k\frac{1}{\sqrt{5}}\begin{bmatrix}1 &amp; -\lambda_2\\ -1 &amp; \lambda_1 \end{bmatrix}u_0 \\
+u_k &amp;= \frac{1}{\sqrt{5}}S\Lambda^k\begin{bmatrix}1 &amp; -\lambda_2\\ -1 &amp; \lambda_1 \end{bmatrix}u_0 \\
+u_k &amp;=
+\tfrac{1}{\sqrt{5}}
+\begin{bmatrix}\lambda_1 &amp; \lambda_2 \\ 1 &amp; 1\end{bmatrix}
+\begin{bmatrix}\lambda_1 &amp; 0 \\ 0 &amp; \lambda_2\end{bmatrix}^k
+\begin{bmatrix}1 &amp; -\lambda_2\\ -1 &amp; \lambda_1 \end{bmatrix}
+u_0 \\
+u_k &amp;= \tfrac{1}{\sqrt{5}}
+\begin{bmatrix}\lambda_1 &amp; \lambda_2 \\ 1 &amp; 1\end{bmatrix}
+\begin{bmatrix}\lambda_1^k &amp; 0 \\ 0 &amp; \lambda_2^k\end{bmatrix}
+\begin{bmatrix}1 &amp; -\lambda_2\\ -1 &amp; \lambda_1 \end{bmatrix}
+\begin{bmatrix}1\\0\end{bmatrix} \\
+u_k &amp;= \tfrac{1}{\sqrt{5}}
+\begin{bmatrix}\lambda_1 &amp; \lambda_2 \\ 1 &amp; 1\end{bmatrix}
+\begin{bmatrix}\lambda_1^k &amp; 0 \\ 0 &amp; \lambda_2^k\end{bmatrix}
+\begin{bmatrix}1 \\ -1 \end{bmatrix}\\
+u_k &amp;= \tfrac{1}{\sqrt{5}}
+\begin{bmatrix}\lambda_1 &amp; \lambda_2 \\ 1 &amp; 1\end{bmatrix}
+\begin{bmatrix}\lambda_1^k \\ -\lambda_2^k\end{bmatrix}
+\end{align}
+\]</span></p>
+				<h2 id="verify-solution-in-python">Verify Solution in Python</h2>
+				<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lmbd_1 <span class="op">=</span> (<span class="dv">1</span><span class="op">+</span>np.sqrt(<span class="dv">5</span>))<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>lmbd_2 <span class="op">=</span> (<span class="dv">1</span><span class="op">-</span>np.sqrt(<span class="dv">5</span>))<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>a       <span class="op">=</span> np.matrix([[<span class="dv">1</span>,      <span class="dv">1</span>],      [<span class="dv">1</span>,  <span class="dv">0</span>]])</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>s       <span class="op">=</span> np.matrix([[lmbd_1, lmbd_2], [<span class="dv">1</span>,  <span class="dv">1</span>]])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>s_inv   <span class="op">=</span> np.matrix([[<span class="dv">1</span>,     <span class="op">-</span>lmbd_2], [<span class="op">-</span><span class="dv">1</span>, lmbd_1]]) <span class="op">*</span> (<span class="dv">1</span><span class="op">/</span>np.sqrt(<span class="dv">5</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>eig_val <span class="op">=</span> np.matrix([[lmbd_1, <span class="dv">0</span>],      [<span class="dv">0</span>,  lmbd_2]])</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>u_0     <span class="op">=</span> np.matrix([[<span class="dv">1</span>],              [<span class="dv">0</span>]])</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> eig_k(k):</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> eig_val <span class="op">**</span> k</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> u_k(k):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s <span class="op">*</span> eig_k(k) <span class="op">*</span> s_inv <span class="op">*</span> u_0</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fib(n):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    f_n <span class="op">=</span> u_k(n)[<span class="dv">1</span>,<span class="dv">0</span>]</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">int</span>(<span class="bu">round</span>(f_n))</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>[fib(n) <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span>)]</span></code></pre></div>
+				<pre><code>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]</code></pre>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/eigenvalues-and-eigenvectors">Eigenvalues and Eigenvectors</a></h2><span class="post-date">Jan 7, 2016</span></div>
+			<div class="post-content">
+				<p>All <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> matrices have <span class="math inline">\(n\)</span> eigenvalues.</p>
+				<p>Assume:</p>
+				<ul>
+					<li><span class="math inline">\(\lambda\)</span> is our eigenvalue (it is also a scalar)</li>
+					<li><span class="math inline">\(\vec{x}\)</span> is our eigenvector</li>
+					<li><span class="math inline">\(A\)</span> is an <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> matrix.</li>
+				</ul>
+				<p><span class="math display">\[\begin{align*}
+A\vec{x} &amp;= \lambda\vec{x}\\
+A\vec{x} - \lambda\vec{x} &amp;= 0\\
+(A - \lambda I)\vec{x} &amp;= 0
+\end{align*}\]</span></p>
+				<p>Eigen<strong>vectors</strong> are defined as non-zero, so we are not interested in the case when <span class="math inline">\(\vec{x} = 0\)</span>.</p>
+				<p><span class="math inline">\(\vec{x}\)</span> is some non-zero vector in the nullspace of <span class="math inline">\((A - \lambda{}I)\)</span>. If <span class="math inline">\((A - \lambda{}I)\)</span>					has vectors other than <span class="math inline">\(0\)</span> in the nullspace, it must be singular.</p>
+				<p>We can find the singular matrices with <span class="math display">\[det(A-\lambda I) = 0\]</span></p>
+				<h2 id="example-of-finding-the-eigenvectors">Example of Finding the Eigenvectors</h2>
+				<p>Start by finding the eigenvalues for <span class="math inline">\(A=\begin{bmatrix}3 &amp; 1 \\1 &amp; 3\end{bmatrix}\)</span></p>
+				<p><span class="math inline">\(A\)</span> is setup so that the eigenvalues will be real numbers.</p>
+				<p><span class="math display">\[
+\begin{align*}
+0 &amp;= det(A-\lambda{}I)\\
+0 &amp;= \begin{vmatrix}
+3-\lambda &amp; 1 \\
+1 &amp; 3 - \lambda
+\end{vmatrix}\\
+0 &amp;=(3-\lambda{})^2-1\\
+0 &amp;= 9 - 6\lambda{} - \lambda{}^2 - 1\\
+0 &amp;= \lambda{}^2 - 6\lambda -8\\
+0 &amp;= (\lambda - 4)(\lambda - 2)
+\end{align*}
+\]</span></p>
+				<p>So <span class="math inline">\(\lambda{}_1=4\)</span> and <span class="math inline">\(\lambda{}_2=2\)</span> Now we can plug both <span class="math inline">\(\lambda\)</span>					in to <span class="math inline">\((A-\lambda{}I)\)</span></p>
+				<p><span class="math display">\[\begin{align*}
+\begin{bmatrix}
+3 &amp; 1 \\
+1 &amp; 3
+\end{bmatrix} - 
+\begin{bmatrix}
+2 &amp; 0 \\
+0 &amp; 2 
+\end{bmatrix} &amp;= 
+\begin{bmatrix}
+1 &amp; 1 \\
+1 &amp; 1
+\end{bmatrix} \\
+\begin{bmatrix}
+3 &amp; 1 \\
+1 &amp; 3
+\end{bmatrix} - 
+\begin{bmatrix}
+4 &amp; 0 \\
+0 &amp; 4 
+\end{bmatrix} &amp;= 
+\begin{bmatrix}
+-1 &amp; 1 \\
+1 &amp; -1
+\end{bmatrix} \\
+\end{align*}\]</span></p>
+				<p>And solve for <span class="math inline">\((A-\lambda{}I)\vec{x}=0\)</span></p>
+				<p><span class="math display">\[\begin{align*}
+\begin{bmatrix}
+1 &amp; 1 \\
+1 &amp; 1
+\end{bmatrix}\vec{x}_1=0
+&amp;\implies
+\vec{x}_1=
+\begin{bmatrix}1\\-1\end{bmatrix}\\
+\begin{bmatrix}
+-1 &amp; 1 \\
+1 &amp; -1
+\end{bmatrix}\vec{x}_2=0
+&amp;\implies
+\vec{x}_2=
+\begin{bmatrix}1\\1\end{bmatrix}
+\end{align*}\]</span></p>
+				<h2 id="example-of-a-degenerate-matrix">Example of a Degenerate Matrix</h2>
+				<p>Notice that the eigenvectors in the first example are independent. Not all matrices have independent eigenvectors.</p>
+				<p><span class="math display">\[
+A = 
+\begin{bmatrix}3 &amp; 1 \\ 0 &amp; 3\end{bmatrix}
+\]</span></p>
+				<p>We can read the eigenvalues directly off a triangular matrix. To see how, try finding <span class="math inline">\(det(A-\lambda{}I)\vec{x}=0\)</span>:</p>
+				<p><span class="math display">\[\begin{equation*}
+\begin{vmatrix}
+3-\lambda &amp; 1 \\
+0 &amp; 3-\lambda 
+\end{vmatrix}=0
+\end{equation*}\]</span></p>
+				<p>Remember, the determinant of a triangular matrices is the product down the diagonal.</p>
+				<p><span class="math inline">\((3-\lambda )(3-\lambda )=0 \implies \lambda{}_1 = 3, \lambda{}_2 = 3\)</span></p>
+				<p>Repeated eigenvalues are not a problem. The problem comes when we try to solve <span class="math inline">\((A-\lambda{}I)\vec{x}=0\)</span></p>
+				<p><span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+0 &amp; 1 \\
+0 &amp; 0
+\end{bmatrix}
+\vec{x} = 0
+\end{equation*}\]</span></p>
+				<p>There is only one indepedent solution: <span class="math inline">\(\vec{x}=\begin{bmatrix}1\\0\end{bmatrix}\)</span>. We cannot diagonalize <span class="math inline">\(A\)</span>.</p>
+				<h2 id="diagonalization-s-1as-lambda">Diagonalization <span class="math inline">\(S^{-1}AS= \Lambda{}\)</span></h2>
+				<p>Assume we take our <span class="math inline">\(n\)</span> linearly independent eigenvectors of <span class="math inline">\(A\)</span></p>
+				<p><span class="math display">\[\begin{equation*}
+S = \begin{bmatrix}
+&amp; &amp; \\ 
+\vec{x}_1 &amp; \cdots &amp; \vec{x}_n \\
+&amp; &amp;
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<p>What happens when we take <span class="math inline">\(AS\)</span>?</p>
+				<p><span class="math display">\[\begin{equation*}
+AS = A\begin{bmatrix}
+&amp; &amp; \\ 
+\vec{x}_1 &amp; \cdots &amp; \vec{x}_n \\
+&amp; &amp;
+\end{bmatrix} = 
+\begin{bmatrix}
+&amp; &amp; \\ 
+\lambda{}_1\vec{x}_1 &amp; \cdots &amp; \lambda{}_n\vec{x}_n \\
+&amp; &amp;
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<p>Remember that <span class="math inline">\(AS\)</span> is a linear combination of the colums of <span class="math inline">\(A\)</span>. Because <span class="math inline">\(\vec{x}_1\)</span>					is an eigenvector, the first column of <span class="math inline">\(AS\)</span> is going to be <span class="math inline">\(\lambda{}_1\vec{x}_1\)</span>, and
+					the subsequent columns follow the same pattern.</p>
+				<p>Now we want to factor out <span class="math inline">\(\lambda{}\)</span> from <span class="math inline">\(AS\)</span>.</p>
+				<p><span class="math display">\[\begin{equation*}
+AS = 
+\begin{bmatrix}
+&amp; &amp; \\ 
+\lambda{}_1\vec{x}_1 &amp; \cdots &amp; \lambda{}_n\vec{x}_n \\
+&amp; &amp;
+\end{bmatrix} =
+\begin{bmatrix}
+&amp; &amp; \\ 
+\vec{x}_1 &amp;&amp; \cdots &amp;&amp; \vec{x}_n \\
+&amp; &amp;
+\end{bmatrix}
+\begin{bmatrix}
+\lambda{}_1 &amp; &amp; \\ 
+&amp; \ddots &amp; \\
+&amp; &amp; \lambda{}_n
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<p>We will call this last diagonal matrix <span class="math inline">\(\Lambda\)</span>, and we can now say <span class="math inline">\(AS=S\Lambda\)</span>, which
+					gives us the following two equations:</p>
+				<p><span class="math display">\[S^{-1}AS = \Lambda\]</span> <span class="math display">\[S\Lambda{}S^{-1}=A\]</span></p>
+				<p>Remember: We can only invert <span class="math inline">\(S\)</span> is we have <span class="math inline">\(n\)</span> independent eigenvectors</p>
+				<p>Which gives us the most sought after equation:</p>
+				<p><span class="math display">\[
+A^2= S\Lambda{}S^{-1}S\Lambda{}S^{-1}=S\Lambda{}^2S^{-1} \implies A^k=S\Lambda{}^kS^{-1}
+\]</span></p>
+				<p><strong>Theorem:</strong> <span class="math inline">\(A^k \rightarrow 0\)</span> as <span class="math inline">\(k \rightarrow \infty\)</span> if all <span class="math inline">\(|\lambda{}_i| &lt; 1\)</span></p>
+				<h3 id="eigenvalues-eigenvectors-of-a2">Eigenvalues, Eigenvectors of <span class="math inline">\(A^2\)</span></h3>
+				<p>If we have <span class="math inline">\(A\)</span> with eigenvalues <span class="math inline">\(\lambda{}_1 \ldots \lambda{}_n\)</span>:</p>
+				<ul>
+					<li>The eigen<strong>values</strong> of <span class="math inline">\(A^2\)</span> are <span class="math inline">\((\lambda{}_1)^2 \ldots (\lambda{}_n)^2\)</span></li>
+					<li>The eigen<strong>vectors</strong> of <span class="math inline">\(A^2\)</span> the same as te eigenvectors of <span class="math inline">\(A\)</span></li>
+				</ul>
+				<p>Said another way:</p>
+				<p>If <span class="math inline">\(A\vec{x} = \lambda \vec{x}\)</span> then <span class="math inline">\(A^2\vec{x} = \lambda A\vec{x} = \lambda{}^2\vec{x}\)</span></p>
+				<h1 id="facts">Facts</h1>
+				<ul>
+					<li>The <strong>sum</strong> of the <span class="math inline">\(n\)</span> eigenvalues is equal to the trace of the matrix (the <strong>sum</strong> down the diagonal).</li>
+					<li>The product of the eigenvalues is equal to the determinate if the matrix has <span class="math inline">\(n\)</span> distinct eigenvalues.</li>
+					<li>A triangular matrix , <span class="math inline">\(U\)</span> has eigenvalues along the diagonal - they are the pivots.</li>
+					<li><span class="math inline">\(A\)</span> has one or more eigen<strong>values</strong> <span class="math inline">\(\lambda =0\)</span> exactly when <span class="math inline">\(A\)</span>						is singular</li>
+					<li>We can multiply eigen<strong>vectors</strong> by any non-zero constant, and <span class="math inline">\(A\vec{x} = \lambda \vec{x}\)</span> will remain true</li>
+					<li>Symmetric matrices always have real eigenvalues</li>
+					<li>Elimination changes eigenvalues</li>
+				</ul>
+				<h2 id="facts-about-diagonalizing">Facts About Diagonalizing</h2>
+				<ul>
+					<li>A matrix with fewer than <span class="math inline">\(n\)</span> eigen<strong>vectors</strong> cannot be diagonalized</li>
+					<li>Any matrix that has no repeated eigenvalues can be diagonalized</li>
+					<li><span class="math inline">\(A\)</span> is sure to have <span class="math inline">\(n\)</span> independent eigenvectors (and be diagonalizable) if all the
+						<span
+						class="math inline">\(\lambda{}\)</span>&#x2019;s are different (no repeated <span class="math inline">\(\lambda{}\)</span>s).</li>
+					<li>If <span class="math inline">\(A\)</span> does not have <span class="math inline">\(n\)</span> independent <span class="math inline">\(\lambda\)</span>s, it
+						<em>might</em> be diagonizable.</li>
+				</ul>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/calculate-the-nullspace-of-a-matrix">Calculate the Nullspace of a Matrix</a></h2><span class="post-date">Dec 17, 2015</span></div>
+			<div class="post-content">
+				<p>We want to find the nullspace of <span class="math inline">\(A\)</span></p>
+				<p><span class="math display">\[\begin{equation}
+A = 
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 2 &amp; 3 &amp; 4 \\
+4 &amp; 3 &amp; 2 &amp; 1
+\end{bmatrix}
+\end{equation}\]</span></p>
+				<p><strong><span class="math inline">\(A\)</span> and <span class="math inline">\(U\)</span> have the same nullspace.</strong> Elimination brings us to <span class="math inline">\(U\)</span></p>
+				<p><span class="math display">\[\begin{equation*}
+A
+\implies
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; 1 &amp; 2 &amp; 3 \\
+0 &amp; -1 &amp; -2 &amp; -3 
+\end{bmatrix}
+\implies
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; 1 &amp; 2 &amp; 3 \\
+0 &amp; 0 &amp; 0 &amp; 0 
+\end{bmatrix}
+=U
+\end{equation*}\]</span></p>
+				<p>We identify our <em>pivot columns</em> and our <em>free colums</em>. The pivot columns, <span class="math inline">\(x_1\)</span>, and <span class="math inline">\(x_2\)</span>					contain our pivots. The other columns, <span class="math inline">\(x_3\)</span> and <span class="math inline">\(x_4\)</span>, are free. Now we have two choices:
+					<em>back subsitution</em>, and solving by <em>row reduced echelon form</em>.</p>
+				<h2 id="back-subsitution">Back Subsitution</h2>
+				<p>For each <em>free</em> column, <span class="math inline">\(x_n\)</span>:</p>
+				<ol type="1">
+					<li>Set that col to 1</li>
+					<li>Set all the other free columns to 0</li>
+					<li>Solve all equations for 0 with back subsitution</li>
+				</ol>
+				<p>The upper triangular matrix above, <span class="math inline">\(U\)</span>, becomes:</p>
+				<p><span class="math display">\[\begin{align}
+x_1 &amp;+&amp; x_2 &amp;+&amp; x_3 &amp;+&amp; x_4 &amp;= 0 \\
+     &amp;&amp; x_2 &amp;+&amp; 2x_3 &amp;+&amp; 3x_4 &amp;= 0 \\
+     &amp;&amp; &amp;&amp; &amp;&amp; 0 &amp;= 0
+\end{align}\]</span></p>
+				<p>Do back subsitution with <span class="math inline">\(x_3 = 1\)</span> and <span class="math inline">\(x_4 = 0\)</span>:</p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= x_2 + 2  &amp;\implies&amp; x_2 = -2 \\
+0 &amp;= x_1 -2 + 1 &amp;\implies&amp; x_1 = 1
+\end{align}\]</span></p>
+				<p><span class="math display">\[\begin{equation*}
+A \begin{bmatrix} 1 \\ -2 \\ 1 \\ 0\end{bmatrix} = 0
+\end{equation*}\]</span></p>
+				<p>Do back subsitution with <span class="math inline">\(x_3 = 0\)</span> and <span class="math inline">\(x_4 = 1\)</span>:</p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= x_2 + 3  &amp;\implies&amp; x_2 = -3 \\
+0 &amp;= x_1 -3 + 1 &amp;\implies&amp; x_1 = 2
+\end{align}\]</span></p>
+				<p><span class="math display">\[\begin{equation*}
+A 
+\begin{bmatrix} 2 \\ -3 \\ 0 \\ 1
+\end{bmatrix} 
+= 0
+\end{equation*}\]</span></p>
+				<p>One way to write the complete solution:</p>
+				<p><span class="math display">\[\begin{equation*}
+x_3
+\begin{bmatrix} 1 \\ -2 \\ 1 \\ 0
+\end{bmatrix} 
++ x_4
+\begin{bmatrix} 2 \\ -3 \\ 0 \\ 1
+\end{bmatrix} =
+\begin{bmatrix} x_3 + 2x_4 \\ -2x_3 - 3x_4 \\ x_3 \\ x_4
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<h2 id="row-reduced-echelon-form">Row Reduced Echelon Form</h2>
+				<p>However, it is quicker to &#x201C;complete&#x201D; elimination, and find the solution from rref. <strong><span class="math inline">\(A\)</span>, <span class="math inline">\(U\)</span>, and <span class="math inline">\(R\)</span> have the same nullspace.</strong>					Our example matrix, <span class="math inline">\(A\)</span>, is very close to rref already (the pivots are already 1).</p>
+				<p><span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; 1 &amp; 2 &amp; 3 \\
+0 &amp; 0 &amp; 0 &amp; 0 
+\end{bmatrix}
+\implies
+\begin{bmatrix}
+1 &amp; 0 &amp; -1 &amp; -2 \\
+0 &amp; 1 &amp; 2 &amp; 3 \\
+0 &amp; 0 &amp; 0 &amp; 0 
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<p>Notice how if we set <span class="math inline">\(x_3 = 1\)</span> and <span class="math inline">\(x_4 = 0\)</span> we can read the values <span class="math inline">\(x_1\)</span>					and <span class="math inline">\(x_2\)</span> from the third column (if we reverse the sign)</p>
+				<p><span class="math inline">\(A \begin{bmatrix} 1 \\ -2 \\ 1 \\ 0\end{bmatrix} = 0\)</span></p>
+				<p>You <strong>cannot</strong> do back subsitution on a matrix in rref. This yields incorrect results.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/projections-and-projection-matrices">Projections and Projection Matrices</a></h2><span class="post-date">Nov 27, 2015</span></div>
+			<div class="post-content">
+				<p><img src="http://i1222.photobucket.com/albums/dd494/psychicenemy/projection-matrices.png" style="max-width:369px; height:auto; margin-left:auto; margin-right:auto;">					As a simple example we project on to a line. First, calculate <span class="math inline">\(e\)</span> and <span class="math inline">\(p\)</span>.</p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= \vec{e} \bullet{}\vec{a} &amp;&amp; \vec{e} \perp \vec{a} \text{ so the dot product is zero}\\
+0 &amp;= (\vec{b}-\hat{x}\vec{a})\bullet{}\vec{a} &amp;&amp; \text{notice } \vec{e} = \vec{b}-\vec{p} = \vec{b}-\hat{x}\vec{a}\\
+0 &amp;= \vec{b}\bullet \vec{a} - \vec{a} \hat{x}\bullet \vec{a} &amp;&amp; \text{distribute } \vec{a}\\
+0 &amp;= (\vec{b} \bullet \vec{a}) - \hat{x} (\vec{a} \bullet \vec{a}) &amp;&amp; 
+\text{notice } \hat{x} \text{ is a scalar, so the last term can be } \hat{x} \vec{a} \bullet \vec{a}\\
+\hat{x} (\vec{a} \bullet \vec{a}) &amp;= (\vec{b} \bullet \vec{a})\\
+\hat{x} &amp;= \dfrac{\vec{b} \bullet \vec{a}}{\vec{a} \bullet \vec{a}} 
+\implies \vec{p} = \dfrac{\vec{b} \bullet \vec{a}}{\vec{a} \bullet \vec{a}} \vec{a} &amp;&amp; 
+\text{because } \vec{p} = \hat{x}\vec{a}
+\end{align}\]</span></p>
+				<p>We can summarize the projection to the matrix as, <span class="math inline">\(\vec{p} = P\vec{b}\)</span>. This is easy to find if we present the equation the
+					other way around. Notice that with vectors the order is inconsequential, because <span class="math inline">\(\vec{a} \bullet \vec{b} = \vec{b} \bullet \vec{a}\)</span></p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= \vec{a} \bullet \vec{e} &amp;&amp; \vec{a}, \vec{e} \text{ on opposite sides}\\
+0 &amp;= (\vec{a} \bullet \vec{b}) - \hat{x}(\vec{a} \bullet \vec{a})\\
+\hat{x}(\vec{a} \bullet \vec{a}) &amp;= (\vec{a} \bullet \vec{b})\\
+\hat{x} &amp;= \dfrac{\vec{a} \bullet \vec{b}}{\vec{a} \bullet \vec{b}} = \dfrac{\vec{a}^T\vec{b}}{\vec{a}^T\vec{a}}
+\end{align}\]</span></p>
+				<p>With <span class="math inline">\(\hat{x}\)</span> in this form, we can calculate the permutation matrix, <span class="math inline">\(P\)</span> from <span class="math inline">\(\vec{p} = P\vec{b}\)</span></p>
+				<p><span class="math display">\[\begin{align}
+\vec{p} &amp;= \vec{a}\dfrac{\vec{a}^T\vec{b}}{\vec{a}^T\vec{a}}\\
+\vec{p} &amp;= \dfrac{\vec{a}\vec{a}^T}{\vec{a}^T\vec{a}}\vec{b}
+\implies P = \dfrac{\vec{a}\vec{a}^T}{\vec{a}^T\vec{a}} &amp;&amp; \text{because } \vec{p}= P\vec{b}
+\end{align}\]</span></p>
+				<h2 id="project-onto-a-plane-in-mathbbr3">Project Onto a Plane in <span class="math inline">\(\mathbb{R}^3\)</span></h2>
+				<p>Note that <span class="math inline">\(\vec{a}^T\vec{a}\)</span> in the denominator evaluates to a scalar. If we want to project onto a plane, the denominator
+					becomes <span class="math inline">\(A^TA\)</span>, which evaluates to a matrix.</p>
+				<ul>
+					<li>Division by a matrix has no meaning. You cannot divide by a martix.</li>
+					<li>In arithmatic, we undo multiplication with division.</li>
+					<li>To undo the effects of a matrix multiplication, we multiply the inverse of the matrix. <span class="math inline">\(A^{-1}A\vec{b}=\vec{b}\)</span></li>
+					<li>We must re-arrange the equation so that we use inverse matrices instead of division.</li>
+				</ul>
+				<p>We can think of projecting onto a plane as projecting onto multiple vectors. To project <span class="math inline">\(\vec{b}\)</span> onto <span class="math inline">\(A\)</span>,
+					we are looking for the vector <span class="math inline">\(\hat{x}\)</span>, such that <span class="math inline">\(\vec{p}=A\hat{x}\)</span>, where <span class="math inline">\(\vec{p}\)</span>					is the point on the plane closest to <span class="math inline">\(\vec{b}\)</span>. The first step is to find the vector <span class="math inline">\(\hat{x}\)</span>.</p>
+				<p>Like the first example, we define the error vector, <span class="math inline">\(\vec{e}\)</span>, as the vector that goes from the plane to <span class="math inline">\(\vec{b}\)</span></p>
+				<p><span class="math display">\[\begin{equation*}
+\vec{e} = \vec{b} - A\hat{x}
+\end{equation*}\]</span></p>
+				<p>Assume <span class="math inline">\(A\)</span> is a matrix made of two vectors, <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span>					in <span class="math inline">\(\mathbb{R}^3\)</span>:</p>
+				<p><span class="math display">\[\begin{equation}
+A = \begin{bmatrix}
+a_{11} &amp; a_{21} \\
+a_{12} &amp; a_{22} \\
+a_{13} &amp; a_{23}
+\end{bmatrix}
+\end{equation}\]</span></p>
+				<p>Our error vector, <span class="math inline">\(\vec{e}\)</span> will be perpendicular to both <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span>.
+					We want to find the closest point on <span class="math inline">\(A\)</span> to <span class="math inline">\(\vec{b}\)</span>. Set <span class="math inline">\(\vec{e}\)</span>					and <span class="math inline">\(\vec{a}\)</span> perpendicular <span class="math inline">\(0 = \vec{a}_n^T\vec{e}\)</span></p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= \vec{a}_1^T(\vec{b} - A\hat{x})\\
+0 &amp;= \vec{a}_2^T(\vec{b} - A\hat{x})
+\end{align}\]</span></p>
+				<p>There is a simple way to write the equation that captures all components at once.</p>
+				<p><span class="math inline">\(A^T(\vec{b}-A\hat{x})\)</span></p>
+				<p>Which can be written as</p>
+				<p><span class="math inline">\(A^T\vec{b} = A^TA\hat{x}\)</span></p>
+				<p>Which can be solved for <span class="math inline">\(\hat{x}\)</span></p>
+				<p><span class="math inline">\((A^TA)^{-1}A^T\vec{b} = \hat{x}\)</span></p>
+				<p>Now that we have the <span class="math inline">\(\hat{x}\)</span> vector, we can find the projection matrix. Remeber that <span class="math inline">\(\vec{p} = P\vec{b}\)</span>.
+					If we can arrange the equation above correctly, it gives us <span class="math inline">\(P\)</span>.</p>
+				<p><span class="math inline">\(\vec{p} = A\hat{x}\)</span></p>
+				<p>Subsitute <span class="math inline">\(\hat{x}\)</span></p>
+				<p><span class="math inline">\(\vec{p} = A(A^TA)^{-1}A^T\vec{b}\)</span></p>
+				<p>Now the equation is in the form <span class="math inline">\(\vec{p} = P\vec{b}\)</span>, so</p>
+				<p><span class="math inline">\(P = A(A^TA)^{-1}A^T\)</span></p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/getting-npm-anaconda-jupyter-and-brew-to-play-together">Getting Npm, Anaconda, Jupyter, and Brew to Play Together</a></h2><span class="post-date">Nov 25, 2015</span></div>
+			<div class="post-content">
+				<p>I chose to use Anaconda to manage my Python installation in favor of the OSX stock Python 2.7 or brew&#x2019;d Python. This makes it easy to switch between Python
+					2 and Python 3, and it works well with <a href="http://jupyter.org/">Project Jupyter</a>.</p>
+				<p>I would like to default to Python 3.4.3, because that works best with iPython notebooks in Project Jupyter. But npm packages often use node-gyp to build, and
+					node-gyp is not compatible with Python 3. When I tried to install the npm fsevents package, I got the following error:</p>
+				<pre><code>gyp ERR! configure error 
+gyp ERR! stack Error: Python executable &quot;python&quot; is v3.4.3, which is not supported by gyp.
+gyp ERR! stack You can pass the --python switch to point to Python &gt;= v2.5.0 &amp; &lt; 3.0.0.
+gyp ERR! stack     at failPythonVersion (/usr/local/lib/node_modules/npm/node_modules/node-gyp/lib/configure.js:108:14)
+...</code></pre>
+				<p>It is possible to specify a python version when npm installing <code>npm install --python=python2.7</code>. We can also configure npm to use a specific version
+					of python (<a href="http://stackoverflow.com/questions/20454199/how-to-use-a-different-version-of-python-during-npm-install">stackoverflow</a>).</p>
+				<pre><code>$ npm config set python python2.7</code></pre>
+				<p>This solved the node-gyp problem, but created another problem. By default, npm modules installed with the <code>-g</code> are installed to <code>/usr/local</code>.
+					You can check where global npm modules are stored with</p>
+				<pre><code>$ npm config get prefix</code></pre>
+				<p>I usually just use sudo when installing global npm modules in OSX. However, for some reason the when I <code>sudo npm install -g</code> with with npm configured
+					to use Python 2.7, Python ran as a different user without admin privileges, and failed. (Does anyone know why?)</p>
+				<p><a href="https://github.com/npm/npm/issues/3139">It is safe</a> to use sudo when npm installing, but I would prefer to sudo as little as possible. To solve the
+					problem, I configured npm to install global packages to a directory that does not require admin privileges.</p>
+				<p>It is not difficult to configure npm to use a custom path for storing global modules (<a href="http://stackoverflow.com/questions/19352976/npm-modules-wont-install-globally-without-sudo">stackoverflow</a>).</p>
+				<pre><code>$ npm config set prefix &apos;~/.npm-packages&apos;</code></pre>
+				<p>Then add the following to .bashrc (linux) .bash_profile (osx)</p>
+				<pre><code>export PATH=&quot;$PATH:$HOME/.npm-packages/bin&quot;</code></pre>
+				<p>This allows us to <code>npm install -g</code> without sudo. It also allows Anaconda to manage python installations, giving us Python 3.4.3 by default in the
+					terminal.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/praise-for-the-name-of-the-wind">Praise for The Name of the Wind</a></h2><span class="post-date">Aug 1, 2014</span></div>
+			<div class="post-content">
+				<p>I love escaping into a fantasy world. At best, reading a fantasy novel is a vacation, a waking dream, a story you become a part of. After I finished reading
+					through all 5 books in <em>A Song of Fire and Ice</em> for a second time, I started looking to scratch the Fantasy/SciFi itch. However, I often find fantasy
+					novels frustrating. For example&#x2026;</p>
+				<ul>
+					<li><em>The Hobbit</em> is amazing, but I&#x2019;ve read it 18 times. LOTR is acceptable, but I finished it recently.</li>
+					<li>Neal Stephenson is pretty good, but his stories are about caricatures and ideas, not characters and relationships.</li>
+					<li><em>The Belgariad</em> series was enjoyable, but felt juvenile - Every Character is obviously either good or bad. Nothing bad ever happens to any of the good
+						characters. The obvious good guys &#x201C;win&#x201D; every single encounter.</li>
+					<li>I started <em>Eye of the World</em> on three separate occasions. I could tolerate the campyness, it moved just a little too slowly, and I lost interest every
+						time.</li>
+				</ul>
+				<p>I started reading <em>Wizard&#x2019;s First Rule</em>, the first book in the The Sword of Truth series. But after the first ~5 chapters I gave up, frustrated.</p>
+				<p>In the best stories, I believe the characters and their actions as much as I believe my own personal relationships. A convincing cast pulls me in to the story
+					better than anything else.</p>
+				<p>However, most fantasy stories do not have convincing characters. The most offensively unconvincing characters are love interests.</p>
+				<p>Let me outline the plot at the beginning of <em>Wizard&#x2019;s First Rule</em>&#x2026;</p>
+				<blockquote>
+					<p>Our hero lives on the outskirts of a small remote village. While investigating the mysterious sudden murder of his parents, he notices a beautiful female traveler
+						walking in the wilderness alone. He also notices four sinister men who are surreptitiously stalking the traveler. Our hero meets the girl, helps her avoid,
+						and eventually defeat her stalkers.</p>
+				</blockquote>
+				<blockquote>
+					<p>It turns out that the girl is actually a highly intelligent and powerful magician (not quite powerful enough to defeat the four men by herself), and while she
+						maintains a tough exterior, she has been through traumatizing experiences, and occasionally needs the dependable kindness and emotional support that only our
+						hero can provide. Our hero finds her quite attractive, but comes to consider her his friend, and having a kind and understanding disposition would never try
+						to take advantage of her occasional weakened state.</p>
+				</blockquote>
+				<p>I am supposed to relate to the main character. This is preying on the fantasy that an attractive and powerful girl will see what a good, wise friend I can be,
+					open up to me for emotional and physical support, eventually leading to romantic, and finally sexual interactions&#x2026; She comes to me (and only me) and
+					opens herself to me because of my humility, wisdom, patience, and overall goodness. This story that plays out in the first few chapters of <em>Wizard&#x2019;s First Rule</em>					is unrealistic and aggravating. It&#x2019;s an angle that&#x2019;s overused and abused. I suspect it&#x2019;s also alienating to non-male readers.</p>
+				<p>Why is this same story played out in so many other fantasy novels? As I was approaching the last chapter of <em>Hyperion</em>, I thought the story would finish
+					inoffensively, but then the conclusion of the entire story depended completely on an improbable and unconvincing love story not at unlike the one in <em>Wizard&#x2019;s First Rule</em>.</p>
+				<p>I concede that not every story needs to be written for all genders. They are <em>fantasy</em> novels after all. Romance novels (for example) are often written
+					and marketed to a female audience. I imagine unrealistic male love interests are common in romance novels.</p>
+				<p>I&#x2019;ve been reading <em>The Name of the Wind</em> by Patrick Rothfuss. It&#x2019;s wonderful. It&#x2019;s imperfect. It&#x2019;s like being in the other
+					world. It&#x2019;s like being drunk. While I&#x2019;m reading, the current world ceases to exist. I stop noticing words on the page, and the world in the story
+					materializes in front of me. Best of all, this is a novel that gets the love story right. How? Well, the relationship is dysfunctional, doomed, and convincing.
+					The protagonist is in his early teens, awkward, crushed, and incompetent. There are specific things he does that I relate to doing when I was his age, or in
+					my first relationship. Awkwardness, competing interests, and ignored instincts all get in the way of the relationship. Perhaps it&#x2019;s because I&#x2019;ve
+					been there that I relate to it so strongly. Perhaps nearly everyone has.</p>
+				<p>I am optimistic there are more fantasy novels like this one out there waiting to be read.</p>
+			</div>
+		</div>
+		<!-- pagination: navigate between pages-->
+		<div class="post post-content last">
+			<div class="pagination-nav"><a href="/posts" class="page-newer">...newer content</a>&nbsp | &nbsp<a href="/posts/3" class="page-older">older content...</a></div>
+		</div>
+		</div>
+</body>
+
+</html>

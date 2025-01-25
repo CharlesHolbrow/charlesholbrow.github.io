@@ -1,0 +1,417 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Blog</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item current-menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div
+	class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/connect-handler-example-for-simple-cors-requests">Connect Handler Example for Simple CORS Requests</a></h2><span class="post-date">Jul 8, 2014</span></div>
+			<div class="post-content">
+				<p>For reference, I&#x2019;m recording an example of handling <strong>Simple CORS Requests</strong> with some handy connect/express implementation details.</p>
+				<p>Remember when using <a href="http://www.senchalabs.org/connect/proto.html#app.use">webapp.use()</a> with a path as the first argument:</p>
+				<ul>
+					<li>All sub-paths of that path are also handled</li>
+					<li>The specified path is striped from the beginning <code>req.url</code> inside request handlers</li>
+				</ul>
+				<p>Notes about the <code>req</code> parameter to request handlers:</p>
+				<ul>
+					<li><code>req</code> objects are instances of node&#x2019;s <a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a></li>
+					<li>Your framework may build on top of the <code>IncomingMessage</code> interface. For example, express adds the <a href="http://expressjs.com/api.html#req.param">param</a>						method</li>
+				</ul>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// hosts whitelist</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> coorsAccessOrigins <span class="op">=</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;http://localhost:3000&apos;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;http://example.com&apos;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;http://charlesholbrow.com&apos;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;http://www.charlesholbrow.com&apos;</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">// allow simple CORS GET requests to the /dds directory</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>webApp<span class="op">.</span><span class="fu">use</span>(<span class="st">&apos;/dds&apos;</span><span class="op">,</span> <span class="kw">function</span>(req<span class="op">,</span> res<span class="op">,</span> next){</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Don&apos;t add access control headers if host is not in whitelist</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>coorsAccessOrigins[req<span class="op">.</span><span class="at">headers</span><span class="op">.</span><span class="at">origin</span>]) <span class="cf">return</span> <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">// The origin header implies this is a CORS request.</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// The user-agent (the browser) is unlikely to add the origin</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// header if it doesn&apos;t support CORS</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>req<span class="op">.</span><span class="at">headers</span><span class="op">.</span><span class="at">origin</span>) <span class="cf">return</span> <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">setHeader</span>(<span class="st">&apos;Access-Control-Allow-Origin&apos;</span><span class="op">,</span> req<span class="op">.</span><span class="at">headers</span><span class="op">.</span><span class="at">origin</span>)<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">setHeader</span>(<span class="st">&apos;Access-Control-Allow-Methods&apos;</span><span class="op">,</span> <span class="st">&apos;GET&apos;</span>)<span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+				<p>Notice the difference between the <code>origin</code> request header and the <code>host</code> request header.</p>
+				<ul>
+					<li>The <code>host</code> request-header specifies the Internet host and port number of the resource being requested</li>
+					<li>The <code>origin</code> request-header indicates that this is a CORS request</li>
+				</ul>
+				<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// example req.headers object</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;host&quot;</span><span class="op">:</span> <span class="st">&quot;localhost:3000&quot;</span><span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;connection&quot;</span><span class="op">:</span> <span class="st">&quot;keep-alive&quot;</span><span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;cache-control&quot;</span><span class="op">:</span> <span class="st">&quot;no-cache&quot;</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;pragma&quot;</span><span class="op">:</span> <span class="st">&quot;no-cache&quot;</span><span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;origin&quot;</span><span class="op">:</span> <span class="st">&quot;http://charles.meteor.com&quot;</span><span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;user-agent&quot;</span><span class="op">:</span> <span class="st">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36&quot;</span><span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;accept&quot;</span><span class="op">:</span> <span class="st">&quot;*/*&quot;</span><span class="op">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dnt&quot;</span><span class="op">:</span> <span class="st">&quot;1&quot;</span><span class="op">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;referer&quot;</span><span class="op">:</span> <span class="st">&quot;http://charles.meteor.com/&quot;</span><span class="op">,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;accept-encoding&quot;</span><span class="op">:</span> <span class="st">&quot;gzip,deflate,sdch&quot;</span><span class="op">,</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;accept-language&quot;</span><span class="op">:</span> <span class="st">&quot;en-US,en;q=0.8&quot;</span><span class="op">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x-forwarded-for&quot;</span><span class="op">:</span> <span class="st">&quot;127.0.0.1&quot;</span><span class="op">,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x-forwarded-port&quot;</span><span class="op">:</span> <span class="st">&quot;3000&quot;</span><span class="op">,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x-forwarded-proto&quot;</span><span class="op">:</span> <span class="st">&quot;http&quot;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/cross-origin-resource-sharing-and-jsonp-a-simple-explanation">Cross-Origin Resource Sharing and JSONP: A Simple Explanation</a></h2><span class="post-date">Jun 8, 2014</span></div>
+			<div class="post-content">
+				<p>If you are browsing farmville.com and a script downloaded makes an ajax request to facebook.com, this is known as cross-origin resource sharing, or CORS.</p>
+				<p>When a modern browser encounters a CORS request, it intervenes for security reasons. Browsers distinguish <strong>Simple Requests</strong> from <strong>Non-Simple Requests</strong>					using a different intervention strategy for each.</p>
+				<h2 id="simple-requests">Simple Requests</h2>
+				<p>An HTTP request is considered simple if all 3 criteria are met:</p>
+				<ol type="1">
+					<li>The request method is <strong>GET</strong>, <strong>HEAD</strong> or <strong>POST</strong></li>
+					<li>the request uses only headers in the following list:</li>
+				</ol>
+				<ul>
+					<li>Accept</li>
+					<li>Accept-Language</li>
+					<li>Content-Type</li>
+					<li>Content-Language</li>
+				</ul>
+				<ol start="3" type="1">
+					<li>The value field of the Content-Type header matches one of the following:</li>
+				</ol>
+				<ul>
+					<li>application/x-www-form-urlencoded</li>
+					<li>multipart/form-data</li>
+					<li>text/plain</li>
+				</ul>
+				<p>For simple requests, the browser adds the <code>Origin</code> header behind the scenes. The request received by our server might look like this:</p>
+				<pre><code>GET /some/resource
+Host: bar.other
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20081130 Minefield/3.1b3pre
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Origin: http://foo.example</code></pre>
+				<p>The server observes the <code>Origin</code> header, and serves back a response. The browser inspects the HTTP Response and looks for the Access-Control-Allow-Origin
+					header.</p>
+				<pre><code>Access-Control-Allow-Origin: http://bar.example.com</code></pre>
+				<p>In the example above, the server is indicating that only requests originating from <code>http://bar.example.com</code> are permitted to access the resource.
+					The browser will discard the data in the http response, and throw a JavaScript error indicating that the AJAX request was unsuccessful. Note that wild cards
+					can also be used for the value of <code>Access-Control-Allow-Origin</code>. In the next example, the server is indicating that requests from any origin may
+					be permitted to access the response.</p>
+				<pre><code>Access-Control-Allow-Origin: *</code></pre>
+				<p>The Access Control headers hidden from the JavaScript API - they are removed be the browser before exposing the HTTP Response to your JavaScript code.</p>
+				<h2 id="non-simple-requests">Non-Simple Requests</h2>
+				<p>For non simple HTTP Requests, the browser employs a different security strategy. Instead of sending an ajax request directly to the other server, it first sends
+					an OPTIONS http request. The headers in the response to the OPTIONS request indicate to the browser if the server is willing to listen to requests originating
+					from other servers.</p>
+				<p>In our example, facebook.com needs to be configured to respond to OPTIONS requests with a specific header format. These headers indicate to the browser which
+					domains are allowed to make resource requests.</p>
+				<p>CORS is the modern way to make cross-origin requests &#x2013; It&#x2019;s not supported by IE 7 and below. JSONP is another option for making cross origin requests.</p>
+				<p>JSONP exploits the fact that <code>&lt;script&gt;</code> elements are allowed to make cross-origin GET requests to retrieve script files. A server can return
+					an html document containing a script tag with a cross origin <code>src=&apos;www.example.com&apos;</code> attribute. The browser will not interfere with this
+					request.</p>
+				<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> myFunc <span class="op">=</span> <span class="kw">function</span>(data){</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">// append a script tag to the document. This will trigger a cross-origin GET request.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="fu">write</span>(<span class="st">&quot;&lt;script src=&apos;http://facebook.com/example/api/callback=myFunc&apos;&gt;&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span></code></pre></div>
+				<p>The script returned by Facebook&#x2019;s executes a function that we (hopefully) defined prior to making the request.</p>
+				<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// example script returned and run by dynamically adding a script tag</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">myFunc</span>({</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">name</span><span class="op">:</span> <span class="st">&apos;Charles&apos;</span><span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">id</span><span class="op">:</span> <span class="st">&apos;123456&apos;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/dns-cname-a-record-and-http-redirect-explained">DNS, CNAME, A Record, and HTTP Redirect Explained</a></h2><span class="post-date">May 30, 2014</span></div>
+			<div class="post-content">
+				<p>You have probably noticed that different websites handle the <strong>www</strong> subdomain in different ways. For Example:</p>
+				<ul>
+					<li><a href="http://google.com">google.com</a> redirects you to <a href="http://www.google.com">www.google.com</a></li>
+					<li><a href="http://www.ipython.org">www.ipython.org</a> redirects you to <a href="http://ipython.org">ipython.org</a></li>
+					<li><a href="http://writersreply.com">writersreply.com</a> and <a href="http://www.writersreply.com">www.writersreply.com</a> look identical without redirecting</li>
+				</ul>
+				<p>It&#x2019;s worth understanding DNS, A Records, CNAME, the HTTP Host Request Header, and HTTP Redirects so you can make your domain function the way that you
+					want.</p>
+				<h2 id="dns---domain-name-system">DNS - Domain Name System</h2>
+				<p>When you buy a domain, your registrar allows you to specify <strong>Authoritative Name Servers</strong>. For example you might register <code>ns1.domaincontrol.com</code>					as the authoritative resource on the internet for identifying the IP address of your domain.</p>
+				<h2 id="a-records-and-cname">A Records and CNAME</h2>
+				<p>Once your Authoritative Name Server is registered, you configure that name server, specifying the IP addresses that your domain and (optionally) subdomains point
+					to.</p>
+				<p>An <strong>A Record</strong> (Address Record) points your domain or subdomain to an IP Address. An <strong>A Record</strong> will always point to an IP Address.</p>
+				<p>A <strong>CNAME</strong> (Canonical Name aka Alias) points your domain or subdomain to to the the IP Address of a different domain. <strong>CNAME</strong> records
+					always point to domain names.</p>
+				<p>The **<span class="citation" data-cites="*">@*</span>* symbols is used in DNS records to indicate your root domain name. Consider the hypothetical DNS table
+					below for the domain <code>writersreply.com</code></p>
+				<table>
+					<style>
+						thead {
+							font-weight: bold;
+						}
+						
+						td {
+							width: 180px;
+						}
+						
+						table,
+						td,
+						th {
+							border: 1px solid black;
+							border-collapse: collapse;
+							padding: 4px 8px;
+						}
+					</style>
+					<thead>
+						<tr>
+							<td>
+								Host Name
+							</td>
+							<td>
+								Address
+							</td>
+							<td>
+								Type
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								@
+							</td>
+							<td>
+								18.85.28.11
+							</td>
+							<td>
+								A
+							</td>
+						</tr>
+						<tr>
+							<td>
+								www
+							</td>
+							<td>
+								writersreply.com
+							</td>
+							<td>
+								CNAME
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<p>The example above doesn&#x2019;t actually redirect users - it just means that when you navigate your browser to <code>www.example.com</code> the HTTP Request
+					goes to the same IP address as if you navigate to <code>example.com</code>. In either case the address bar in your browser will be unchanged when the site loads.</p>
+				<h2 id="http-redirects">HTTP Redirects</h2>
+				<p>You can&#x2019;t redirect users with DNS Configuration. However, <strong>some DNS providers offer a redirection service</strong>. If your Domain registrar does
+					not offer redirection service, you have to configure your web server to redirect http traffic manually.</p>
+				<p>How does this work? Here&#x2019;s an example of browser behavior when you navigate to <code>google.com</code>:</p>
+				<ol type="1">
+					<li>Use the DNS IP address provided by your Router or ISP to determine the Authoritative Name Server for <code>google.com</code></li>
+				</ol>
+				<ul>
+					<li>Answer: <code>ns1.google.com</code></li>
+				</ul>
+				<ol start="2" type="1">
+					<li>Request the ip address of <code>google.com</code> from <code>ns1.google.com</code></li>
+				</ol>
+				<ul>
+					<li>Answer: <code>74.125.21.100</code></li>
+				</ul>
+				<ol start="3" type="1">
+					<li>Send an HTTP Request to <code>74.125.21.100</code> looking something like this:</li>
+				</ol>
+				<pre><code>GET / HTTP/1.1
+Host: google.com
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: en-US,en;q=0.8
+DNT: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36
+X-Chrome-UMA-Enabled: 1</code></pre>
+				<p>Notice that the HTTP request is sent to an IP address, but it includes the <strong>Host Header</strong> <code>google.com</code>. Google&#x2019;s servers see
+					the host name in the request, and send back an HTTP 301 Redirect looking akin to this:</p>
+				<pre><code>HTTP/1.1 301 Moved Permanently
+Location: http://www.google.com/
+Content-Type: text/html; charset=UTF-8
+Server: gws
+Content-Length: 219
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Alternate-Protocol: 80:quic
+Age: 25150
+Date: Sun, 01 Jun 2014 13:09:35 GMT
+Expires: Tue, 01 Jul 2014 13:09:35 GMT
+Cache-Control: public, max-age=2592000
+Connection: keep-alive</code></pre>
+				<p>Important points</p>
+				<ul>
+					<li>The only thing that DNS acutally does is tie Domain names to IP Addresses</li>
+					<li>HTTP Requests are sent to IP addresses, but include the domain name in the Host Header</li>
+					<li>HTTP servers may serve different content depending on the contents of the Host Header</li>
+				</ul>
+				<p>The exact way you configure your server to redirect http requests depends on the server you are using.</p>
+				<ul>
+					<li>Apache servers can redirect via the .htaccess file (<a href="http://stackoverflow.com/questions/1100343/apache-redirect-from-non-www-to-www">Stackoverflow</a>)</li>
+					<li>Nginx servers can redirect via server block (<a href="http://stackoverflow.com/questions/10294481/how-to-redirect-a-url-in-nginx">Stackoverflow</a>)</li>
+					<li>Node.js servers inspect the HTTP Host header, and headers modify the response object</li>
+				</ul>
+				<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Inside node.js request handler</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">writeHead</span>(<span class="dv">302</span><span class="op">,</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;Location&apos;</span><span class="op">:</span> <span class="st">&apos;your/path/here&apos;</span><span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// optional other headers...</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>response<span class="op">.</span><span class="fu">end</span>()<span class="op">;</span></span></code></pre></div>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/i-hope">I hope</a></h2><span class="post-date">Dec 21, 2013</span></div>
+			<div class="post-content">
+				<p>I hope I live to see the day when we look back at this time period and say:</p>
+				<blockquote>
+					<p>They used <em>money</em> as a measure of success at all scales - how primitive!</p>
+				</blockquote>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/what-should-a-node-module-export">What Should a Node Module Export?</a></h2><span class="post-date">Oct 27, 2013</span></div>
+			<div class="post-content">
+				<p>A node.js module can export:</p>
+				<ul>
+					<li>A function that we call when we import a module</li>
+					<li>An object with properties</li>
+					<li>Both! (a function with assigned properties)</li>
+				</ul>
+				<p><code>module</code> is the global scope variable in a node.js file. It behaves similarly to <code>window</code> in the browser.</p>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Assignment can hide the &quot;exports&quot; name</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">// in a node.js file:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> exports <span class="op">=</span> <span class="st">&apos;Caution!&apos;</span> <span class="co">// creates a new exports object that will NOT be exported</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>exports <span class="op">=</span> <span class="st">&apos;Same problem!&apos;</span> <span class="co">// same problem as above</span></span></code></pre></div>
+				<p>The controller pattern (exemplified below) exports a function</p>
+				<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> app<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> templates<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> emailController<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Code outside of the exports function will be run once the </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">// first time we require this module is required</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> mongoose <span class="op">=</span> <span class="pp">require</span>(<span class="st">&apos;mongoose&apos;</span>)<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> User <span class="op">=</span> mongoose<span class="op">.</span><span class="fu">model</span>(<span class="st">&apos;User&apos;</span>)<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> controller <span class="op">=</span> {}<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">// if the exports function on a module requires the app,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">// pass express app in when we require this controller</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> <span class="kw">function</span>(_app) {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  app <span class="op">=</span> _app<span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// if we know that &apos;templates&apos; was set on the app before</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">// requring this controller, then we can app.get &apos;templates&apos;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">// This will re-set the templates variable every time that </span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">// this module-function is called.</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  templates <span class="op">=</span> app<span class="op">.</span><span class="fu">get</span>(<span class="st">&apos;templates&apos;</span>)<span class="op">;</span> </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="co">// We can also require modules directly on the exports</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">// function. Asume that the Email module uses the same</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">// module.exports = function(_app) pattern as this </span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="co">// module.</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  emailController <span class="op">=</span> <span class="pp">require</span>(<span class="bu">__dirname</span> <span class="op">+</span> <span class="st">&apos;controllers/Email&apos;</span>)(app)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> controller<span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>controller<span class="op">.</span><span class="at">getAPI</span> <span class="op">=</span> <span class="kw">function</span>(req<span class="op">,</span> res<span class="op">,</span> next) {<span class="op">...</span>}<span class="op">;</span></span></code></pre></div>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/what-is-an-express-js-app">What is an express.js app?</a></h2><span class="post-date">Jul 13, 2013</span></div>
+			<div class="post-content">
+				<p>An express <code>app</code> is built on top of the npm connect module. The express docs feel incomplete, because they do not cover behavior inherited from connect.</p>
+				<p>Express apps begin like this:</p>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> express <span class="op">=</span> <span class="pp">require</span>(<span class="st">&apos;express&apos;</span>)<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span></code></pre></div>
+				<p>The source of the express function looks like this <a href="https://github.com/visionmedia/express/blob/ba5c48aa864202ae9962a4bb7d5b570efa9caa44/lib/express.js#L32-L39">(github)</a>:</p>
+				<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createApplication</span>() {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> app <span class="op">=</span> <span class="fu">connect</span>()<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  utils<span class="op">.</span><span class="fu">merge</span>(app<span class="op">,</span> proto)<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="at">request</span> <span class="op">=</span> { <span class="dt">__proto__</span><span class="op">:</span> req<span class="op">,</span> <span class="dt">app</span><span class="op">:</span> app }<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="at">response</span> <span class="op">=</span> { <span class="dt">__proto__</span><span class="op">:</span> res<span class="op">,</span> <span class="dt">app</span><span class="op">:</span> app }<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> app<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+				<h2 id="connect-prototype">Connect Prototype</h2>
+				<p>The npm <code>connect</code> module is the foundation of our express app. The source of the <code>connect()</code> function above looks like this <a href="https://github.com/senchalabs/connect/blob/695f7e966ee3a6d76d9c76499b7a2191ba24d552/lib/connect.js#L64-L74">(github)</a>:</p>
+				<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createServer</span>() {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">app</span>(req<span class="op">,</span> res<span class="op">,</span> next){ app<span class="op">.</span><span class="fu">handle</span>(req<span class="op">,</span> res<span class="op">,</span> next)<span class="op">;</span> }</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  utils<span class="op">.</span><span class="fu">merge</span>(app<span class="op">,</span> proto)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  utils<span class="op">.</span><span class="fu">merge</span>(app<span class="op">,</span> <span class="bu">EventEmitter</span><span class="op">.</span><span class="at">prototype</span>)<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="at">route</span> <span class="op">=</span> <span class="st">&apos;/&apos;</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  app<span class="op">.</span><span class="at">stack</span> <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">arguments</span><span class="op">.</span><span class="at">length</span><span class="op">;</span> <span class="op">++</span>i) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    app<span class="op">.</span><span class="fu">use</span>(<span class="kw">arguments</span>[i])<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> app<span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+				<p>The code above uses <code>utils.merge</code> to give <code>app</code> all the functionality of the <a href="https://github.com/senchalabs/connect/blob/master/lib/proto.js">Connect http server prototype</a>.
+					This includes the <code>.use</code>, <code>.handle</code>, and <code>.listen</code> methods.</p>
+				<p>The app also merges <a href="https://github.com/Gozala/events">EventEmitter</a> from the node.js <code>events</code> library. <code>EventEmitter</code> is where
+					<code>app</code> gets <code>app.on</code> and <code>app.emit</code> from.</p>
+				<h2 id="app.listen-returns-a-server">app.listen returns a server</h2>
+				<p><code>app</code> is itself a request handler that is passed to node&#x2019;s <code>http.createServer</code> when you call <code>app.listen</code></p>
+				<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> port <span class="op">=</span> <span class="dv">3000</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> server <span class="op">=</span> app<span class="op">.</span><span class="fu">listen</span>(port)<span class="op">;</span></span></code></pre></div>
+				<p><code>app.listen</code> is defined in the connect prototype. It looks like this:</p>
+				<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// require &apos;http&apos;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="at">listen</span> <span class="op">=</span> <span class="kw">function</span>(){</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> server <span class="op">=</span> http<span class="op">.</span><span class="fu">createServer</span>(<span class="kw">this</span>)<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> server<span class="op">.</span><span class="at">listen</span><span class="op">.</span><span class="fu">apply</span>(server<span class="op">,</span> <span class="kw">arguments</span>)<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+				<p><code>http.createServer</code> returns a <code>net.Server</code> instance from node&#x2019;s <a href="http://nodejs.org/api/net.html">net module</a>.</p>
+				<h2 id="express-app-prototype">Express App Prototype</h2>
+				<p>After the connect initializaition has finished, we merge the express app prototype onto our new <code>connect</code> app.</p>
+				<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>utils<span class="op">.</span><span class="fu">merge</span>(app<span class="op">,</span> proto)<span class="op">;</span></span></code></pre></div>
+				<p>This line adds all the functionality from the <a href="https://github.com/visionmedia/express/blob/master/lib/application.js">express application prototype</a>.
+					This is where <code>app.use</code>, <code>app.routes</code>, <code>app.get</code>, etc are defined. This behavior is documented very clearly in the express
+					docs.</p>
+			</div>
+		</div>
+		<!-- pagination: navigate between pages-->
+		<div class="post post-content last">
+			<div class="pagination-nav"><a href="/posts/2" class="page-newer">...newer content</a>&nbsp | &nbsp<a href="/posts/4" class="page-older">older content...</a></div>
+		</div>
+		</div>
+</body>
+
+</html>

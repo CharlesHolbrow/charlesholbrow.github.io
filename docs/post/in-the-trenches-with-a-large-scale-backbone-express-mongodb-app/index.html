@@ -1,0 +1,60 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - In the Trenches With a Large Scale Backbone/Express/MongoDB App</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/in-the-trenches-with-a-large-scale-backbone-express-mongodb-app">In the Trenches With a Large Scale Backbone/Express/MongoDB App</a></h2><span class="post-date">Jul 10, 2013</span></div>
+			<div class="post-content">
+				<p>I&#x2019;ve just finished some contract work on the Web App <a href="http://www.visualstager.com">www.VisualStager.com</a>. This is a large scale project that
+					build on top of Express, Mongoose, Backbone, <a href="http://lazd.github.io/F/">F</a>, and <a href="http://lazd.github.io/PseudoClass/">PsuedoClass</a>.</p>
+				<p>Since Express and Backbone are both lightweight and flexible, it was pretty neat to see them working a part of a well designed large scale production app. My
+					team of four developers had just under two weeks to build out an admin interface for the entire app.</p>
+				<p>Visual Stager is an interior design app that depends on three.js and clever mathematics to position 3D furniture models inside a 2D photo of a room. We needed
+					to create admin pages for the Account, User, House, Photo, Scene, and Furniture collections. While the experience is still fresh in my mind, I&#x2019;m going
+					to memoize some interesting takeaways.</p>
+				<h2 id="pure-backbone-is-too-lightweight-for-large-scale-apps">Pure Backbone is too lightweight for large scale apps</h2>
+				<p>In a mature framework like Rails or Django, building an admin page is trivial. In our case, we depended on <a href="http://lazd.github.io/F/F/jsdoc/F.ListComponent.html">F.ListComponent</a>					to render collections of items as tables or lists without boilerplate. F.Component organizes the following into a logical unit of application code:</p>
+				<ul>
+					<li>A Backbone View</li>
+					<li>A Backbone Model</li>
+					<li>Handlebars templates</li>
+					<li>Public methods</li>
+					<li>Sub-components</li>
+				</ul>
+				<p>F Components address one of the main complexity headaches found in backbone apps &#x2013; There is no Controller class. Additionally, we can subclass F Components
+					using the <a href="http://lazd.github.io/PseudoClass/">PsuedoClass</a> inheritance pattern.</p>
+				<h2 id="no-associations">No Associations</h2>
+				<p>In ActiveRecord we have &#x201C;associations&#x201D;. Imagine a User in our app is a member of many accounts. When we delete the user, we want to automatically
+					remove that user from all accounts it belongs to. This is trivial with ActiveRecord. However, the Mongo/Express stack is not mature enough to have abstracted
+					this behavior. We had to write the association logic manually in our server-side controllers.</p>
+				<h2 id="async">Async</h2>
+				<p>This is where Express gets fun. As part of the admin behavior, I found myself writing backend operations that run on large collections of MongoDB documents.
+					The asynchronous style of node.js lends itself perfectly to this type of operation. The <a href="https://github.com/caolan/async">async</a> library provides
+					operations that operate on collections, similar to _.each and _.map &#x2013; the difference between async and underscore is synchronicity. Async iterators may
+					operate on each member of a collection asynchronously.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Projections and Projection Matrices</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/projections-and-projection-matrices">Projections and Projection Matrices</a></h2><span class="post-date">Nov 27, 2015</span></div>
+			<div class="post-content">
+				<p><img src="http://i1222.photobucket.com/albums/dd494/psychicenemy/projection-matrices.png" style="max-width:369px; height:auto; margin-left:auto; margin-right:auto;">					As a simple example we project on to a line. First, calculate <span class="math inline">\(e\)</span> and <span class="math inline">\(p\)</span>.</p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= \vec{e} \bullet{}\vec{a} &amp;&amp; \vec{e} \perp \vec{a} \text{ so the dot product is zero}\\
+0 &amp;= (\vec{b}-\hat{x}\vec{a})\bullet{}\vec{a} &amp;&amp; \text{notice } \vec{e} = \vec{b}-\vec{p} = \vec{b}-\hat{x}\vec{a}\\
+0 &amp;= \vec{b}\bullet \vec{a} - \vec{a} \hat{x}\bullet \vec{a} &amp;&amp; \text{distribute } \vec{a}\\
+0 &amp;= (\vec{b} \bullet \vec{a}) - \hat{x} (\vec{a} \bullet \vec{a}) &amp;&amp; 
+\text{notice } \hat{x} \text{ is a scalar, so the last term can be } \hat{x} \vec{a} \bullet \vec{a}\\
+\hat{x} (\vec{a} \bullet \vec{a}) &amp;= (\vec{b} \bullet \vec{a})\\
+\hat{x} &amp;= \dfrac{\vec{b} \bullet \vec{a}}{\vec{a} \bullet \vec{a}} 
+\implies \vec{p} = \dfrac{\vec{b} \bullet \vec{a}}{\vec{a} \bullet \vec{a}} \vec{a} &amp;&amp; 
+\text{because } \vec{p} = \hat{x}\vec{a}
+\end{align}\]</span></p>
+				<p>We can summarize the projection to the matrix as, <span class="math inline">\(\vec{p} = P\vec{b}\)</span>. This is easy to find if we present the equation the
+					other way around. Notice that with vectors the order is inconsequential, because <span class="math inline">\(\vec{a} \bullet \vec{b} = \vec{b} \bullet \vec{a}\)</span></p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= \vec{a} \bullet \vec{e} &amp;&amp; \vec{a}, \vec{e} \text{ on opposite sides}\\
+0 &amp;= (\vec{a} \bullet \vec{b}) - \hat{x}(\vec{a} \bullet \vec{a})\\
+\hat{x}(\vec{a} \bullet \vec{a}) &amp;= (\vec{a} \bullet \vec{b})\\
+\hat{x} &amp;= \dfrac{\vec{a} \bullet \vec{b}}{\vec{a} \bullet \vec{b}} = \dfrac{\vec{a}^T\vec{b}}{\vec{a}^T\vec{a}}
+\end{align}\]</span></p>
+				<p>With <span class="math inline">\(\hat{x}\)</span> in this form, we can calculate the permutation matrix, <span class="math inline">\(P\)</span> from <span class="math inline">\(\vec{p} = P\vec{b}\)</span></p>
+				<p><span class="math display">\[\begin{align}
+\vec{p} &amp;= \vec{a}\dfrac{\vec{a}^T\vec{b}}{\vec{a}^T\vec{a}}\\
+\vec{p} &amp;= \dfrac{\vec{a}\vec{a}^T}{\vec{a}^T\vec{a}}\vec{b}
+\implies P = \dfrac{\vec{a}\vec{a}^T}{\vec{a}^T\vec{a}} &amp;&amp; \text{because } \vec{p}= P\vec{b}
+\end{align}\]</span></p>
+				<h2 id="project-onto-a-plane-in-mathbbr3">Project Onto a Plane in <span class="math inline">\(\mathbb{R}^3\)</span></h2>
+				<p>Note that <span class="math inline">\(\vec{a}^T\vec{a}\)</span> in the denominator evaluates to a scalar. If we want to project onto a plane, the denominator
+					becomes <span class="math inline">\(A^TA\)</span>, which evaluates to a matrix.</p>
+				<ul>
+					<li>Division by a matrix has no meaning. You cannot divide by a martix.</li>
+					<li>In arithmatic, we undo multiplication with division.</li>
+					<li>To undo the effects of a matrix multiplication, we multiply the inverse of the matrix. <span class="math inline">\(A^{-1}A\vec{b}=\vec{b}\)</span></li>
+					<li>We must re-arrange the equation so that we use inverse matrices instead of division.</li>
+				</ul>
+				<p>We can think of projecting onto a plane as projecting onto multiple vectors. To project <span class="math inline">\(\vec{b}\)</span> onto <span class="math inline">\(A\)</span>,
+					we are looking for the vector <span class="math inline">\(\hat{x}\)</span>, such that <span class="math inline">\(\vec{p}=A\hat{x}\)</span>, where <span class="math inline">\(\vec{p}\)</span>					is the point on the plane closest to <span class="math inline">\(\vec{b}\)</span>. The first step is to find the vector <span class="math inline">\(\hat{x}\)</span>.</p>
+				<p>Like the first example, we define the error vector, <span class="math inline">\(\vec{e}\)</span>, as the vector that goes from the plane to <span class="math inline">\(\vec{b}\)</span></p>
+				<p><span class="math display">\[\begin{equation*}
+\vec{e} = \vec{b} - A\hat{x}
+\end{equation*}\]</span></p>
+				<p>Assume <span class="math inline">\(A\)</span> is a matrix made of two vectors, <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span>					in <span class="math inline">\(\mathbb{R}^3\)</span>:</p>
+				<p><span class="math display">\[\begin{equation}
+A = \begin{bmatrix}
+a_{11} &amp; a_{21} \\
+a_{12} &amp; a_{22} \\
+a_{13} &amp; a_{23}
+\end{bmatrix}
+\end{equation}\]</span></p>
+				<p>Our error vector, <span class="math inline">\(\vec{e}\)</span> will be perpendicular to both <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span>.
+					We want to find the closest point on <span class="math inline">\(A\)</span> to <span class="math inline">\(\vec{b}\)</span>. Set <span class="math inline">\(\vec{e}\)</span>					and <span class="math inline">\(\vec{a}\)</span> perpendicular <span class="math inline">\(0 = \vec{a}_n^T\vec{e}\)</span></p>
+				<p><span class="math display">\[\begin{align}
+0 &amp;= \vec{a}_1^T(\vec{b} - A\hat{x})\\
+0 &amp;= \vec{a}_2^T(\vec{b} - A\hat{x})
+\end{align}\]</span></p>
+				<p>There is a simple way to write the equation that captures all components at once.</p>
+				<p><span class="math inline">\(A^T(\vec{b}-A\hat{x})\)</span></p>
+				<p>Which can be written as</p>
+				<p><span class="math inline">\(A^T\vec{b} = A^TA\hat{x}\)</span></p>
+				<p>Which can be solved for <span class="math inline">\(\hat{x}\)</span></p>
+				<p><span class="math inline">\((A^TA)^{-1}A^T\vec{b} = \hat{x}\)</span></p>
+				<p>Now that we have the <span class="math inline">\(\hat{x}\)</span> vector, we can find the projection matrix. Remeber that <span class="math inline">\(\vec{p} = P\vec{b}\)</span>.
+					If we can arrange the equation above correctly, it gives us <span class="math inline">\(P\)</span>.</p>
+				<p><span class="math inline">\(\vec{p} = A\hat{x}\)</span></p>
+				<p>Subsitute <span class="math inline">\(\hat{x}\)</span></p>
+				<p><span class="math inline">\(\vec{p} = A(A^TA)^{-1}A^T\vec{b}\)</span></p>
+				<p>Now the equation is in the form <span class="math inline">\(\vec{p} = P\vec{b}\)</span>, so</p>
+				<p><span class="math inline">\(P = A(A^TA)^{-1}A^T\)</span></p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

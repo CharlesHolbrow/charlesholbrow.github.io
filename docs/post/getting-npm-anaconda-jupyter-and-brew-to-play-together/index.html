@@ -1,0 +1,58 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Getting Npm, Anaconda, Jupyter, and Brew to Play Together</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/getting-npm-anaconda-jupyter-and-brew-to-play-together">Getting Npm, Anaconda, Jupyter, and Brew to Play Together</a></h2><span class="post-date">Nov 25, 2015</span></div>
+			<div class="post-content">
+				<p>I chose to use Anaconda to manage my Python installation in favor of the OSX stock Python 2.7 or brew&#x2019;d Python. This makes it easy to switch between Python
+					2 and Python 3, and it works well with <a href="http://jupyter.org/">Project Jupyter</a>.</p>
+				<p>I would like to default to Python 3.4.3, because that works best with iPython notebooks in Project Jupyter. But npm packages often use node-gyp to build, and
+					node-gyp is not compatible with Python 3. When I tried to install the npm fsevents package, I got the following error:</p>
+				<pre><code>gyp ERR! configure error 
+gyp ERR! stack Error: Python executable &quot;python&quot; is v3.4.3, which is not supported by gyp.
+gyp ERR! stack You can pass the --python switch to point to Python &gt;= v2.5.0 &amp; &lt; 3.0.0.
+gyp ERR! stack     at failPythonVersion (/usr/local/lib/node_modules/npm/node_modules/node-gyp/lib/configure.js:108:14)
+...</code></pre>
+				<p>It is possible to specify a python version when npm installing <code>npm install --python=python2.7</code>. We can also configure npm to use a specific version
+					of python (<a href="http://stackoverflow.com/questions/20454199/how-to-use-a-different-version-of-python-during-npm-install">stackoverflow</a>).</p>
+				<pre><code>$ npm config set python python2.7</code></pre>
+				<p>This solved the node-gyp problem, but created another problem. By default, npm modules installed with the <code>-g</code> are installed to <code>/usr/local</code>.
+					You can check where global npm modules are stored with</p>
+				<pre><code>$ npm config get prefix</code></pre>
+				<p>I usually just use sudo when installing global npm modules in OSX. However, for some reason the when I <code>sudo npm install -g</code> with with npm configured
+					to use Python 2.7, Python ran as a different user without admin privileges, and failed. (Does anyone know why?)</p>
+				<p><a href="https://github.com/npm/npm/issues/3139">It is safe</a> to use sudo when npm installing, but I would prefer to sudo as little as possible. To solve the
+					problem, I configured npm to install global packages to a directory that does not require admin privileges.</p>
+				<p>It is not difficult to configure npm to use a custom path for storing global modules (<a href="http://stackoverflow.com/questions/19352976/npm-modules-wont-install-globally-without-sudo">stackoverflow</a>).</p>
+				<pre><code>$ npm config set prefix &apos;~/.npm-packages&apos;</code></pre>
+				<p>Then add the following to .bashrc (linux) .bash_profile (osx)</p>
+				<pre><code>export PATH=&quot;$PATH:$HOME/.npm-packages/bin&quot;</code></pre>
+				<p>This allows us to <code>npm install -g</code> without sudo. It also allows Anaconda to manage python installations, giving us Python 3.4.3 by default in the
+					terminal.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

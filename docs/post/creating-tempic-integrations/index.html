@@ -1,0 +1,142 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Creating Tempic Integrations</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/creating-tempic-integrations">Creating Tempic Integrations</a></h2><span class="post-date">Oct 29, 2016</span></div>
+			<div class="post-content">
+				<figure>
+					<img src="/project/tempic-integrations/polytempic-accelerando-clean.png" alt="A polytempic accelerando">
+					<figcaption aria-hidden="true">A polytempic accelerando</figcaption>
+				</figure>
+				<h3 id="early-american-experimental-music">Early American Experimental Music</h3>
+				<p>American composer Charles Ives (1874-1954) wrote many experimental pieces where he would selectively disregard certain &#x2018;rules&#x2019; of music theory,
+					and explore the sonic results. In an essay on his experimental music, Ives asked this question:</p>
+				<blockquote>
+					<p>If you can play a tune in one key, why can&#x2019;t a feller, if he feels like, play one in two keys?</p>
+				</blockquote>
+				<p>Ives&#x2019; early <strong>polytonal</strong> experiments include pieces with a melody in one musical key and accompaniment in another key, and pieces with separate
+					voices, each in separate keys. These experimental pieces were not published or performed until long after he wrote them, but Ives&#x2019; ideas did appear in
+					his less systematic compositions. More importantly his ideas influenced a generation of younger composers.</p>
+				<p>Among these younger composers was Henry Cowell (1897-1965), who in 1930 published <em>New Musical Resources</em>, a collection of largely unexplored musical
+					ideas. The book extends the notion of multiple simultaneous musical keys <strong>polytonal music</strong> to multiple simultaneous tempos, <strong>polytempic music</strong>.</p>
+				<p>Can we make music with multiple simultaneous tempos? Certainly. But Cowell took the idea a step further. Assume we have multiple simultaneous tempos <em>and</em>					these tempos are accelerating or decelerating relative to each other. In <em>New Musical Resources</em>, Cowell called this practice <strong>sliding tempo</strong>,
+					and he noted that this would not be easy to do. In 1930, he writes:</p>
+				<blockquote>
+					<p>For practical purposes, care would have to be exercised in the use of sliding tempo, in order to control the relation between tones in a sliding part with those
+						in another part being played at the same time: a composer would have to know in other words, what tones in a part with rising tempo would be struck simultaneously
+						with other tones in a part of, say, fixed tempo, and this from considerations of harmony. There would usually be no absolute coincidence, but the tones which
+						would be struck at approximately the same time could be calculated.</p>
+				</blockquote>
+				<h3 id="phase-music">Phase Music</h3>
+				<p>Can we calculate the times of coincidence like Cowell suggests? How? Can a musician even perform polytempic music with tempo accelerations or decelerations?
+					Over the course of the 20th century, musicians explored this idea in what is now called <em>phase music</em> (<a href="https://en.wikipedia.org/wiki/Phase_music">wikipedia</a>).
+					One early example is <em>Piano Phase</em> (1967) by Steve Reich (<a href="https://en.wikipedia.org/wiki/Piano_Phase">wikipedia</a>, <a href="https://vimeo.com/98823512">vimeo</a>).</p>
+				<p>Through experimentation, Steve Reich found that if the music is reasonably simple, two performers can make synchronized tempo adjustments relative to each other
+					well enough to yield compelling results. In <em>Piano Phase</em> two pianos both play the same repeating 12 note musical pattern. One musician plays at a slightly
+					faster rate than the other. It is possible for a musician to play this, but there is a limit to complexity of the patterns that a musician can play and a limit
+					to the number of simultaneous changing tempi a musician can comprehend. <em>Piano Phase</em> approaches the limit of what a musician can perform. Can we not
+					use electronic sequencers or digital audio tools to synthesize complex phase music with many simultaneous tempic transitions?</p>
+				<p>Most phase music (including <em>Piano Phase</em>) layers identical copies of musical content playing at slightly different speeds. The layers begin in-phase
+					with with each other, and gradually drift out of phase. Reich&#x2019;s <em>Piano Phase</em> is no exception. As the layers drift out of phase, our listening
+					attention is drawn to variations caused by shifting phase relationships between the layers. In the example below, the two layers start out playing together
+					at 90 beats-per-minute (BPM), at <span class="math inline">\(t=0\)</span> the top layer abruptly starts playing at 100 BPM.</p>
+				<figure>
+					<img src="/project/tempic-integrations/naive-polytempic-example.png" alt="Abrupt tempo change">
+					<figcaption aria-hidden="true">Abrupt tempo change</figcaption>
+				</figure>
+				<p>If we wait long enough, eventually the layers will re-align, and and the whole pattern will start from the beginning again. But what if we want to control exactly
+					when the layers re-synchronize? Can we specify precisely both the time and the phase of sync points without abrupt changes in tempo? How can we sequence patterns
+					like the one below exactly? This is the central question of <strong>Tempic Integrations</strong>.</p>
+				<figure>
+					<img src="/project/tempic-integrations/basic-tempo-transition.png" alt="Continuous tempo acceleration from 90 BPM to 120 BPM">
+					<figcaption aria-hidden="true">Continuous tempo acceleration from 90 BPM to 120 BPM</figcaption>
+				</figure>
+				<h3 id="tempic-integrations">Tempic Integrations</h3>
+				<p>If we want to specify the exact number of beats that elapse between the beginning of a tempo acceleration and the end point of the acceleration, and we want
+					to hear this precisely we need a mathematical model for shaping our tempo acceleration curves. The goal is to compose and audition music where:</p>
+				<ul>
+					<li>Swarms of an arbitrary number of simultaneous tempi coexist.</li>
+					<li>Each individual player within the swarm can continuously accelerate or decelerate individually, but also as a member of a cohesive whole.</li>
+					<li>Each musical line can converge and diverge at explicit points. At each point of convergence the phase of the meter within the tempo can be set.</li>
+				</ul>
+				<p>We start by defining a single tempo transition. Consider the following example from the image above:</p>
+				<ul>
+					<li>Assume we have 2 snare drum players. Both begin playing the same beat at 90 BPM in common time.</li>
+					<li>One performer gradually accelerates relative to the other. We want to define a continuous tempo curve such that one drummer accelerates to 120 BPM.</li>
+					<li>So far, we can easily accomplish this with a simple linear tempo acceleration. However, we want the tempo transition to complete exactly when <em>both</em>						drummers are on a down-beat, so the combined effect is a 3 over 4 rhythmic pattern. Linear acceleration results in the transition completing at an arbitrary
+						phase.</li>
+					<li>We want the accelerating drummer to reach the new tempo after exactly 20 beats.</li>
+					<li>We also want the acceleration to complete in exactly 16 beats of the original tempo, so that the drummer playing a constant tempo and the accelerating drummer
+						are playing together.</li>
+				</ul>
+				<p>We are interested in both the number of beats elapsed in the static tempo <em>and</em> in the changing tempo, as well as the absolute tempo. If we think of the
+					number of beats elapsed as our <em>position</em>, and the tempo as our <em>rate</em>, we see how this resembles a physics problem. If we have a function that
+					describes our tempo (or rate), we can integrate that function, and the result will tell us our number of beats elapsed (or position). Given the above considerations,
+					our tempo curve is defined in terms of 5 constants:</p>
+				<ul>
+					<li>Time <span class="math inline">\(t_0=0\)</span>, when the tempo transition begins</li>
+					<li>A known time, <span class="math inline">\(t_1\)</span>, when the tempo transition ends</li>
+					<li>A known starting tempo: <span class="math inline">\(\dot{x}_0\)</span></li>
+					<li>A known finishing tempo: <span class="math inline">\(\dot{x}_1\)</span></li>
+					<li>The number of beats elapsed in the changing tempo between <span class="math inline">\(t_0\)</span> and <span class="math inline">\(t_1\)</span>: <span class="math inline">\(x_1\)</span></li>
+				</ul>
+				<p>The tension of the tempo curve determines how many beats elapse during the transition period. The curve is well-defined for some starting acceleration
+					<span
+					class="math inline">\(a_0\)</span> and finishing acceleration <span class="math inline">\(a_1\)</span>, so we define the curve in terms of linear acceleration. Using Newtonian
+						notation we can describe our tempo acceleration as:</p>
+				<p><span class="math display">\[\begin{equation}
+    \ddot{x}_1 = a_0 + a_1t_1
+\end{equation}\]</span></p>
+				<p>Integrating linear acceleration (above) yields a quadratic velocity curve (below). The velocity curve describes the tempo (in beats per minute) with respect
+					to time.</p>
+				<p><span class="math display">\[\begin{equation}
+    \dot{x}_1 = \dot{x}_0 + a_0t_1 + \frac{a_1t_1^2}{2}
+\end{equation}\]</span></p>
+				<p>Integrating velocity (above) gives us a function describing position (the number of beats elapsed with respect to time, below).</p>
+				<p><span class="math display">\[\begin{equation}
+    x_1 = x_0 + \dot{x}_0t_1 + \frac{a_0t_1^2}{2} + \frac{a_1t_1^3}{6}
+\end{equation}\]</span></p>
+				<p>With equations for <span class="math inline">\(\dot{x}_1\)</span> and <span class="math inline">\(x_1\)</span>, we can solve for our two unknowns, <span class="math inline">\(a_0\)</span>					and <span class="math inline">\(a_1\)</span>. First we solve both equations for <span class="math inline">\(a_1\)</span>:</p>
+				<p><span class="math display">\[\begin{equation}
+    a_1 = \frac{-2}{t_1^2}(\dot{x}_0-\dot{x}_1 + a_0t_1) = \frac{-6}{t_1^3}(\dot{x}_0t_1-x_1 + \frac{a_0t_1^2}{2})
+\end{equation}\]</span></p>
+				<p>Assuming <span class="math inline">\(t_1 \neq 0\)</span>, we solve this system of equations for <span class="math inline">\(a_0\)</span>:</p>
+				<p><span class="math display">\[\begin{equation}
+    a_0=\frac{6x_1-2t_1(\dot{x}_1+2\dot{x}_0)}{t_1^2}
+\end{equation}\]</span></p>
+				<p>Evaluating for <span class="math inline">\(a_0\)</span> with our constants gives us our starting acceleration. Once we have <span class="math inline">\(a_0\)</span>					we can solve our velocity equation to find the value of <span class="math inline">\(a_1\)</span>. Plugging <span class="math inline">\(a_1\)</span> and
+					<span
+					class="math inline">\(a_0\)</span> into the velocity equation will give us velocity curve that produces a continuous BPM curve over the course of the tempo transition.</p>
+				<p><strong>Note:</strong> We must specify the same time units for input variables like <span class="math inline">\(t_1\)</span> and <span class="math inline">\(\dot{x}_1\)</span>.
+					I prefer <em>minutes</em> for <span class="math inline">\(t_1\)</span> and <em>beats per minute</em> for <span class="math inline">\(\dot{x}_1\)</span> over
+					<em>seconds</em> and <em>beats per second</em>.</p>
+				<audio controls="true" src="http://web.media.mit.edu/~holbrow/media/CharlesHolbrow-TempicIntegrations.mp3">
+					Your Browser Does not Support the Audio Element
+				</audio>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

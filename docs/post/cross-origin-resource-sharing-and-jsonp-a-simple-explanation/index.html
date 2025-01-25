@@ -1,0 +1,97 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Cross-Origin Resource Sharing and JSONP: A Simple Explanation</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/cross-origin-resource-sharing-and-jsonp-a-simple-explanation">Cross-Origin Resource Sharing and JSONP: A Simple Explanation</a></h2><span class="post-date">Jun 8, 2014</span></div>
+			<div class="post-content">
+				<p>If you are browsing farmville.com and a script downloaded makes an ajax request to facebook.com, this is known as cross-origin resource sharing, or CORS.</p>
+				<p>When a modern browser encounters a CORS request, it intervenes for security reasons. Browsers distinguish <strong>Simple Requests</strong> from <strong>Non-Simple Requests</strong>					using a different intervention strategy for each.</p>
+				<h2 id="simple-requests">Simple Requests</h2>
+				<p>An HTTP request is considered simple if all 3 criteria are met:</p>
+				<ol type="1">
+					<li>The request method is <strong>GET</strong>, <strong>HEAD</strong> or <strong>POST</strong></li>
+					<li>the request uses only headers in the following list:</li>
+				</ol>
+				<ul>
+					<li>Accept</li>
+					<li>Accept-Language</li>
+					<li>Content-Type</li>
+					<li>Content-Language</li>
+				</ul>
+				<ol start="3" type="1">
+					<li>The value field of the Content-Type header matches one of the following:</li>
+				</ol>
+				<ul>
+					<li>application/x-www-form-urlencoded</li>
+					<li>multipart/form-data</li>
+					<li>text/plain</li>
+				</ul>
+				<p>For simple requests, the browser adds the <code>Origin</code> header behind the scenes. The request received by our server might look like this:</p>
+				<pre><code>GET /some/resource
+Host: bar.other
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20081130 Minefield/3.1b3pre
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Origin: http://foo.example</code></pre>
+				<p>The server observes the <code>Origin</code> header, and serves back a response. The browser inspects the HTTP Response and looks for the Access-Control-Allow-Origin
+					header.</p>
+				<pre><code>Access-Control-Allow-Origin: http://bar.example.com</code></pre>
+				<p>In the example above, the server is indicating that only requests originating from <code>http://bar.example.com</code> are permitted to access the resource.
+					The browser will discard the data in the http response, and throw a JavaScript error indicating that the AJAX request was unsuccessful. Note that wild cards
+					can also be used for the value of <code>Access-Control-Allow-Origin</code>. In the next example, the server is indicating that requests from any origin may
+					be permitted to access the response.</p>
+				<pre><code>Access-Control-Allow-Origin: *</code></pre>
+				<p>The Access Control headers hidden from the JavaScript API - they are removed be the browser before exposing the HTTP Response to your JavaScript code.</p>
+				<h2 id="non-simple-requests">Non-Simple Requests</h2>
+				<p>For non simple HTTP Requests, the browser employs a different security strategy. Instead of sending an ajax request directly to the other server, it first sends
+					an OPTIONS http request. The headers in the response to the OPTIONS request indicate to the browser if the server is willing to listen to requests originating
+					from other servers.</p>
+				<p>In our example, facebook.com needs to be configured to respond to OPTIONS requests with a specific header format. These headers indicate to the browser which
+					domains are allowed to make resource requests.</p>
+				<p>CORS is the modern way to make cross-origin requests &#x2013; It&#x2019;s not supported by IE 7 and below. JSONP is another option for making cross origin requests.</p>
+				<p>JSONP exploits the fact that <code>&lt;script&gt;</code> elements are allowed to make cross-origin GET requests to retrieve script files. A server can return
+					an html document containing a script tag with a cross origin <code>src=&apos;www.example.com&apos;</code> attribute. The browser will not interfere with this
+					request.</p>
+				<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> myFunc <span class="op">=</span> <span class="kw">function</span>(data){</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">// append a script tag to the document. This will trigger a cross-origin GET request.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="fu">write</span>(<span class="st">&quot;&lt;script src=&apos;http://facebook.com/example/api/callback=myFunc&apos;&gt;&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span></code></pre></div>
+				<p>The script returned by Facebook&#x2019;s executes a function that we (hopefully) defined prior to making the request.</p>
+				<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// example script returned and run by dynamically adding a script tag</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">myFunc</span>({</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">name</span><span class="op">:</span> <span class="st">&apos;Charles&apos;</span><span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">id</span><span class="op">:</span> <span class="st">&apos;123456&apos;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

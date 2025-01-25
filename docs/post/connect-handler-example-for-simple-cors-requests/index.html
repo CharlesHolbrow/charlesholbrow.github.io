@@ -1,0 +1,88 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Connect Handler Example for Simple CORS Requests</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/connect-handler-example-for-simple-cors-requests">Connect Handler Example for Simple CORS Requests</a></h2><span class="post-date">Jul 8, 2014</span></div>
+			<div class="post-content">
+				<p>For reference, I&#x2019;m recording an example of handling <strong>Simple CORS Requests</strong> with some handy connect/express implementation details.</p>
+				<p>Remember when using <a href="http://www.senchalabs.org/connect/proto.html#app.use">webapp.use()</a> with a path as the first argument:</p>
+				<ul>
+					<li>All sub-paths of that path are also handled</li>
+					<li>The specified path is striped from the beginning <code>req.url</code> inside request handlers</li>
+				</ul>
+				<p>Notes about the <code>req</code> parameter to request handlers:</p>
+				<ul>
+					<li><code>req</code> objects are instances of node&#x2019;s <a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a></li>
+					<li>Your framework may build on top of the <code>IncomingMessage</code> interface. For example, express adds the <a href="http://expressjs.com/api.html#req.param">param</a>						method</li>
+				</ul>
+				<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// hosts whitelist</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> coorsAccessOrigins <span class="op">=</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;http://localhost:3000&apos;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;http://example.com&apos;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;http://charlesholbrow.com&apos;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&apos;http://www.charlesholbrow.com&apos;</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">// allow simple CORS GET requests to the /dds directory</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>webApp<span class="op">.</span><span class="fu">use</span>(<span class="st">&apos;/dds&apos;</span><span class="op">,</span> <span class="kw">function</span>(req<span class="op">,</span> res<span class="op">,</span> next){</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Don&apos;t add access control headers if host is not in whitelist</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>coorsAccessOrigins[req<span class="op">.</span><span class="at">headers</span><span class="op">.</span><span class="at">origin</span>]) <span class="cf">return</span> <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">// The origin header implies this is a CORS request.</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// The user-agent (the browser) is unlikely to add the origin</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// header if it doesn&apos;t support CORS</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>req<span class="op">.</span><span class="at">headers</span><span class="op">.</span><span class="at">origin</span>) <span class="cf">return</span> <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">setHeader</span>(<span class="st">&apos;Access-Control-Allow-Origin&apos;</span><span class="op">,</span> req<span class="op">.</span><span class="at">headers</span><span class="op">.</span><span class="at">origin</span>)<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">setHeader</span>(<span class="st">&apos;Access-Control-Allow-Methods&apos;</span><span class="op">,</span> <span class="st">&apos;GET&apos;</span>)<span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">next</span>()<span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+				<p>Notice the difference between the <code>origin</code> request header and the <code>host</code> request header.</p>
+				<ul>
+					<li>The <code>host</code> request-header specifies the Internet host and port number of the resource being requested</li>
+					<li>The <code>origin</code> request-header indicates that this is a CORS request</li>
+				</ul>
+				<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// example req.headers object</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;host&quot;</span><span class="op">:</span> <span class="st">&quot;localhost:3000&quot;</span><span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;connection&quot;</span><span class="op">:</span> <span class="st">&quot;keep-alive&quot;</span><span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;cache-control&quot;</span><span class="op">:</span> <span class="st">&quot;no-cache&quot;</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;pragma&quot;</span><span class="op">:</span> <span class="st">&quot;no-cache&quot;</span><span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;origin&quot;</span><span class="op">:</span> <span class="st">&quot;http://charles.meteor.com&quot;</span><span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;user-agent&quot;</span><span class="op">:</span> <span class="st">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36&quot;</span><span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;accept&quot;</span><span class="op">:</span> <span class="st">&quot;*/*&quot;</span><span class="op">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dnt&quot;</span><span class="op">:</span> <span class="st">&quot;1&quot;</span><span class="op">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;referer&quot;</span><span class="op">:</span> <span class="st">&quot;http://charles.meteor.com/&quot;</span><span class="op">,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;accept-encoding&quot;</span><span class="op">:</span> <span class="st">&quot;gzip,deflate,sdch&quot;</span><span class="op">,</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;accept-language&quot;</span><span class="op">:</span> <span class="st">&quot;en-US,en;q=0.8&quot;</span><span class="op">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x-forwarded-for&quot;</span><span class="op">:</span> <span class="st">&quot;127.0.0.1&quot;</span><span class="op">,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x-forwarded-port&quot;</span><span class="op">:</span> <span class="st">&quot;3000&quot;</span><span class="op">,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x-forwarded-proto&quot;</span><span class="op">:</span> <span class="st">&quot;http&quot;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

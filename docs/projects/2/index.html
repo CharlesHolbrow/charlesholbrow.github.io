@@ -1,0 +1,197 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Projects</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item current-menu-item">Projects </a></div>
+	<div
+	class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/tempic-integrations">Tempic Integrations</a></h2><span class="post-date">Oct 29, 2016</span></div>
+			<div class="post-content">
+				<p>Tempic Integrations is a musical study that experiments with the use of multiple simultaneous <strong>tempi</strong> (the plural of tempo) in a musical composition.
+					While Listening to the composition below:</p>
+				<ul>
+					<li>Can you hear the parallel musical tempi as they accelerate and decelerate relative to each other?</li>
+					<li>Can you hear when the parallel musical tempi de-synchronize and re-synchronize?</li>
+				</ul>
+				<audio label="Tempic Integrations" controls="true" src="/media/CharlesHolbrow-TempicIntegrations.mp3">
+					Your Browser Does not Support the Audio Element
+				</audio>
+				<ul>
+					<li>How can we design these tempo changes so the layers synchronize at defined musical moments? (<a href="/post/creating-tempic-integrations/">Hint: calculus</a>)</li>
+					<li>How can we use this process musically?</li>
+				</ul>
+				<h3 id="motivation">Motivation</h3>
+				<p>Consider the factors that make a musical instrument <em>expressive</em>. The gold standard is the human voice. Can any other instrument be as expressive as the
+					human voice? Probably not, though some may come close. Other instruments are still useful because they <em>extend</em> our capabilities.</p>
+				<figure>
+					<img src="/project/tempic-integrations/basic-tempo-transition.png" alt="Example of a simple polytempic accelerando">
+					<figcaption aria-hidden="true">Example of a simple polytempic accelerando</figcaption>
+				</figure>
+				<p>This project explores a particular way of extending our sonic palette. It uses integral calculus to unlock a class of previously inaccessible rhythmic patterns.
+					Specifically it shows how simultaneous musical tempi can continuously accelerate and decelerate relative to each other while coming in and out of phase at defined
+					musical points as shown in the image above.</p>
+				<p>The project had three phases:</p>
+				<ol type="1">
+					<li>Design of a Mathematical algorithm for computing continuous tempo curves required for the <strong>polytempic accelerando</strong> shown in the image above.</li>
+					<li>Implementation of Python routines and development of work flow for generating, auditioning, and editing the patterns in a Digital Audio Workstation.</li>
+					<li>Composition of musical piece using algorithm implementation.</li>
+				</ol>
+				<p>While listening to the composition, listen for the two melodic patterns:</p>
+				<ul>
+					<li>Both patterns play the same melody, one octave apart</li>
+					<li>At the start of the piece both patterns play together at the same tempo, synchronized with each other, <em>and</em> with the kick drum.</li>
+					<li>Both patterns accelerate to 1.5 times the original tempo. However, they accelerate at slightly different rates, so they over the course of the piece the go
+						out of phase with each other</li>
+					<li>At 0:57 the two parts re-synchronize with each other and with the drums.</li>
+				</ul>
+				<p>For a detailed explanation of the background and mathematics (and a little bit of music history) read my blog post about <a href="/post/creating-tempic-integrations/">Creating Tempic Integrations</a>.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/of-experience">De l’Expérience</a></h2><span class="post-date">May 16, 2015</span></div>
+			<div class="post-content">
+				<figure>
+					<img src="/project/of-experience/img/performance-with-organ.jpg" alt="De l&#x2019;Exp&#xE9;rience Performance. Photo Credit: R&#xE9;becca Kleinberger">
+					<figcaption
+					aria-hidden="true">De l&#x2019;Exp&#xE9;rience Performance. Photo Credit: R&#xE9;becca Kleinberger</figcaption>
+				</figure>
+				<p>I got to work on Tod Machover&#x2019;s <em>De l&#x2019;Exp&#xE9;rience</em> in a number of capacities, including: sound design, recording the premier performance
+					at the Orchestre Symphonique de Montr&#xE9;al orchestra hall, and mixing the resulting multi-tracks. We also used a custom surround sound panning and imaging
+					system I developed for blending the live electronics with the organ in the venue.</p>
+				<p>The piece is a 23 minutes composition for organ, electronics, and spoken voice. The text is taken from the writings of Michel du Montaigne, the french author
+					who <a href="https://en.wikipedia.org/wiki/Essays_(Montaigne)">invented the essay</a>.</p>
+				<p>It&#x2019;s pretty unusual for anyone to listen to 23 minutes of music on the web, but if you have the time and a decent sound sound system (no laptop or iPhone
+					speakers please), the piece is pretty magnificent, and well worth listening to in its entirety.</p>
+				<audio src="/media/OSM-OfExperience-LiveConcert-Stereo-03.mp3" controls>
+				</audio>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/vocal-vibrations">Vocal Vibrations</a></h2><span class="post-date">Sep 10, 2014</span></div>
+			<div class="post-content">
+				<figure>
+					<img src="/project/vocal-vibrations/vv0.jpg" alt="The Installation at Le Labo Paris">
+					<figcaption aria-hidden="true">The Installation at Le Labo Paris</figcaption>
+				</figure>
+				<p>I worked on the audio at pretty much every level for the installation all about the human voice.</p>
+				<ul>
+					<li>Recording</li>
+					<li>Sound Design</li>
+					<li>Spec and build the 10.2 channel playback system</li>
+					<li>Engineering and mixing - 10.2 channel version for the installation</li>
+					<li>Engineering and mixing - 5.1 and stereo mixes for <a href="http://www.bowers-wilkins.com/Society_of_Sound/Society_of_Sound/TodMachover/vocal-vibrations.html">Commercial Release</a></li>
+				</ul>
+				<p>This project was filled with interesting creative decisions from how to take advantage of the acoustics of the venue, and developing the workflow for 10.2 surround
+					mixing. The 10 channel mix led to some creative and powerful surround tools that I plan on developing further as part of my master&#x2019;s thesis at the Media
+					Lab.</p>
+				<p>There&#x2019;s lots more information on the <a href="http://opera.media.mit.edu/projects/vv/">Opera Of the Future page</a>. The Installation opened in Paris,
+					France in March, but it&#x2019;s going to be the first exhibit at the new <a href="http://www.lelaboratoirecambridge.com/">Le Laboratoire Cambridge</a> when
+					it opens on October 30th! If you are around Boston, you can come see it for yourself.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/powers-global-interactive-simulcast">Mixing Death and the Powers: Global Interactive Simulcast</a></h2><span class="post-date">Sep 9, 2014</span></div>
+			<div class="post-content">
+				<figure>
+					<img src="/project/powers-global-interactive-simulcast/powers-live.jpg" alt="Powers Live">
+					<figcaption aria-hidden="true">Powers Live</figcaption>
+				</figure>
+				<p>Death and the Powers is a massive technical undertaking that keeps growing even more massive. The February 2014 performance in Dallas, TX added another layer
+					of technology connecting the audiences across the globe.</p>
+				<p>Tod Machover&#x2019;s composition blends acoustic orchestra with carefully engineered and synthesized electronic samples to create the unique sound of the Opera.</p>
+				<p>Close mics from the orchestra, lavalieres on the singers, a variety of synthesizers, samplers, and 16 channel encoded ambisonic playback make up the 100+ channels
+					to be mixed at the Front of house on a Studer Vista 5.1.</p>
+				<p>For the Dallas performance, we broadcast a multi-camera shoot with 5.1 and stereo mixes to 9 different theaters all around the world, leaving us with 3 simultaneous
+					mixes.</p>
+				<ol type="1">
+					<li>Live mix for the PA in the hall, mixed from on a Studer Vista 5 at the front of house</li>
+					<li>Surround 5.1 mix for the simulcast mixed on a Studer Vista 1 in our makeshift sound studio</li>
+					<li>Stereo mix for the simulcast also mixed on the Studer Vista 1</li>
+				</ol>
+				<p>Audiences in the remote venues were encouraged to download our mobile app that synchronized with the performance adding additional content and interactivity
+					with the performance happening in Dallas.</p>
+				<figure>
+					<img src="/project/powers-global-interactive-simulcast/me.jpg" alt="On the Console">
+					<figcaption aria-hidden="true">On the Console</figcaption>
+				</figure>
+				<p>I got to mix the two like simulcast mixes, and learned my way around the Studer Vista in the process. I&#x2019;ve done lots of mixing before, but not a lot of
+					live sound, so this was a very exciting opportunity. The Vista Console is also an amazing piece of gear. Every console has a predetermined amount of DSP all
+					running on FPGAs. The assignment of the FPGAs is also totally customizable, so you choose the number of busses, sends, EQs Compressors, needed for your given
+					show, and compile a virtual machine, loading it into the console before the show.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/see-like-a-bee">See Like A Bee</a></h2><span class="post-date">Sep 8, 2014</span></div>
+			<div class="post-content">
+				<figure>
+					<img src="/project/see-like-a-bee/me.jpg" alt="Cover Photo">
+					<figcaption aria-hidden="true">Cover Photo</figcaption>
+				</figure>
+				<p>My own foray into &#x201C;wearables&#x201D;. This unusual project came out of the experimental Media Lab class called <strong>Silicon Menagerie</strong>. In
+					this class, we explored ways to augment human senses to simulate the kind of experience that non-human animals have. We looked at lots of different animals,
+					including Angler Fish, Bats, Ants, and Sharks, all of which have the ability to perceive stimuli that humans cannot.</p>
+				<p>For inspiration, my group looked to the Honey Bee. Honey Bees have a fascinating array of sensory apparati. They have 5 eyes, they communicate through dance,
+					they operate as a hive mind, and they have a very precise perception of time that enables them to use the position of the sun as a dependable reference point
+					as it moves across the sky.</p>
+				<p>My group built a sensor network and heads-up-display mounted in a stylish wearable package inspired by the ulra-violet vision of bees.</p>
+				<p><em>Steel cable makes up the enclosure. 3D printed parts hold everything together</em></p>
+				<figure>
+					<img src="/project/see-like-a-bee/hardware-0.png" alt="Early Build">
+					<figcaption aria-hidden="true">Early Build</figcaption>
+				</figure>
+				<p><em>We used an iPod touch for the display, and an Arduino Mega for communicating with the sensors</em></p>
+				<figure>
+					<img src="/project/see-like-a-bee/hardware-1.jpg" alt="Simulated Bee Vision">
+					<figcaption aria-hidden="true">Simulated Bee Vision</figcaption>
+				</figure>
+				<figure>
+					<img src="/project/see-like-a-bee/laia.jpg" alt="Laia">
+					<figcaption aria-hidden="true">Laia</figcaption>
+				</figure>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/pioneer">Pioneer</a></h2><span class="post-date">Jun 3, 2013</span></div>
+			<div class="post-content">
+				<p>I&#x2019;m launching <a href="http://github.com/CharlesHolbrow/Pioneer">Pioneer (github)</a>.</p>
+				<ul>
+					<li>Full stack blogging application built with <a href="http://meteor.com">Meteor</a></li>
+					<li>Written entirely in <a href="http://coffeescript.org/">CoffeeScript</a></li>
+					<li>Designed for simplicity, maintainability, and performance</li>
+				</ul>
+				<p><del>This site, <a href="http://http://www.charlesholbrow.com/">www.CharlesHolbrow.com</a> is built using Pioneer.</del></p>
+				<p>Edit: <em>Pioneer has been deprecated.</em> This Blog is now a static page built with <a href="http://metalsmith.io">Metalsmith.io</a>.</p>
+			</div>
+		</div>
+		<!-- pagination: navigate between pages-->
+		<div class="post post-content last">
+			<div class="pagination-nav"><a href="/projects" class="page-newer">...newer content</a>&nbsp | &nbsp<a href="/projects/3" class="page-older">older content...</a></div>
+		</div>
+		</div>
+</body>
+
+</html>

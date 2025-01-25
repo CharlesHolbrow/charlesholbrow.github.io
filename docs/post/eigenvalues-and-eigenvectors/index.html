@@ -1,0 +1,212 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Eigenvalues and Eigenvectors</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/eigenvalues-and-eigenvectors">Eigenvalues and Eigenvectors</a></h2><span class="post-date">Jan 7, 2016</span></div>
+			<div class="post-content">
+				<p>All <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> matrices have <span class="math inline">\(n\)</span> eigenvalues.</p>
+				<p>Assume:</p>
+				<ul>
+					<li><span class="math inline">\(\lambda\)</span> is our eigenvalue (it is also a scalar)</li>
+					<li><span class="math inline">\(\vec{x}\)</span> is our eigenvector</li>
+					<li><span class="math inline">\(A\)</span> is an <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> matrix.</li>
+				</ul>
+				<p><span class="math display">\[\begin{align*}
+A\vec{x} &amp;= \lambda\vec{x}\\
+A\vec{x} - \lambda\vec{x} &amp;= 0\\
+(A - \lambda I)\vec{x} &amp;= 0
+\end{align*}\]</span></p>
+				<p>Eigen<strong>vectors</strong> are defined as non-zero, so we are not interested in the case when <span class="math inline">\(\vec{x} = 0\)</span>.</p>
+				<p><span class="math inline">\(\vec{x}\)</span> is some non-zero vector in the nullspace of <span class="math inline">\((A - \lambda{}I)\)</span>. If <span class="math inline">\((A - \lambda{}I)\)</span>					has vectors other than <span class="math inline">\(0\)</span> in the nullspace, it must be singular.</p>
+				<p>We can find the singular matrices with <span class="math display">\[det(A-\lambda I) = 0\]</span></p>
+				<h2 id="example-of-finding-the-eigenvectors">Example of Finding the Eigenvectors</h2>
+				<p>Start by finding the eigenvalues for <span class="math inline">\(A=\begin{bmatrix}3 &amp; 1 \\1 &amp; 3\end{bmatrix}\)</span></p>
+				<p><span class="math inline">\(A\)</span> is setup so that the eigenvalues will be real numbers.</p>
+				<p><span class="math display">\[
+\begin{align*}
+0 &amp;= det(A-\lambda{}I)\\
+0 &amp;= \begin{vmatrix}
+3-\lambda &amp; 1 \\
+1 &amp; 3 - \lambda
+\end{vmatrix}\\
+0 &amp;=(3-\lambda{})^2-1\\
+0 &amp;= 9 - 6\lambda{} - \lambda{}^2 - 1\\
+0 &amp;= \lambda{}^2 - 6\lambda -8\\
+0 &amp;= (\lambda - 4)(\lambda - 2)
+\end{align*}
+\]</span></p>
+				<p>So <span class="math inline">\(\lambda{}_1=4\)</span> and <span class="math inline">\(\lambda{}_2=2\)</span> Now we can plug both <span class="math inline">\(\lambda\)</span>					in to <span class="math inline">\((A-\lambda{}I)\)</span></p>
+				<p><span class="math display">\[\begin{align*}
+\begin{bmatrix}
+3 &amp; 1 \\
+1 &amp; 3
+\end{bmatrix} - 
+\begin{bmatrix}
+2 &amp; 0 \\
+0 &amp; 2 
+\end{bmatrix} &amp;= 
+\begin{bmatrix}
+1 &amp; 1 \\
+1 &amp; 1
+\end{bmatrix} \\
+\begin{bmatrix}
+3 &amp; 1 \\
+1 &amp; 3
+\end{bmatrix} - 
+\begin{bmatrix}
+4 &amp; 0 \\
+0 &amp; 4 
+\end{bmatrix} &amp;= 
+\begin{bmatrix}
+-1 &amp; 1 \\
+1 &amp; -1
+\end{bmatrix} \\
+\end{align*}\]</span></p>
+				<p>And solve for <span class="math inline">\((A-\lambda{}I)\vec{x}=0\)</span></p>
+				<p><span class="math display">\[\begin{align*}
+\begin{bmatrix}
+1 &amp; 1 \\
+1 &amp; 1
+\end{bmatrix}\vec{x}_1=0
+&amp;\implies
+\vec{x}_1=
+\begin{bmatrix}1\\-1\end{bmatrix}\\
+\begin{bmatrix}
+-1 &amp; 1 \\
+1 &amp; -1
+\end{bmatrix}\vec{x}_2=0
+&amp;\implies
+\vec{x}_2=
+\begin{bmatrix}1\\1\end{bmatrix}
+\end{align*}\]</span></p>
+				<h2 id="example-of-a-degenerate-matrix">Example of a Degenerate Matrix</h2>
+				<p>Notice that the eigenvectors in the first example are independent. Not all matrices have independent eigenvectors.</p>
+				<p><span class="math display">\[
+A = 
+\begin{bmatrix}3 &amp; 1 \\ 0 &amp; 3\end{bmatrix}
+\]</span></p>
+				<p>We can read the eigenvalues directly off a triangular matrix. To see how, try finding <span class="math inline">\(det(A-\lambda{}I)\vec{x}=0\)</span>:</p>
+				<p><span class="math display">\[\begin{equation*}
+\begin{vmatrix}
+3-\lambda &amp; 1 \\
+0 &amp; 3-\lambda 
+\end{vmatrix}=0
+\end{equation*}\]</span></p>
+				<p>Remember, the determinant of a triangular matrices is the product down the diagonal.</p>
+				<p><span class="math inline">\((3-\lambda )(3-\lambda )=0 \implies \lambda{}_1 = 3, \lambda{}_2 = 3\)</span></p>
+				<p>Repeated eigenvalues are not a problem. The problem comes when we try to solve <span class="math inline">\((A-\lambda{}I)\vec{x}=0\)</span></p>
+				<p><span class="math display">\[\begin{equation*}
+\begin{bmatrix}
+0 &amp; 1 \\
+0 &amp; 0
+\end{bmatrix}
+\vec{x} = 0
+\end{equation*}\]</span></p>
+				<p>There is only one indepedent solution: <span class="math inline">\(\vec{x}=\begin{bmatrix}1\\0\end{bmatrix}\)</span>. We cannot diagonalize <span class="math inline">\(A\)</span>.</p>
+				<h2 id="diagonalization-s-1as-lambda">Diagonalization <span class="math inline">\(S^{-1}AS= \Lambda{}\)</span></h2>
+				<p>Assume we take our <span class="math inline">\(n\)</span> linearly independent eigenvectors of <span class="math inline">\(A\)</span></p>
+				<p><span class="math display">\[\begin{equation*}
+S = \begin{bmatrix}
+&amp; &amp; \\ 
+\vec{x}_1 &amp; \cdots &amp; \vec{x}_n \\
+&amp; &amp;
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<p>What happens when we take <span class="math inline">\(AS\)</span>?</p>
+				<p><span class="math display">\[\begin{equation*}
+AS = A\begin{bmatrix}
+&amp; &amp; \\ 
+\vec{x}_1 &amp; \cdots &amp; \vec{x}_n \\
+&amp; &amp;
+\end{bmatrix} = 
+\begin{bmatrix}
+&amp; &amp; \\ 
+\lambda{}_1\vec{x}_1 &amp; \cdots &amp; \lambda{}_n\vec{x}_n \\
+&amp; &amp;
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<p>Remember that <span class="math inline">\(AS\)</span> is a linear combination of the colums of <span class="math inline">\(A\)</span>. Because <span class="math inline">\(\vec{x}_1\)</span>					is an eigenvector, the first column of <span class="math inline">\(AS\)</span> is going to be <span class="math inline">\(\lambda{}_1\vec{x}_1\)</span>, and
+					the subsequent columns follow the same pattern.</p>
+				<p>Now we want to factor out <span class="math inline">\(\lambda{}\)</span> from <span class="math inline">\(AS\)</span>.</p>
+				<p><span class="math display">\[\begin{equation*}
+AS = 
+\begin{bmatrix}
+&amp; &amp; \\ 
+\lambda{}_1\vec{x}_1 &amp; \cdots &amp; \lambda{}_n\vec{x}_n \\
+&amp; &amp;
+\end{bmatrix} =
+\begin{bmatrix}
+&amp; &amp; \\ 
+\vec{x}_1 &amp;&amp; \cdots &amp;&amp; \vec{x}_n \\
+&amp; &amp;
+\end{bmatrix}
+\begin{bmatrix}
+\lambda{}_1 &amp; &amp; \\ 
+&amp; \ddots &amp; \\
+&amp; &amp; \lambda{}_n
+\end{bmatrix}
+\end{equation*}\]</span></p>
+				<p>We will call this last diagonal matrix <span class="math inline">\(\Lambda\)</span>, and we can now say <span class="math inline">\(AS=S\Lambda\)</span>, which
+					gives us the following two equations:</p>
+				<p><span class="math display">\[S^{-1}AS = \Lambda\]</span> <span class="math display">\[S\Lambda{}S^{-1}=A\]</span></p>
+				<p>Remember: We can only invert <span class="math inline">\(S\)</span> is we have <span class="math inline">\(n\)</span> independent eigenvectors</p>
+				<p>Which gives us the most sought after equation:</p>
+				<p><span class="math display">\[
+A^2= S\Lambda{}S^{-1}S\Lambda{}S^{-1}=S\Lambda{}^2S^{-1} \implies A^k=S\Lambda{}^kS^{-1}
+\]</span></p>
+				<p><strong>Theorem:</strong> <span class="math inline">\(A^k \rightarrow 0\)</span> as <span class="math inline">\(k \rightarrow \infty\)</span> if all <span class="math inline">\(|\lambda{}_i| &lt; 1\)</span></p>
+				<h3 id="eigenvalues-eigenvectors-of-a2">Eigenvalues, Eigenvectors of <span class="math inline">\(A^2\)</span></h3>
+				<p>If we have <span class="math inline">\(A\)</span> with eigenvalues <span class="math inline">\(\lambda{}_1 \ldots \lambda{}_n\)</span>:</p>
+				<ul>
+					<li>The eigen<strong>values</strong> of <span class="math inline">\(A^2\)</span> are <span class="math inline">\((\lambda{}_1)^2 \ldots (\lambda{}_n)^2\)</span></li>
+					<li>The eigen<strong>vectors</strong> of <span class="math inline">\(A^2\)</span> the same as te eigenvectors of <span class="math inline">\(A\)</span></li>
+				</ul>
+				<p>Said another way:</p>
+				<p>If <span class="math inline">\(A\vec{x} = \lambda \vec{x}\)</span> then <span class="math inline">\(A^2\vec{x} = \lambda A\vec{x} = \lambda{}^2\vec{x}\)</span></p>
+				<h1 id="facts">Facts</h1>
+				<ul>
+					<li>The <strong>sum</strong> of the <span class="math inline">\(n\)</span> eigenvalues is equal to the trace of the matrix (the <strong>sum</strong> down the diagonal).</li>
+					<li>The product of the eigenvalues is equal to the determinate if the matrix has <span class="math inline">\(n\)</span> distinct eigenvalues.</li>
+					<li>A triangular matrix , <span class="math inline">\(U\)</span> has eigenvalues along the diagonal - they are the pivots.</li>
+					<li><span class="math inline">\(A\)</span> has one or more eigen<strong>values</strong> <span class="math inline">\(\lambda =0\)</span> exactly when <span class="math inline">\(A\)</span>						is singular</li>
+					<li>We can multiply eigen<strong>vectors</strong> by any non-zero constant, and <span class="math inline">\(A\vec{x} = \lambda \vec{x}\)</span> will remain true</li>
+					<li>Symmetric matrices always have real eigenvalues</li>
+					<li>Elimination changes eigenvalues</li>
+				</ul>
+				<h2 id="facts-about-diagonalizing">Facts About Diagonalizing</h2>
+				<ul>
+					<li>A matrix with fewer than <span class="math inline">\(n\)</span> eigen<strong>vectors</strong> cannot be diagonalized</li>
+					<li>Any matrix that has no repeated eigenvalues can be diagonalized</li>
+					<li><span class="math inline">\(A\)</span> is sure to have <span class="math inline">\(n\)</span> independent eigenvectors (and be diagonalizable) if all the
+						<span
+						class="math inline">\(\lambda{}\)</span>&#x2019;s are different (no repeated <span class="math inline">\(\lambda{}\)</span>s).</li>
+					<li>If <span class="math inline">\(A\)</span> does not have <span class="math inline">\(n\)</span> independent <span class="math inline">\(\lambda\)</span>s, it
+						<em>might</em> be diagonizable.</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

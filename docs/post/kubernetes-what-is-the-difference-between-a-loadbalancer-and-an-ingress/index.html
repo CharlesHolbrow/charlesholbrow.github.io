@@ -1,0 +1,60 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Kubernetes: What is the Difference Between a LoadBalancer and an Ingress?</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/kubernetes-what-is-the-difference-between-a-loadbalancer-and-an-ingress">Kubernetes: What is the Difference Between a LoadBalancer and an Ingress?</a></h2><span class="post-date">Mar 7, 2019</span></div>
+			<div class="post-content">
+				<p>It can be tricky to understand how Kubernetes Services and Ingresses interact. The most important distinction relates to the concept of a <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Service</a>.</p>
+				<ul>
+					<li>A Kubernetes <code>LoadBalancer</code> is a type of <code>Service</code>.</li>
+					<li>A Kubernetes <code>Ingress</code> is not a type of <code>Service</code>. It is a collection of rules. An Ingress Controller in your cluster watches for <code>Ingress</code>						resources, and attempts to update the server side configuration according to the rules specified in the <code>Ingress</code>.</li>
+				</ul>
+				<p>For both <code>Ingress</code> and <code>LoadBalancer</code> resources, different Kubernetes providers (such as GKE, Amazon EKS, or bare metal) support different
+					features. One of the things that makes Ingresses and LoadBalancers tricky is that your YAML manifest files might not be portable between different platforms
+					and controllers.</p>
+				<p>Let&#x2019;s talk about Services. One thing that clarified services for me is understanding how the different services build on each other. For example the <code>ClusterIP</code>					is a simplest type. <code>NodePort</code> does everything that <code>ClusterIP</code> does (and more). <code>LoadBalancer</code> is another layer of capability
+					on top of <code>NodePort</code>.</p>
+				<p>So the mental process when I need a <code>Service</code> is:</p>
+				<ol type="1">
+					<li>Am I trying to help my pods talk to each other? If yes, ClusterIP is enough. If not&#x2026;</li>
+					<li>Am I trying to make my <code>Service</code> accessible on the public web (on a port above 30000)? If yes, NodePorts is enough (this is unusual). If not&#x2026;</li>
+					<li>Am I trying to manage most public traffic coming into the cluster? If yes, choose an Ingress or a LoadBalancer. This is where things get tricky, because your
+						options depend on the controllers that are available on your cluster.
+						<ul>
+							<li>Load Balancers tend to be a little simpler than Ingresses.</li>
+							<li>Ingresses might come with nice features like TLS/HTTPS termination and limited HTTP routing.</li>
+						</ul>
+					</li>
+				</ol>
+				<p>In my cluster I use the <a href="https://kubernetes.github.io/ingress-nginx/">NGINX Ingress Controller</a> for routing incoming HTTP requests to different services
+					based on their <code>Host</code> HTTP header and url.</p>
+				<p>Make sure you understand what ingress controller is installed on your cluster (if any) and know that the YAML manifests for it are likely not portable to other
+					Ingress Controllers &#x2014; the YAML manifest that you give to the NGINX Ingress Controller might need to be pretty different than the manifest that you give
+					to your GKE Ingress.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Fluid Music Examples</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/project/fluid-music-examples">Fluid Music Examples</a></h2><span class="post-date">Jan 2, 2021</span></div>
+			<div class="post-content">
+				<p>The Fluid Music framework enables users to encapsulate professional music production techniques in reusable and reconfigurable JavaScript modules.</p>
+				<p>The following examples were scripted with the JavaScript based fluid score language and produced using the Fluid Music audio server. They aim to demonstrate
+					that professional quality audio production can be automatically applied to symbolic digital scores.</p>
+				<p>The examples were generated completely in code. A GUI was only used in the final stages to trim and normalize the output of the Fluid Music audio server.</p>
+				<h2 id="example-1-processed-guitar">Example 1: Processed Guitar</h2>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/fluid-experiment.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/fluid-experiment.wav" type="audio/wav">
+				</audio>
+				<p>See the <a href="https://github.com/fluid-music/example">score repository</a> on github for the code that created this audio. To make the audio sound polished
+					I packaged the following music productions techniques using the fluid music framework:</p>
+				<ul>
+					<li>A sub-bass synthesizer adds low end to the kick drum, giving it extra <em>OOMPH!</em></li>
+					<li>Reversed and processed guitar samples from the <a href="https://www.npmjs.com/package/@fluid-music/g3rd"><code>@fluid-music/g3rd</code> npm package</a> are
+						time aligned with the musical grid.</li>
+					<li>Tempo synchronized stereo width modulation (this technique is subtly in the example, but can by much more dramatic).</li>
+					<li>A subtle reverb &#x2018;glues&#x2019; the mix together.</li>
+				</ul>
+				<p>These are just some of the kinds of productions techniques that can be encapsulated with the fluid music library. Used with care, techniques like these are a
+					big part of what make prerecorded music stand out and sound professional.</p>
+				<h2 id="example-2-trap-drums">Example 2: Trap Drums</h2>
+				<p>Trap music is built around manipulated TR-808 drum samples. The next example uses the <a href="https://www.npmjs.com/package/@fluid-music/tr-808"><code>@fluid-music/tr-808</code> npm package</a>					as source material for the drum and bass samples.</p>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/trap-002b.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/trap-002b.wav" type="audio/wav">
+				</audio>
+				<ul>
+					<li>Custom timing techniques applied to the drum samples to achieve the characteristically complex trap-style hi-hat patterns.</li>
+					<li>Micro timing adjustments shift drum samples off of the timeline grid so that the samples&#x2019; transients don&#x2019;t mask each other when they overlap.</li>
+					<li>Subtle reverb and bus compression &#x2018;glue&#x2019; the mix together.</li>
+				</ul>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/twitterb.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/twitterb.wav" type="audio/wav">
+				</audio>
+				<ul>
+					<li>This second Trap example builds on the techniques in the first one, expanding the sonic palette without duplicating effort</li>
+					<li>Side chain compression (with &#x201C;ghost kicks&#x201D;) pump one of the pad synthesizers in time with the musical rhythm</li>
+					<li>The <a href="https://www.npmjs.com/package/@fluid-music/kit"><code>@fluid-music/kit</code></a> this package works like a drum sampler preset with features like
+						sample randomization and dynamic layers.</li>
+				</ul>
+				<h2 id="example-3-seven-and-five">Example 3: Seven and Five</h2>
+				<p>In <em>Seven and Five</em> I tried to make a slightly longer composition that holds interest throughout. Additionally, I tried to make something that would be
+					infeasible or impossible to make <em>without</em> Fluid Music.</p>
+				<p>The piece is based around a MIDI delay (echo), except that each delayed copy contains mutated MIDI content. The delays are grouped in five repetitions of seven
+					notes, giving the composition its name.</p>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/seven-and-five-excerpt.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/seven-and-five-excerpt.wav" type="audio/wav">
+				</audio>
+				<p>Note that the code in the <a href="https://github.com/fluid-music/example-seven-and-five">score repository</a> is more complex that the previous examples, so
+					it&#x2019;s a more challenging starting point if you are just exploring Fluid Music for the first time.</p>
+				<ul>
+					<li>Custom techniques insert up to 70 MIDI notes per invocation.</li>
+					<li>Features the unusual 35/32 time signature</li>
+					<li>Uses computationally generated custom Technique Libraries that create the arpeggiated patterns that make up the harmonic foundation of the piece.</li>
+				</ul>
+				<h2 id="example-4-nikhil-singhs-fluid-adaptations">Example 4: Nikhil Singh&#x2019;s <em>Fluid Adaptations</em></h2>
+				<p>Composer <a href="https://nsingh1.host.dartmouth.edu/">Nikhil Singh</a> worked with the <em>Seven and Five</em> score to compose <em>Fluid Adaptations</em>.
+					His composition keeps the same harmonic material, mutates the existing timbres and adds new ones.</p>
+				<p>His score also converts the 35/32 time signature to 4/4, a change that would be difficult or impossible to do without the Fluid Music framework.</p>
+				<audio controls>
+					<source src="/project/fluid-music-examples/media/nikhil-sing.mp3" type="audio/mpeg">
+					<source src="/project/fluid-music-examples/media/nikhil-sing.wav" type="audio/wav">
+				</audio>
+				<p>Read Nikhil&#x2019;s full score on GitHub at <a href="https://github.com/nikhilsinghmus/fluid-demotrapremix">nikhilsinghmus/fluid-demotrapremix</a>. By reading
+					the updated <a href="https://github.com/nikhilsinghmus/fluid-demotrapremix/blob/main/package.json">package.json</a> file, we can also see that the score adds
+					a dependency on the <a href="https://www.npmjs.com/package/@fluid-music/battery-4">Battery 4 plugin adapter</a>.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

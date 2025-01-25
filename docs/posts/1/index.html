@@ -1,0 +1,506 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Blog</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item current-menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div
+	class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/useful-welcoming-software">Useful, Welcoming Software</a></h2><span class="post-date">Dec 22, 2020</span></div>
+			<div class="post-content">
+				<p><strong>Useful, Welcoming Software</strong> is a conceptual model for describing software, and articulating design goals. It is built around two questions:</p>
+				<ol type="1">
+					<li>What is this software useful for?</li>
+					<li>Who is this software welcoming to?</li>
+				</ol>
+				<p>Avid Technologies <a href="https://www.avid.com/pro-tools">Pro Tools</a> and Ableton <a href="https://www.ableton.com/en/live/">Live</a> are useful for producing
+					music. Ableton Live is useful simply because a lot of producers choose to &#x201C;use&#x201D; it for aesthetic and practical reasons. Pro Tools is similarly
+					useful because it is still a core component of commercial music production.</p>
+				<p>However, Live and Pro Tools are &#x201C;welcoming&#x201D; to a very narrow user base, because both are expensive, closed source, and only available under restrictive
+					licenses. You cannot legally share your copy of Ableton Live with a friend. Are you allowed to run a copy of Pro Tools on a web server as part of an generative
+					interactive streaming audio exhibit? I do not know, because Pro Tools&#x2019; legal user rights are buried in a <a href="https://www.avid.com/legal/end-user-license-terms-for-avid-software">240 page End User License Agreement</a>					(as of December 2020). Pro Tools is probably only welcoming to affluent audio engineers and producers with professional ambitions.</p>
+				<p>In the context of <strong>Useful, Welcoming Software</strong>, &#x201C;useful,&#x201D; and &#x201C;welcoming&#x201D; are intended to have somewhat more specific
+					meaning than in everyday conversation.</p>
+				<p>You can think about these questions as aspirational design goals:</p>
+				<ol type="1">
+					<li>What do we <em>want</em> this software useful for?</li>
+					<li>Who do we <em>want</em> this software to be welcoming to?</li>
+				</ol>
+				<p>Here&#x2019;s an example from <a href="https://github.com/CharlesHolbrow/fluid-music">Fluid Music</a>, which is software I am writing for my dissertation.</p>
+				<p>Fluid Music aims to be:</p>
+				<ol type="1">
+					<li>Useful for creating music that people care about</li>
+					<li>Welcoming to developers with a wide variety of backgrounds</li>
+				</ol>
+				<p>Within the <strong>Useful, Welcoming Software</strong> model, software is always useful <em>for</em> some purpose. Conceptually, this is more useful for thinking
+					about and articulating software design goals.</p>
+				<p>Similarly, within the <strong>Useful, Welcoming Software</strong> model, software is always welcoming <em>to</em> some audience.</p>
+				<p>The word &#x201C;welcoming&#x201D; is intended to express the intention of going beyond &#x201C;access&#x201D;. Not only can you access welcoming software, but
+					in the ideal case, it <em>invites</em> you to use it. A high cost, a difficult user interface, or a restrictive user license are all antithetical to welcoming
+					software. Free, well-documented software with a permissive license, and an accessible user interface, is more &#x201C;welcoming.&#x201D; However, care should
+					still be taken to consider <em>who</em> is it welcoming to. What language is the software written in? What spoken languages are present in the documentation?
+					Does the website or documentation use <a href="https://www.recurse.com/social-rules#no-subtle-isms">subtle -isms</a>? What assumptions does the documentation
+					make about the reader&#x2019;s background and areas of expertise?</p>
+				<p>I found that being intentional about what I <em>want</em> my software to do, and <em>who</em> I want to be able to do it helped me make consistent design choices.
+					It also helped me to articulate why I made the design choices I did.</p>
+				<p>It is is a simple model with modest ambitions. Note that while it may help identify or articulate design goals, this is just a first step. You still need to
+					evaluate the implications of the software you are building. For example&#x2026;</p>
+				<p>Amazon Rekognition aims to be:</p>
+				<ol type="1">
+					<li>Useful for identifying and characterizing individuals using an image of their face</li>
+					<li>Welcoming to governments, NGOs, and businesses</li>
+				</ol>
+				<p>In an ideal world this would alert you to the fact that there are some serious ethical concerns with the software Amazon is creating. But if you are not familiar
+					with the literature on facial recognition software, that might not be obvious. Know that merely identifying and articulating the goals of software you are working
+					on is not a substitute for understanding and evaluating them.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/openai-and-amazon-should-read-george-lewis">OpenAI and Amazon should read George Lewis</a></h2><span class="post-date">Apr 30, 2020</span></div>
+			<div class="post-content">
+				<p>OpenAI Is Joining Amazon in a nascent group of major tech companies to invest astronomical sums of money in machine learning projects for generating music.</p>
+				<p>This example output from OpenAI&#x2019;s new <a href="https://openai.com/blog/jukebox/">Jukebox</a> demo probably illustrates it best:</p>
+				<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/787891207&amp;color=%23ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true">
+				</iframe>
+				<div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;">
+					<a href="https://soundcloud.com/openai_audio" title="OpenAI" target="_blank" style="color: #cccccc; text-decoration: none;">OpenAI</a> &#xB7; <a href="https://soundcloud.com/openai_audio/jukebox-905633287"
+					title="Hip Hop, in the style of Kanye West - OpenAI Jukebox" target="_blank" style="color: #cccccc; text-decoration: none;">Hip Hop, in the style of Kanye West - OpenAI Jukebox</a>
+				</div>
+				<p>OpenAI situates this track as the output of their waveform generating neural network, which has been conditioned on music by Kanye West.</p>
+				<p>The result is actually a very garbled hip hop audio with clearly audible excerpts from Eminem&#x2019;s <em>Lose Yourself</em>. It is more revealing of Deep Neural
+					Networks&#x2019; tendency to obscure and appropriate the labor used in their creation than it is impressive that they made Eminem sound a little bit like Kanye
+					West.</p>
+				<p><a href="https://twitter.com/CharlesHolbrow/status/1203395400759037952">As was the case for Amazon&#x2019;s DeepComposer</a>, George Lewis&#x2019; writing about
+					music tech is probably the best lens through which to study OpenAI&#x2019;s Jukebox. Lewis published a <a href="http://eamusic.dartmouth.edu/~larry/algoCompClass/readings/george%20lewis/lewis.too_many_notes.pdf">paper</a>					in the Leonardo music journal in 2000, which includes this quote:</p>
+				<blockquote>
+					<p>&#x201C;As notions about the nature and function of music become embedded in the structure of software-based musical systems and compositions, interactions
+						with these systems tend to reveal characteristics of the community of thought and culture that produced them.&#x201D;</p>
+				</blockquote>
+				<p>We should understand the meticulously researched, astronomically expensive, machine learning technology on display here as representative of the &#x201C;community
+					of thought&#x201D; at OpenAI.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/music-collaboration-and-covid-19-quarantine">Music Collaboration and COVID-19 Quarantine</a></h2><span class="post-date">Mar 22, 2020</span></div>
+			<div class="post-content">
+				<p><strong>Updates</strong>:</p>
+				<ul>
+					<li><strong>June 23, 2021:</strong> added sub.live and faders.io</li>
+					<li><strong>August 12, 2021:</strong> sub.live now available for MacOS and Windows</li>
+				</ul>
+				<p>I&#x2019;ve been getting a lot of questions about collaborative online music in the age of Covid-19. There are lots of performance and DJ streams on Twitch and
+					Youtube. What are the options for collaborating on <em>making</em> music. What is the lowest-latency way to play music together over the internet? Can my choir
+					rehearse over zoom? How can I collaborate on recordings with other musicians while we are self-isolating? What follows is a quick brain dump that I hope will
+					be helpful.</p>
+				<p><strong>NOTE:</strong> The tweet-sized description of my PhD work at the MIT Media lab is: &#x201C;Understanding the long-term potential of the internet, AI,
+					and streaming technologies for music through experimentation&#x201D; and I have way more to say about this than almost anyone wants to hear. I&#x2019;ll try
+					to keep this pragmatic.</p>
+				<h3 id="the-short-answer">The Short Answer</h3>
+				<p>No one wants to hear the short answer, but: Real-time (synchronous) internet-enabled music collaboration will never seriously compete with playing music with
+					other people in the same room. Video conferencing options like Zoom and Google Hangouts have a combination of latency and quality issues, and will be more frustrating
+					than rewarding. When making music together online, I recommend non-real-time (asynchronous or semi-synchronous) approaches.</p>
+				<p>Below I list a variety of collaborative technologies for creating music on the internet. I&#x2019;ve <a href="http://www.aes.org/e-lib/browse.cfm?elib=20316">written about</a>					this in the past, but FWIW, the technologies outlined below are primitive, and are (in their own different ways) attempting to squeeze historical ideas and
+					formats into the online medium. We haven&#x2019;t yet figured a way to create music collaboratively on the internet where the advantages outweigh the disadvantages.</p>
+				<p>However because many of us are self isolating right now, playing music in the same room just isn&#x2019;t possible&#x2026;. So now is a good time to look at
+					some of the current options for online music collaboration.</p>
+				<h3 id="realtime-internet-enabled-collaboration">Realtime Internet Enabled Collaboration</h3>
+				<p>If you really want to shoehorn the experience of making music together in real-time into the internet, I recommend trying one of the following native applications
+					which are designed to minimize latency.</p>
+				<ul>
+					<li>JackTrip <a href="https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/">(Mac, Linux)</a>, <a href="https://ccrma.stanford.edu/software/jacktrip/windows/index.html">(Windows)</a>.
+						Open source, free software for creating reasonably low-latency audio connections over the internet. It also scales to multiple concurrent users, as bandwidth
+						allows.</li>
+					<li><a href="https://www.ianhowellcountertenor.com/soundjack-bootcamp">SoundJack</a> I haven&#x2019;t used this, but it looks slightly more user friendly than JackTrip.</li>
+					<li><a href="https://sub.live/">sub.live</a> prioritizes low latency audio, but also includes video support. As of August 2021 it is available for Mac and Windows.</li>
+				</ul>
+				<p>I would go with one of the options above if everyone in your ensemble knows what an IP address is, and is ready to set up port-forwarding if needed. SoundJack
+					has some nice tutorials and documentation for network configuration. JackTrip requires that one user run a server, which will be easier if that user is familiar
+					with a command line, is familiar with <a href="https://jackaudio.org/">Jack Audio</a>, and has some knowledge of computer networking. JackTrip comes from Stanford&#x2019;s
+					Center for Computer Research in Music and Acoustics, which published a <a href="https://ccrma.stanford.edu/groups/soundwire/research/slsq/">write-up</a> of
+					one of their early experiments, containing some useful references.</p>
+				<p>Note that all real-time options will have latency. Your mileage will vary. If your ensemble is small, everyone is in the same geographic region, and everyone
+					has a fast internet connection you might just get usable results.</p>
+				<p>A quick note about latency: Assume our latency threshold is 20 milliseconds. Anything higher than this and your ability to play together begins to suffer. Light
+					travels approximately 3728 miles in 20 milliseconds (in a vacuum). Absolute best case scenario for round-trip audio is 1864 miles or NYC to Wyoming (but not
+					across the Atlantic). Practical results will rarely be better than half that, and typically be much, much worse, due to network congestion, bandwidth limitations,
+					IP throttling, the fact that light travels slower in the optical cables and internet hardware that it does in a vacuum, and other factors.</p>
+				<p><a href="https://mp.ucpress.edu/content/24/1/49.full.pdf+html">Experiments show</a> that musicians can perform together acceptably with latency as high as 50
+					milliseconds. However, even in the unusual situation when you have a low-ish latency connection to your fellow musicians, there are other difficulties associated
+					with playing music together over the internet in real-time. Think of how difficult it is just to get a Zoom meeting in the office going, with projectors, calls,
+					constantly misbehaving in creative new ways. Now imagine that every participant brings with them the complexity of a small home studio. Suddenly trying to coordinate
+					a performance becomes much harder.</p>
+				<h3 id="almost-realtime-with-optional-zoom-video-share">Almost realtime (with optional Zoom video share)</h3>
+				<p>If your use-case can tolerate approximately 100 milliseconds of latency, and you want lossless audio, the subscription service by <a href="https://audiomovers.com/">Audio Movers</a>					might be what you need. Their service uses an audio workstation plugin, and can stream to a sharable browser URL. The video below shows how to synchronize a
+					web stream to a Zoom call for Audio+Video.</p>
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/OmJUOkf0kE4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen>
+				</iframe>
+				<p>This might be useful in professional situations as discussed in the video. However it will probably not be suitable for realtime jamming or distributed performance.</p>
+				<h3 id="non-internet-network-audio">Non-Internet Network Audio</h3>
+				<p>If you are lucky enough to be on the same physical network as your musical collaborators then JackTrip might work well. However, depending on your network infrastructure,
+					you can probably get even better results with professional audio-over-ethernet options such as AVB (Supported by modern Motu interfaces like the <a href="https://motu.com/products/avb/ultralite-avb">UltraLightAVB</a>)
+					or Dante (supported by modern Focusrite audio interfaces like the <a href="https://pro.focusrite.com/category/audiooverip/item/rednet-x2p">REDNET2XP</a>). These
+					protocols can deliver high channel counts at sub-millisecond latency over a local network. For Dante or AVB, ensure compatibility with your network hardware
+					before buying audio interfaces.</p>
+				<h3 id="google-docs-for-audio">&#x201C;Google Docs for Audio&#x201D;</h3>
+				<p>A number of startups are developing tools that add cloud enabled collaboration to the form factor of conventional digital audio workstations. These add real-time
+					remote collaboration to a digital audio workstation, meaning that users record and edit audio at the same time similar to how users can edit text collaboratively
+					in Google Docs. Note that the real-time interaction is for composing, editing, or recording music &#x2013; these are not helpful if you want to <em>play</em>					music together in real-time.</p>
+				<ul>
+					<li><a href="https://www.soundtrap.com/">Soundtrap</a></li>
+					<li><a href="https://www.ohmstudio.com/">Ohm Studio</a></li>
+					<li><a href="https://www.bandlab.com/">BandLab</a></li>
+					<li><a href="https://ampedstudio.com/">Amped Studio</a></li>
+					<li><a href="https://soundation.com/">Soundation</a></li>
+					<li><a href="https://www.faders.io/">faders.io</a> - This is a brand new option which is as of Summer 2021. In beta</li>
+				</ul>
+				<p>All of these are less mature and less capable than native digital audio workstations. Soundtrap was purchased by Spotify in 2017, and so it has a little more
+					support than some of the others. It is also browser based, which means its sessions are easy to share, but limits its capabilities in other ways. These tend
+					to be aimed at podcast creators, and beat makers, but you can use them for other kinds of music as well.</p>
+				<h3 id="dropbox-for-digital-audio-workstations">&#x201C;Dropbox for Digital Audio Workstations&#x201D;</h3>
+				<p>If you are accustomed to working with a conventional digital audio workstation like ProTools, Ableton Live, or Reaper, one easy option is to save your session
+					files along with the accompanying audio files in a Dropbox folder, and then pass them off to your band mates so that they can record over them. Unlike the options
+					above, only one user will be able to record or edit at a time.</p>
+				<p>Dropbox works okay for this purpose, but I would also recommend taking a look at these variants, which are specially designed for working with digital audio
+					sessions. These include extra features like dedicated audio session version control and track preview. These can be helpful for sharing audio sessions between
+					users.</p>
+				<ul>
+					<li><a href="https://splice.com/">Splice.com</a></li>
+					<li><a href="https://blend.io/">Blend.io</a></li>
+				</ul>
+				<p>These will try to sell you sample packs and drum loops. If you want to make music with samples or loops, this might even be useful.</p>
+				<h3 id="mobile-apps">Mobile apps</h3>
+				<p>These come and go so quickly it is hard to keep up! Here are just a few.</p>
+				<p>There are a million different mobile apps for creating videos. Want to make a video like the one that recently went viral by the Chino Valley Unified School
+					District in California? Google <strong>video collage</strong>, and there are numerous apps that will help.</p>
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/k3_crTZ0NHg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen>
+				</iframe>
+				<p><a href="https://apps.apple.com/us/app/acapella-from-picplaypost/id924635678">Acapella</a> is one iOS app that cam make video collages, and includes built-in
+					support for remote collaboration. Here&#x2019;s a self-isolation themed music video made with Acapella.</p>
+				<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/B9zs2zrg0qy/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="12"
+				style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+					<div style="padding:16px;">
+						<a href="https://www.instagram.com/p/B9zs2zrg0qy/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;"
+						target="_blank">
+							<div style=" display: flex; flex-direction: row; align-items: center;">
+								<div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;">
+
+								</div>
+								<div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;">
+									<div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;">
+
+									</div>
+									<div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;">
+
+									</div>
+								</div>
+							</div>
+							<div style="padding: 19% 0;">
+
+							</div>
+							<div style="display:block; height:50px; margin:0 auto 12px; width:50px;">
+								<svg width="50px" height="50px" viewbox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<g transform="translate(-511.000000, -20.000000)" fill="#000000">
+											<g>
+												<path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"
+												/>
+											</g>
+										</g>
+									</g>
+								</svg>
+							</div>
+							<div style="padding-top: 8px;">
+								<div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">
+									View this post on Instagram
+								</div>
+							</div>
+							<div style="padding: 12.5% 0;">
+
+							</div>
+							<div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;">
+								<div>
+									<div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);">
+
+									</div>
+									<div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;">
+
+									</div>
+									<div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);">
+
+									</div>
+								</div>
+								<div style="margin-left: 8px;">
+									<div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;">
+
+									</div>
+									<div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)">
+
+									</div>
+								</div>
+								<div style="margin-left: auto;">
+									<div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);">
+
+									</div>
+									<div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);">
+
+									</div>
+									<div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);">
+
+									</div>
+								</div>
+							</div>
+							<div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;">
+								<div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;">
+
+								</div>
+								<div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;">
+
+								</div>
+							</div>
+						</a>
+						<p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">
+							<a href="https://www.instagram.com/p/B9zs2zrg0qy/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;"
+							target="_blank">A post shared by AcapellaApp by Mixcord (<span class="citation" data-cites="acapellaapp">@acapellaapp</span>)</a> on
+							<time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;"
+							datetime="2020-03-16T20:25:51+00:00">Mar 16, 2020 at 1:25pm PDT</time>
+						</p>
+					</div>
+				</blockquote>
+				<script async src="//www.instagram.com/embed.js"></script>
+				<p><a href="https://www.tiktok.com/">TikTok</a> is often used with video editor apps (like Acapella), but it also includes features for asynchronous collaboration
+					called &#x201C;duets&#x201D; and &#x201C;reactions&#x201D; which are pretty self explanatory. If you know of a nice example of a musical TikTok Duet, please
+					send me a link, and I&#x2019;ll embed it.</p>
+				<p><a href="https://www.smule.com/">Smule</a>&#x2019;s eponymous mobile app is specifically made to create karaoke style videos collaboratively. It includes a RockBand
+					style vocal pitch display, supports remote collaborations, and can create video collages.</p>
+				<h3 id="semi-real-time-loop-based-jamming">Semi Real-Time Loop Based Jamming</h3>
+				<p>This final category of apps is for jamming with people in almost-real time. Instead of trying to minimize latency, these <em>increase</em> latency to a musical
+					duration in measures. They work kind of like playing with a looper, except that instead of layering over yourself, you are layering over what other musicians
+					played a few bars ago.</p>
+				<ul>
+					<li><a href="https://www.cockos.com/ninjam/">Ninjam</a> is free and open source. It is designed to be used with the commercial, but very affordable DAW, <a href="https://reaper.fm">Reaper</a></li>
+					<li><a href="https://jammr.net/">Jammr</a> is a commercial version of the same concept. Might be slightly easier to setup than Ninjam, but for most purposes, I
+						recommend Ninjam</li>
+					<li><a href="https://endlesss.fm/">Endless</a> is a mobile app that supports semi real-time beat making, and can also sync with a MacOS desktop app.</li>
+				</ul>
+				<p>If you are familiar with (or interested in) algorithmic music or code-based composition, there are also tools for &#x201C;jamming&#x201D; semi real-time with
+					code. The <a href="https://tidalcycles.org/index.php/Welcome">TidalCycles</a> software package supports <a href="https://tidalcycles.org/index.php/Multi-user_Tidal">several different collaborative paradigms</a>					including shared editors for a google-docs like experience capable of generating MIDI messages with code (thanks to <a href="https://manaswimishra.com/">Manaswi Mishra</a>					for the tip).</p>
+				<h3 id="latency-tolerant-music">Latency Tolerant Music</h3>
+				<p>Music and compositions that do not depend on precise shared rhythm can be tolerant to latent or distributed interaction. Playing this kind of music is one way
+					to circumvent some (but not all) of the obstacles introduced by video conferencing. I participated in <a href="https://paulineoliveros.us/">Pauline Oliveros&#x2019;</a>					&#x201C;World Wide Tuning Meditation&#x201D; via zoom, and while I wasn&#x2019;t expecting to enjoy it, I was surprised. A <a href="https://www.nytimes.com/2020/04/03/arts/music/music-meditation-zoom-coronavirus.html">review in the New York Times</a>					explains how the piece works.</p>
+				<p>For technology centric people (such as myself) it&#x2019;s worth recognizing that what makes this kind of music work is not the technology: it is the community
+					leadership of the organizers.</p>
+				<h2 id="final-thoughts">Final Thoughts</h2>
+				<p>There&#x2019;s lots of historical examples, and a million apps I left out. If you think of an important category or example that I missed, please feel free to
+					reach out and I&#x2019;ll add it to the list. If you don&#x2019;t know me personally, try @<a href="https://twitter.com/CharlesHolbrow">CharlesHolbrow</a> (or
+					email, etc.)</p>
+				<p>COVID-19 has and will continue to be challenging for musicians. Performing musicians (who don&#x2019;t typically have extra money laying around) suddenly had
+					their tours cancelled and their income eliminated. Venues are closing. If you are lucky enough to be self-isolating with loved ones or family members, I recommend
+					making music with them. Also please reach out to friends and family who may be more isolated.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/kubernetes-what-is-the-difference-between-a-loadbalancer-and-an-ingress">Kubernetes: What is the Difference Between a LoadBalancer and an Ingress?</a></h2><span class="post-date">Mar 7, 2019</span></div>
+			<div class="post-content">
+				<p>It can be tricky to understand how Kubernetes Services and Ingresses interact. The most important distinction relates to the concept of a <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Service</a>.</p>
+				<ul>
+					<li>A Kubernetes <code>LoadBalancer</code> is a type of <code>Service</code>.</li>
+					<li>A Kubernetes <code>Ingress</code> is not a type of <code>Service</code>. It is a collection of rules. An Ingress Controller in your cluster watches for <code>Ingress</code>						resources, and attempts to update the server side configuration according to the rules specified in the <code>Ingress</code>.</li>
+				</ul>
+				<p>For both <code>Ingress</code> and <code>LoadBalancer</code> resources, different Kubernetes providers (such as GKE, Amazon EKS, or bare metal) support different
+					features. One of the things that makes Ingresses and LoadBalancers tricky is that your YAML manifest files might not be portable between different platforms
+					and controllers.</p>
+				<p>Let&#x2019;s talk about Services. One thing that clarified services for me is understanding how the different services build on each other. For example the <code>ClusterIP</code>					is a simplest type. <code>NodePort</code> does everything that <code>ClusterIP</code> does (and more). <code>LoadBalancer</code> is another layer of capability
+					on top of <code>NodePort</code>.</p>
+				<p>So the mental process when I need a <code>Service</code> is:</p>
+				<ol type="1">
+					<li>Am I trying to help my pods talk to each other? If yes, ClusterIP is enough. If not&#x2026;</li>
+					<li>Am I trying to make my <code>Service</code> accessible on the public web (on a port above 30000)? If yes, NodePorts is enough (this is unusual). If not&#x2026;</li>
+					<li>Am I trying to manage most public traffic coming into the cluster? If yes, choose an Ingress or a LoadBalancer. This is where things get tricky, because your
+						options depend on the controllers that are available on your cluster.
+						<ul>
+							<li>Load Balancers tend to be a little simpler than Ingresses.</li>
+							<li>Ingresses might come with nice features like TLS/HTTPS termination and limited HTTP routing.</li>
+						</ul>
+					</li>
+				</ol>
+				<p>In my cluster I use the <a href="https://kubernetes.github.io/ingress-nginx/">NGINX Ingress Controller</a> for routing incoming HTTP requests to different services
+					based on their <code>Host</code> HTTP header and url.</p>
+				<p>Make sure you understand what ingress controller is installed on your cluster (if any) and know that the YAML manifests for it are likely not portable to other
+					Ingress Controllers &#x2014; the YAML manifest that you give to the NGINX Ingress Controller might need to be pretty different than the manifest that you give
+					to your GKE Ingress.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/modern-wanderlust-in-games">Modern Wanderlust in Games</a></h2><span class="post-date">Jul 3, 2017</span></div>
+			<div class="post-content">
+				<p>It used to be that when I started a new RPG I got this amazing feeling of excitement when I began to explore the world. The thrilling feeling of entering a new
+					area and wondering what secrets could be hidden, waiting to be discovered.</p>
+				<p>Getting older, I experienced this less and less. The novelty of exploring a virtual world seemed to wear off as I got older. Then in 2011 I (along with the rest
+					of the world) found Minecraft. The experience was fresh and exciting. A great implementation of a different approach to generating a virtual world. Something
+					about knowing that world is infinite and unlike the world that anyone else is playing made exploration feel meaningful again.</p>
+				<p>Once I began to internalize the patterns of terrain in Minecraft the feeling of excitement began to ebb. It was still exciting to find diamonds, but the random
+					terrain began to feel repetitive and similar. I wanted to find something not random in the world - I wanted to find something that felt intelligent. What if
+					there were a way to stumble on the ruins of other users civilizations, decayed after many years of abandonment?</p>
+				<p>Could a hybrid approach to world building be the next step in the evolution of wanderlust in games? I started writing this <a href="/project/wanderlust/">game for mobile devices</a>,
+					but my skills at the time were not enough to implement the networking required to simulate the dynamic world I imagined. Then I found Meteor, a javascript framework
+					that makes it very easy to synchronize client data. I re-implemented the game, migrating from the the Moai game engine to Meteor with the front-end entirely
+					written in a custom canvas based game engine. Here is my <a href="https://www.youtube.com/watch?v=eoi_tM6LHA8">lightning talk</a> at a 2013 meteor meetup in
+					San Francisco.</p>
+				<p>There were some pretty awesome features in the last meteor version. Users could write their own custom servers, characters could move between servers with a
+					complex three way authentication handshake. But I wasn&#x2019;t following Ken Levine&#x2019;s excellent game development advice: &#x201C;Stop trying to be smart,
+					and start trying not to be dumb&#x201D;. The engine and features were too complex, and it didn&#x2019;t make sense for me to be maintaining my own javascript
+					game engine. So in early 2017 I started re-writing the game again. This time the server is written in Go, and the client built on top of PIXI.js canvas engine.
+					Both decisions have already paid off.</p>
+				<p>In one way or another I have been working on this game since the first mobile version 2012. It&#x2019;s nearly always in some part of my mind &#x2013; even when
+					I am too busy to be actively developing. Whenever I have a spare moment my mind wanders back to the most recent development challenge. There&#x2019;s some inexplicable
+					force that drives me to keep at it. I envision a dynamic and evolving world in the cloud. A dwarf fortress for the next generation. A Minecraft for the future.
+					A limitless RPG for that can fill others with the same wanderlust that I found in RPGs of my childhood.</p>
+			</div>
+		</div>
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/creating-tempic-integrations">Creating Tempic Integrations</a></h2><span class="post-date">Oct 29, 2016</span></div>
+			<div class="post-content">
+				<figure>
+					<img src="/project/tempic-integrations/polytempic-accelerando-clean.png" alt="A polytempic accelerando">
+					<figcaption aria-hidden="true">A polytempic accelerando</figcaption>
+				</figure>
+				<h3 id="early-american-experimental-music">Early American Experimental Music</h3>
+				<p>American composer Charles Ives (1874-1954) wrote many experimental pieces where he would selectively disregard certain &#x2018;rules&#x2019; of music theory,
+					and explore the sonic results. In an essay on his experimental music, Ives asked this question:</p>
+				<blockquote>
+					<p>If you can play a tune in one key, why can&#x2019;t a feller, if he feels like, play one in two keys?</p>
+				</blockquote>
+				<p>Ives&#x2019; early <strong>polytonal</strong> experiments include pieces with a melody in one musical key and accompaniment in another key, and pieces with separate
+					voices, each in separate keys. These experimental pieces were not published or performed until long after he wrote them, but Ives&#x2019; ideas did appear in
+					his less systematic compositions. More importantly his ideas influenced a generation of younger composers.</p>
+				<p>Among these younger composers was Henry Cowell (1897-1965), who in 1930 published <em>New Musical Resources</em>, a collection of largely unexplored musical
+					ideas. The book extends the notion of multiple simultaneous musical keys <strong>polytonal music</strong> to multiple simultaneous tempos, <strong>polytempic music</strong>.</p>
+				<p>Can we make music with multiple simultaneous tempos? Certainly. But Cowell took the idea a step further. Assume we have multiple simultaneous tempos <em>and</em>					these tempos are accelerating or decelerating relative to each other. In <em>New Musical Resources</em>, Cowell called this practice <strong>sliding tempo</strong>,
+					and he noted that this would not be easy to do. In 1930, he writes:</p>
+				<blockquote>
+					<p>For practical purposes, care would have to be exercised in the use of sliding tempo, in order to control the relation between tones in a sliding part with those
+						in another part being played at the same time: a composer would have to know in other words, what tones in a part with rising tempo would be struck simultaneously
+						with other tones in a part of, say, fixed tempo, and this from considerations of harmony. There would usually be no absolute coincidence, but the tones which
+						would be struck at approximately the same time could be calculated.</p>
+				</blockquote>
+				<h3 id="phase-music">Phase Music</h3>
+				<p>Can we calculate the times of coincidence like Cowell suggests? How? Can a musician even perform polytempic music with tempo accelerations or decelerations?
+					Over the course of the 20th century, musicians explored this idea in what is now called <em>phase music</em> (<a href="https://en.wikipedia.org/wiki/Phase_music">wikipedia</a>).
+					One early example is <em>Piano Phase</em> (1967) by Steve Reich (<a href="https://en.wikipedia.org/wiki/Piano_Phase">wikipedia</a>, <a href="https://vimeo.com/98823512">vimeo</a>).</p>
+				<p>Through experimentation, Steve Reich found that if the music is reasonably simple, two performers can make synchronized tempo adjustments relative to each other
+					well enough to yield compelling results. In <em>Piano Phase</em> two pianos both play the same repeating 12 note musical pattern. One musician plays at a slightly
+					faster rate than the other. It is possible for a musician to play this, but there is a limit to complexity of the patterns that a musician can play and a limit
+					to the number of simultaneous changing tempi a musician can comprehend. <em>Piano Phase</em> approaches the limit of what a musician can perform. Can we not
+					use electronic sequencers or digital audio tools to synthesize complex phase music with many simultaneous tempic transitions?</p>
+				<p>Most phase music (including <em>Piano Phase</em>) layers identical copies of musical content playing at slightly different speeds. The layers begin in-phase
+					with with each other, and gradually drift out of phase. Reich&#x2019;s <em>Piano Phase</em> is no exception. As the layers drift out of phase, our listening
+					attention is drawn to variations caused by shifting phase relationships between the layers. In the example below, the two layers start out playing together
+					at 90 beats-per-minute (BPM), at <span class="math inline">\(t=0\)</span> the top layer abruptly starts playing at 100 BPM.</p>
+				<figure>
+					<img src="/project/tempic-integrations/naive-polytempic-example.png" alt="Abrupt tempo change">
+					<figcaption aria-hidden="true">Abrupt tempo change</figcaption>
+				</figure>
+				<p>If we wait long enough, eventually the layers will re-align, and and the whole pattern will start from the beginning again. But what if we want to control exactly
+					when the layers re-synchronize? Can we specify precisely both the time and the phase of sync points without abrupt changes in tempo? How can we sequence patterns
+					like the one below exactly? This is the central question of <strong>Tempic Integrations</strong>.</p>
+				<figure>
+					<img src="/project/tempic-integrations/basic-tempo-transition.png" alt="Continuous tempo acceleration from 90 BPM to 120 BPM">
+					<figcaption aria-hidden="true">Continuous tempo acceleration from 90 BPM to 120 BPM</figcaption>
+				</figure>
+				<h3 id="tempic-integrations">Tempic Integrations</h3>
+				<p>If we want to specify the exact number of beats that elapse between the beginning of a tempo acceleration and the end point of the acceleration, and we want
+					to hear this precisely we need a mathematical model for shaping our tempo acceleration curves. The goal is to compose and audition music where:</p>
+				<ul>
+					<li>Swarms of an arbitrary number of simultaneous tempi coexist.</li>
+					<li>Each individual player within the swarm can continuously accelerate or decelerate individually, but also as a member of a cohesive whole.</li>
+					<li>Each musical line can converge and diverge at explicit points. At each point of convergence the phase of the meter within the tempo can be set.</li>
+				</ul>
+				<p>We start by defining a single tempo transition. Consider the following example from the image above:</p>
+				<ul>
+					<li>Assume we have 2 snare drum players. Both begin playing the same beat at 90 BPM in common time.</li>
+					<li>One performer gradually accelerates relative to the other. We want to define a continuous tempo curve such that one drummer accelerates to 120 BPM.</li>
+					<li>So far, we can easily accomplish this with a simple linear tempo acceleration. However, we want the tempo transition to complete exactly when <em>both</em>						drummers are on a down-beat, so the combined effect is a 3 over 4 rhythmic pattern. Linear acceleration results in the transition completing at an arbitrary
+						phase.</li>
+					<li>We want the accelerating drummer to reach the new tempo after exactly 20 beats.</li>
+					<li>We also want the acceleration to complete in exactly 16 beats of the original tempo, so that the drummer playing a constant tempo and the accelerating drummer
+						are playing together.</li>
+				</ul>
+				<p>We are interested in both the number of beats elapsed in the static tempo <em>and</em> in the changing tempo, as well as the absolute tempo. If we think of the
+					number of beats elapsed as our <em>position</em>, and the tempo as our <em>rate</em>, we see how this resembles a physics problem. If we have a function that
+					describes our tempo (or rate), we can integrate that function, and the result will tell us our number of beats elapsed (or position). Given the above considerations,
+					our tempo curve is defined in terms of 5 constants:</p>
+				<ul>
+					<li>Time <span class="math inline">\(t_0=0\)</span>, when the tempo transition begins</li>
+					<li>A known time, <span class="math inline">\(t_1\)</span>, when the tempo transition ends</li>
+					<li>A known starting tempo: <span class="math inline">\(\dot{x}_0\)</span></li>
+					<li>A known finishing tempo: <span class="math inline">\(\dot{x}_1\)</span></li>
+					<li>The number of beats elapsed in the changing tempo between <span class="math inline">\(t_0\)</span> and <span class="math inline">\(t_1\)</span>: <span class="math inline">\(x_1\)</span></li>
+				</ul>
+				<p>The tension of the tempo curve determines how many beats elapse during the transition period. The curve is well-defined for some starting acceleration
+					<span
+					class="math inline">\(a_0\)</span> and finishing acceleration <span class="math inline">\(a_1\)</span>, so we define the curve in terms of linear acceleration. Using Newtonian
+						notation we can describe our tempo acceleration as:</p>
+				<p><span class="math display">\[\begin{equation}
+    \ddot{x}_1 = a_0 + a_1t_1
+\end{equation}\]</span></p>
+				<p>Integrating linear acceleration (above) yields a quadratic velocity curve (below). The velocity curve describes the tempo (in beats per minute) with respect
+					to time.</p>
+				<p><span class="math display">\[\begin{equation}
+    \dot{x}_1 = \dot{x}_0 + a_0t_1 + \frac{a_1t_1^2}{2}
+\end{equation}\]</span></p>
+				<p>Integrating velocity (above) gives us a function describing position (the number of beats elapsed with respect to time, below).</p>
+				<p><span class="math display">\[\begin{equation}
+    x_1 = x_0 + \dot{x}_0t_1 + \frac{a_0t_1^2}{2} + \frac{a_1t_1^3}{6}
+\end{equation}\]</span></p>
+				<p>With equations for <span class="math inline">\(\dot{x}_1\)</span> and <span class="math inline">\(x_1\)</span>, we can solve for our two unknowns, <span class="math inline">\(a_0\)</span>					and <span class="math inline">\(a_1\)</span>. First we solve both equations for <span class="math inline">\(a_1\)</span>:</p>
+				<p><span class="math display">\[\begin{equation}
+    a_1 = \frac{-2}{t_1^2}(\dot{x}_0-\dot{x}_1 + a_0t_1) = \frac{-6}{t_1^3}(\dot{x}_0t_1-x_1 + \frac{a_0t_1^2}{2})
+\end{equation}\]</span></p>
+				<p>Assuming <span class="math inline">\(t_1 \neq 0\)</span>, we solve this system of equations for <span class="math inline">\(a_0\)</span>:</p>
+				<p><span class="math display">\[\begin{equation}
+    a_0=\frac{6x_1-2t_1(\dot{x}_1+2\dot{x}_0)}{t_1^2}
+\end{equation}\]</span></p>
+				<p>Evaluating for <span class="math inline">\(a_0\)</span> with our constants gives us our starting acceleration. Once we have <span class="math inline">\(a_0\)</span>					we can solve our velocity equation to find the value of <span class="math inline">\(a_1\)</span>. Plugging <span class="math inline">\(a_1\)</span> and
+					<span
+					class="math inline">\(a_0\)</span> into the velocity equation will give us velocity curve that produces a continuous BPM curve over the course of the tempo transition.</p>
+				<p><strong>Note:</strong> We must specify the same time units for input variables like <span class="math inline">\(t_1\)</span> and <span class="math inline">\(\dot{x}_1\)</span>.
+					I prefer <em>minutes</em> for <span class="math inline">\(t_1\)</span> and <em>beats per minute</em> for <span class="math inline">\(\dot{x}_1\)</span> over
+					<em>seconds</em> and <em>beats per second</em>.</p>
+				<audio controls="true" src="http://web.media.mit.edu/~holbrow/media/CharlesHolbrow-TempicIntegrations.mp3">
+					Your Browser Does not Support the Audio Element
+				</audio>
+			</div>
+		</div>
+		<!-- pagination: navigate between pages-->
+		<div class="post post-content last">
+			<div class="pagination-nav"><a href="/posts/2" class="page-older">older content...</a></div>
+		</div>
+		</div>
+</body>
+
+</html>

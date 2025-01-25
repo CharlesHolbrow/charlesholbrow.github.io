@@ -1,0 +1,55 @@
+<html>
+
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="description" content="Charles' Home Page" />
+	<meta name="author" content="Charles Holbrow" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/css/hk-pyg.raw.css" />
+	<link rel="stylesheet" href="/css/master.styl.css" />
+	<title>Charles Holbrow - Modern Wanderlust in Games</title>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/video-sizing.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true, processEnvironments:
+		true }, // Center justify equations in code and markdown cells. Elsewhere // we use CSS to left justify single line equations in code cells. displayAlign: 'center',
+		"HTML-CSS": { styles: {'.MathJax_Display': {"margin": 0}}, linebreaks: { automatic: true } } });
+	</script>
+</head>
+
+<body>
+	<div class="menu"><a href="/" class="menu-item">Bio </a><a href="/posts" class="menu-item">Blog </a><a href="/projects" class="menu-item">Projects </a></div>
+	<div class="content">
+		<div class="post">
+			<div class="post-header">
+				<h2 class="post-title"><a href="/post/modern-wanderlust-in-games">Modern Wanderlust in Games</a></h2><span class="post-date">Jul 3, 2017</span></div>
+			<div class="post-content">
+				<p>It used to be that when I started a new RPG I got this amazing feeling of excitement when I began to explore the world. The thrilling feeling of entering a new
+					area and wondering what secrets could be hidden, waiting to be discovered.</p>
+				<p>Getting older, I experienced this less and less. The novelty of exploring a virtual world seemed to wear off as I got older. Then in 2011 I (along with the rest
+					of the world) found Minecraft. The experience was fresh and exciting. A great implementation of a different approach to generating a virtual world. Something
+					about knowing that world is infinite and unlike the world that anyone else is playing made exploration feel meaningful again.</p>
+				<p>Once I began to internalize the patterns of terrain in Minecraft the feeling of excitement began to ebb. It was still exciting to find diamonds, but the random
+					terrain began to feel repetitive and similar. I wanted to find something not random in the world - I wanted to find something that felt intelligent. What if
+					there were a way to stumble on the ruins of other users civilizations, decayed after many years of abandonment?</p>
+				<p>Could a hybrid approach to world building be the next step in the evolution of wanderlust in games? I started writing this <a href="/project/wanderlust/">game for mobile devices</a>,
+					but my skills at the time were not enough to implement the networking required to simulate the dynamic world I imagined. Then I found Meteor, a javascript framework
+					that makes it very easy to synchronize client data. I re-implemented the game, migrating from the the Moai game engine to Meteor with the front-end entirely
+					written in a custom canvas based game engine. Here is my <a href="https://www.youtube.com/watch?v=eoi_tM6LHA8">lightning talk</a> at a 2013 meteor meetup in
+					San Francisco.</p>
+				<p>There were some pretty awesome features in the last meteor version. Users could write their own custom servers, characters could move between servers with a
+					complex three way authentication handshake. But I wasn&#x2019;t following Ken Levine&#x2019;s excellent game development advice: &#x201C;Stop trying to be smart,
+					and start trying not to be dumb&#x201D;. The engine and features were too complex, and it didn&#x2019;t make sense for me to be maintaining my own javascript
+					game engine. So in early 2017 I started re-writing the game again. This time the server is written in Go, and the client built on top of PIXI.js canvas engine.
+					Both decisions have already paid off.</p>
+				<p>In one way or another I have been working on this game since the first mobile version 2012. It&#x2019;s nearly always in some part of my mind &#x2013; even when
+					I am too busy to be actively developing. Whenever I have a spare moment my mind wanders back to the most recent development challenge. There&#x2019;s some inexplicable
+					force that drives me to keep at it. I envision a dynamic and evolving world in the cloud. A dwarf fortress for the next generation. A Minecraft for the future.
+					A limitless RPG for that can fill others with the same wanderlust that I found in RPGs of my childhood.</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
